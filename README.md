@@ -12,5 +12,5 @@ The point of all of this is simple.  To try and help myself and others that play
 
 1. What is being bought the most of besides ore?
 2. Where are these items being sold at?
-3. How long will it take my toon to be able to make these this product?
+3. How long will it take my toon to be able to make these products?
 
