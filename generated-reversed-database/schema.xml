@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="groups" idMethod="native" phpName="Groups">
+    <column name="group_id" phpName="GroupId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="256"/>
+    <column name="published" phpName="Published" type="TINYINT"/>
+    <column name="category_id" phpName="CategoryId" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="systems" idMethod="native" phpName="Systems">
     <column name="system_id" phpName="SystemId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="256"/>

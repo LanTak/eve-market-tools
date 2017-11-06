@@ -2,10 +2,10 @@
 
 namespace Base;
 
-use \TypesQuery as ChildTypesQuery;
+use \GroupsQuery as ChildGroupsQuery;
 use \Exception;
 use \PDO;
-use Map\TypesTableMap;
+use Map\GroupsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -19,18 +19,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'types' table.
+ * Base class that represents a row from the 'groups' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Types implements ActiveRecordInterface
+abstract class Groups implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\TypesTableMap';
+    const TABLE_MAP = '\\Map\\GroupsTableMap';
 
 
     /**
@@ -60,11 +60,11 @@ abstract class Types implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the type_id field.
+     * The value for the group_id field.
      *
      * @var        int
      */
-    protected $type_id;
+    protected $group_id;
 
     /**
      * The value for the name field.
@@ -74,13 +74,6 @@ abstract class Types implements ActiveRecordInterface
     protected $name;
 
     /**
-     * The value for the description field.
-     *
-     * @var        string
-     */
-    protected $description;
-
-    /**
      * The value for the published field.
      *
      * @var        int
@@ -88,74 +81,11 @@ abstract class Types implements ActiveRecordInterface
     protected $published;
 
     /**
-     * The value for the group_id field.
+     * The value for the category_id field.
      *
      * @var        int
      */
-    protected $group_id;
-
-    /**
-     * The value for the radius field.
-     *
-     * @var        int
-     */
-    protected $radius;
-
-    /**
-     * The value for the volume field.
-     *
-     * @var        double
-     */
-    protected $volume;
-
-    /**
-     * The value for the packaged_volume field.
-     *
-     * @var        int
-     */
-    protected $packaged_volume;
-
-    /**
-     * The value for the icon_id field.
-     *
-     * @var        int
-     */
-    protected $icon_id;
-
-    /**
-     * The value for the capacity field.
-     *
-     * @var        int
-     */
-    protected $capacity;
-
-    /**
-     * The value for the portion_size field.
-     *
-     * @var        int
-     */
-    protected $portion_size;
-
-    /**
-     * The value for the mass field.
-     *
-     * @var        string
-     */
-    protected $mass;
-
-    /**
-     * The value for the graphic_id field.
-     *
-     * @var        int
-     */
-    protected $graphic_id;
-
-    /**
-     * The value for the dogma_attributes field.
-     *
-     * @var        int
-     */
-    protected $dogma_attributes;
+    protected $category_id;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -166,7 +96,7 @@ abstract class Types implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Types object.
+     * Initializes internal state of Base\Groups object.
      */
     public function __construct()
     {
@@ -261,9 +191,9 @@ abstract class Types implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Types</code> instance.  If
-     * <code>obj</code> is an instance of <code>Types</code>, delegates to
-     * <code>equals(Types)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Groups</code> instance.  If
+     * <code>obj</code> is an instance of <code>Groups</code>, delegates to
+     * <code>equals(Groups)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -329,7 +259,7 @@ abstract class Types implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Types The current object, for fluid interface
+     * @return $this|Groups The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -391,13 +321,13 @@ abstract class Types implements ActiveRecordInterface
     }
 
     /**
-     * Get the [type_id] column value.
+     * Get the [group_id] column value.
      *
      * @return int
      */
-    public function getTypeId()
+    public function getGroupId()
     {
-        return $this->type_id;
+        return $this->group_id;
     }
 
     /**
@@ -411,16 +341,6 @@ abstract class Types implements ActiveRecordInterface
     }
 
     /**
-     * Get the [description] column value.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * Get the [published] column value.
      *
      * @return int
@@ -431,190 +351,20 @@ abstract class Types implements ActiveRecordInterface
     }
 
     /**
-     * Get the [group_id] column value.
+     * Get the [category_id] column value.
      *
      * @return int
      */
-    public function getGroupId()
+    public function getCategoryId()
     {
-        return $this->group_id;
+        return $this->category_id;
     }
-
-    /**
-     * Get the [radius] column value.
-     *
-     * @return int
-     */
-    public function getRadius()
-    {
-        return $this->radius;
-    }
-
-    /**
-     * Get the [volume] column value.
-     *
-     * @return double
-     */
-    public function getVolume()
-    {
-        return $this->volume;
-    }
-
-    /**
-     * Get the [packaged_volume] column value.
-     *
-     * @return int
-     */
-    public function getPackagedVolume()
-    {
-        return $this->packaged_volume;
-    }
-
-    /**
-     * Get the [icon_id] column value.
-     *
-     * @return int
-     */
-    public function getIconId()
-    {
-        return $this->icon_id;
-    }
-
-    /**
-     * Get the [capacity] column value.
-     *
-     * @return int
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
-    }
-
-    /**
-     * Get the [portion_size] column value.
-     *
-     * @return int
-     */
-    public function getPortionSize()
-    {
-        return $this->portion_size;
-    }
-
-    /**
-     * Get the [mass] column value.
-     *
-     * @return string
-     */
-    public function getMass()
-    {
-        return $this->mass;
-    }
-
-    /**
-     * Get the [graphic_id] column value.
-     *
-     * @return int
-     */
-    public function getGraphicId()
-    {
-        return $this->graphic_id;
-    }
-
-    /**
-     * Get the [dogma_attributes] column value.
-     *
-     * @return int
-     */
-    public function getDogmaAttributes()
-    {
-        return $this->dogma_attributes;
-    }
-
-    /**
-     * Set the value of [type_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setTypeId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->type_id !== $v) {
-            $this->type_id = $v;
-            $this->modifiedColumns[TypesTableMap::COL_TYPE_ID] = true;
-        }
-
-        return $this;
-    } // setTypeId()
-
-    /**
-     * Set the value of [name] column.
-     *
-     * @param string $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setName($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->name !== $v) {
-            $this->name = $v;
-            $this->modifiedColumns[TypesTableMap::COL_NAME] = true;
-        }
-
-        return $this;
-    } // setName()
-
-    /**
-     * Set the value of [description] column.
-     *
-     * @param string $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setDescription($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[TypesTableMap::COL_DESCRIPTION] = true;
-        }
-
-        return $this;
-    } // setDescription()
-
-    /**
-     * Set the value of [published] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setPublished($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->published !== $v) {
-            $this->published = $v;
-            $this->modifiedColumns[TypesTableMap::COL_PUBLISHED] = true;
-        }
-
-        return $this;
-    } // setPublished()
 
     /**
      * Set the value of [group_id] column.
      *
      * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
+     * @return $this|\Groups The current object (for fluent API support)
      */
     public function setGroupId($v)
     {
@@ -624,191 +374,71 @@ abstract class Types implements ActiveRecordInterface
 
         if ($this->group_id !== $v) {
             $this->group_id = $v;
-            $this->modifiedColumns[TypesTableMap::COL_GROUP_ID] = true;
+            $this->modifiedColumns[GroupsTableMap::COL_GROUP_ID] = true;
         }
 
         return $this;
     } // setGroupId()
 
     /**
-     * Set the value of [radius] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setRadius($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->radius !== $v) {
-            $this->radius = $v;
-            $this->modifiedColumns[TypesTableMap::COL_RADIUS] = true;
-        }
-
-        return $this;
-    } // setRadius()
-
-    /**
-     * Set the value of [volume] column.
-     *
-     * @param double $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setVolume($v)
-    {
-        if ($v !== null) {
-            $v = (double) $v;
-        }
-
-        if ($this->volume !== $v) {
-            $this->volume = $v;
-            $this->modifiedColumns[TypesTableMap::COL_VOLUME] = true;
-        }
-
-        return $this;
-    } // setVolume()
-
-    /**
-     * Set the value of [packaged_volume] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setPackagedVolume($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->packaged_volume !== $v) {
-            $this->packaged_volume = $v;
-            $this->modifiedColumns[TypesTableMap::COL_PACKAGED_VOLUME] = true;
-        }
-
-        return $this;
-    } // setPackagedVolume()
-
-    /**
-     * Set the value of [icon_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setIconId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->icon_id !== $v) {
-            $this->icon_id = $v;
-            $this->modifiedColumns[TypesTableMap::COL_ICON_ID] = true;
-        }
-
-        return $this;
-    } // setIconId()
-
-    /**
-     * Set the value of [capacity] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setCapacity($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->capacity !== $v) {
-            $this->capacity = $v;
-            $this->modifiedColumns[TypesTableMap::COL_CAPACITY] = true;
-        }
-
-        return $this;
-    } // setCapacity()
-
-    /**
-     * Set the value of [portion_size] column.
-     *
-     * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
-     */
-    public function setPortionSize($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->portion_size !== $v) {
-            $this->portion_size = $v;
-            $this->modifiedColumns[TypesTableMap::COL_PORTION_SIZE] = true;
-        }
-
-        return $this;
-    } // setPortionSize()
-
-    /**
-     * Set the value of [mass] column.
+     * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return $this|\Types The current object (for fluent API support)
+     * @return $this|\Groups The current object (for fluent API support)
      */
-    public function setMass($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->mass !== $v) {
-            $this->mass = $v;
-            $this->modifiedColumns[TypesTableMap::COL_MASS] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[GroupsTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setMass()
+    } // setName()
 
     /**
-     * Set the value of [graphic_id] column.
+     * Set the value of [published] column.
      *
      * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
+     * @return $this|\Groups The current object (for fluent API support)
      */
-    public function setGraphicId($v)
+    public function setPublished($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->graphic_id !== $v) {
-            $this->graphic_id = $v;
-            $this->modifiedColumns[TypesTableMap::COL_GRAPHIC_ID] = true;
+        if ($this->published !== $v) {
+            $this->published = $v;
+            $this->modifiedColumns[GroupsTableMap::COL_PUBLISHED] = true;
         }
 
         return $this;
-    } // setGraphicId()
+    } // setPublished()
 
     /**
-     * Set the value of [dogma_attributes] column.
+     * Set the value of [category_id] column.
      *
      * @param int $v new value
-     * @return $this|\Types The current object (for fluent API support)
+     * @return $this|\Groups The current object (for fluent API support)
      */
-    public function setDogmaAttributes($v)
+    public function setCategoryId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->dogma_attributes !== $v) {
-            $this->dogma_attributes = $v;
-            $this->modifiedColumns[TypesTableMap::COL_DOGMA_ATTRIBUTES] = true;
+        if ($this->category_id !== $v) {
+            $this->category_id = $v;
+            $this->modifiedColumns[GroupsTableMap::COL_CATEGORY_ID] = true;
         }
 
         return $this;
-    } // setDogmaAttributes()
+    } // setCategoryId()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -846,47 +476,17 @@ abstract class Types implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : TypesTableMap::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->type_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TypesTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->name = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TypesTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->description = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TypesTableMap::translateFieldName('Published', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->published = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TypesTableMap::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : GroupsTableMap::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->group_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TypesTableMap::translateFieldName('Radius', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->radius = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : GroupsTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : TypesTableMap::translateFieldName('Volume', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->volume = (null !== $col) ? (double) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : GroupsTableMap::translateFieldName('Published', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->published = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : TypesTableMap::translateFieldName('PackagedVolume', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->packaged_volume = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : TypesTableMap::translateFieldName('IconId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->icon_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : TypesTableMap::translateFieldName('Capacity', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->capacity = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : TypesTableMap::translateFieldName('PortionSize', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->portion_size = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : TypesTableMap::translateFieldName('Mass', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->mass = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : TypesTableMap::translateFieldName('GraphicId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->graphic_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : TypesTableMap::translateFieldName('DogmaAttributes', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->dogma_attributes = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : GroupsTableMap::translateFieldName('CategoryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->category_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -895,10 +495,10 @@ abstract class Types implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 14; // 14 = TypesTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = GroupsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Types'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Groups'), 0, $e);
         }
     }
 
@@ -940,13 +540,13 @@ abstract class Types implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(TypesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(GroupsTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildTypesQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildGroupsQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -965,8 +565,8 @@ abstract class Types implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Types::setDeleted()
-     * @see Types::isDeleted()
+     * @see Groups::setDeleted()
+     * @see Groups::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -975,11 +575,11 @@ abstract class Types implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TypesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GroupsTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildTypesQuery::create()
+            $deleteQuery = ChildGroupsQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -1014,7 +614,7 @@ abstract class Types implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TypesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GroupsTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -1033,7 +633,7 @@ abstract class Types implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                TypesTableMap::addInstanceToPool($this);
+                GroupsTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -1092,51 +692,21 @@ abstract class Types implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(TypesTableMap::COL_TYPE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'type_id';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'name';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'description';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_PUBLISHED)) {
-            $modifiedColumns[':p' . $index++]  = 'published';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_GROUP_ID)) {
+        if ($this->isColumnModified(GroupsTableMap::COL_GROUP_ID)) {
             $modifiedColumns[':p' . $index++]  = 'group_id';
         }
-        if ($this->isColumnModified(TypesTableMap::COL_RADIUS)) {
-            $modifiedColumns[':p' . $index++]  = 'radius';
+        if ($this->isColumnModified(GroupsTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(TypesTableMap::COL_VOLUME)) {
-            $modifiedColumns[':p' . $index++]  = 'volume';
+        if ($this->isColumnModified(GroupsTableMap::COL_PUBLISHED)) {
+            $modifiedColumns[':p' . $index++]  = 'published';
         }
-        if ($this->isColumnModified(TypesTableMap::COL_PACKAGED_VOLUME)) {
-            $modifiedColumns[':p' . $index++]  = 'packaged_volume';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_ICON_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'icon_id';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_CAPACITY)) {
-            $modifiedColumns[':p' . $index++]  = 'capacity';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_PORTION_SIZE)) {
-            $modifiedColumns[':p' . $index++]  = 'portion_size';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_MASS)) {
-            $modifiedColumns[':p' . $index++]  = 'mass';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_GRAPHIC_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'graphic_id';
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_DOGMA_ATTRIBUTES)) {
-            $modifiedColumns[':p' . $index++]  = 'dogma_attributes';
+        if ($this->isColumnModified(GroupsTableMap::COL_CATEGORY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'category_id';
         }
 
         $sql = sprintf(
-            'INSERT INTO types (%s) VALUES (%s)',
+            'INSERT INTO groups (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -1145,47 +715,17 @@ abstract class Types implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'type_id':
-                        $stmt->bindValue($identifier, $this->type_id, PDO::PARAM_INT);
+                    case 'group_id':
+                        $stmt->bindValue($identifier, $this->group_id, PDO::PARAM_INT);
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
-                        break;
                     case 'published':
                         $stmt->bindValue($identifier, $this->published, PDO::PARAM_INT);
                         break;
-                    case 'group_id':
-                        $stmt->bindValue($identifier, $this->group_id, PDO::PARAM_INT);
-                        break;
-                    case 'radius':
-                        $stmt->bindValue($identifier, $this->radius, PDO::PARAM_INT);
-                        break;
-                    case 'volume':
-                        $stmt->bindValue($identifier, $this->volume, PDO::PARAM_STR);
-                        break;
-                    case 'packaged_volume':
-                        $stmt->bindValue($identifier, $this->packaged_volume, PDO::PARAM_INT);
-                        break;
-                    case 'icon_id':
-                        $stmt->bindValue($identifier, $this->icon_id, PDO::PARAM_INT);
-                        break;
-                    case 'capacity':
-                        $stmt->bindValue($identifier, $this->capacity, PDO::PARAM_INT);
-                        break;
-                    case 'portion_size':
-                        $stmt->bindValue($identifier, $this->portion_size, PDO::PARAM_INT);
-                        break;
-                    case 'mass':
-                        $stmt->bindValue($identifier, $this->mass, PDO::PARAM_INT);
-                        break;
-                    case 'graphic_id':
-                        $stmt->bindValue($identifier, $this->graphic_id, PDO::PARAM_INT);
-                        break;
-                    case 'dogma_attributes':
-                        $stmt->bindValue($identifier, $this->dogma_attributes, PDO::PARAM_INT);
+                    case 'category_id':
+                        $stmt->bindValue($identifier, $this->category_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1226,7 +766,7 @@ abstract class Types implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = TypesTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = GroupsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1243,46 +783,16 @@ abstract class Types implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getTypeId();
+                return $this->getGroupId();
                 break;
             case 1:
                 return $this->getName();
                 break;
             case 2:
-                return $this->getDescription();
-                break;
-            case 3:
                 return $this->getPublished();
                 break;
-            case 4:
-                return $this->getGroupId();
-                break;
-            case 5:
-                return $this->getRadius();
-                break;
-            case 6:
-                return $this->getVolume();
-                break;
-            case 7:
-                return $this->getPackagedVolume();
-                break;
-            case 8:
-                return $this->getIconId();
-                break;
-            case 9:
-                return $this->getCapacity();
-                break;
-            case 10:
-                return $this->getPortionSize();
-                break;
-            case 11:
-                return $this->getMass();
-                break;
-            case 12:
-                return $this->getGraphicId();
-                break;
-            case 13:
-                return $this->getDogmaAttributes();
+            case 3:
+                return $this->getCategoryId();
                 break;
             default:
                 return null;
@@ -1307,26 +817,16 @@ abstract class Types implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Types'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Groups'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Types'][$this->hashCode()] = true;
-        $keys = TypesTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Groups'][$this->hashCode()] = true;
+        $keys = GroupsTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getTypeId(),
+            $keys[0] => $this->getGroupId(),
             $keys[1] => $this->getName(),
-            $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getPublished(),
-            $keys[4] => $this->getGroupId(),
-            $keys[5] => $this->getRadius(),
-            $keys[6] => $this->getVolume(),
-            $keys[7] => $this->getPackagedVolume(),
-            $keys[8] => $this->getIconId(),
-            $keys[9] => $this->getCapacity(),
-            $keys[10] => $this->getPortionSize(),
-            $keys[11] => $this->getMass(),
-            $keys[12] => $this->getGraphicId(),
-            $keys[13] => $this->getDogmaAttributes(),
+            $keys[2] => $this->getPublished(),
+            $keys[3] => $this->getCategoryId(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1346,11 +846,11 @@ abstract class Types implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Types
+     * @return $this|\Groups
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = TypesTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = GroupsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1361,52 +861,22 @@ abstract class Types implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Types
+     * @return $this|\Groups
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setTypeId($value);
+                $this->setGroupId($value);
                 break;
             case 1:
                 $this->setName($value);
                 break;
             case 2:
-                $this->setDescription($value);
-                break;
-            case 3:
                 $this->setPublished($value);
                 break;
-            case 4:
-                $this->setGroupId($value);
-                break;
-            case 5:
-                $this->setRadius($value);
-                break;
-            case 6:
-                $this->setVolume($value);
-                break;
-            case 7:
-                $this->setPackagedVolume($value);
-                break;
-            case 8:
-                $this->setIconId($value);
-                break;
-            case 9:
-                $this->setCapacity($value);
-                break;
-            case 10:
-                $this->setPortionSize($value);
-                break;
-            case 11:
-                $this->setMass($value);
-                break;
-            case 12:
-                $this->setGraphicId($value);
-                break;
-            case 13:
-                $this->setDogmaAttributes($value);
+            case 3:
+                $this->setCategoryId($value);
                 break;
         } // switch()
 
@@ -1432,49 +902,19 @@ abstract class Types implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = TypesTableMap::getFieldNames($keyType);
+        $keys = GroupsTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setTypeId($arr[$keys[0]]);
+            $this->setGroupId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
+            $this->setPublished($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setPublished($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setGroupId($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setRadius($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setVolume($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setPackagedVolume($arr[$keys[7]]);
-        }
-        if (array_key_exists($keys[8], $arr)) {
-            $this->setIconId($arr[$keys[8]]);
-        }
-        if (array_key_exists($keys[9], $arr)) {
-            $this->setCapacity($arr[$keys[9]]);
-        }
-        if (array_key_exists($keys[10], $arr)) {
-            $this->setPortionSize($arr[$keys[10]]);
-        }
-        if (array_key_exists($keys[11], $arr)) {
-            $this->setMass($arr[$keys[11]]);
-        }
-        if (array_key_exists($keys[12], $arr)) {
-            $this->setGraphicId($arr[$keys[12]]);
-        }
-        if (array_key_exists($keys[13], $arr)) {
-            $this->setDogmaAttributes($arr[$keys[13]]);
+            $this->setCategoryId($arr[$keys[3]]);
         }
     }
 
@@ -1495,7 +935,7 @@ abstract class Types implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Types The current object, for fluid interface
+     * @return $this|\Groups The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1515,49 +955,19 @@ abstract class Types implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(TypesTableMap::DATABASE_NAME);
+        $criteria = new Criteria(GroupsTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(TypesTableMap::COL_TYPE_ID)) {
-            $criteria->add(TypesTableMap::COL_TYPE_ID, $this->type_id);
+        if ($this->isColumnModified(GroupsTableMap::COL_GROUP_ID)) {
+            $criteria->add(GroupsTableMap::COL_GROUP_ID, $this->group_id);
         }
-        if ($this->isColumnModified(TypesTableMap::COL_NAME)) {
-            $criteria->add(TypesTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(GroupsTableMap::COL_NAME)) {
+            $criteria->add(GroupsTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(TypesTableMap::COL_DESCRIPTION)) {
-            $criteria->add(TypesTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(GroupsTableMap::COL_PUBLISHED)) {
+            $criteria->add(GroupsTableMap::COL_PUBLISHED, $this->published);
         }
-        if ($this->isColumnModified(TypesTableMap::COL_PUBLISHED)) {
-            $criteria->add(TypesTableMap::COL_PUBLISHED, $this->published);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_GROUP_ID)) {
-            $criteria->add(TypesTableMap::COL_GROUP_ID, $this->group_id);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_RADIUS)) {
-            $criteria->add(TypesTableMap::COL_RADIUS, $this->radius);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_VOLUME)) {
-            $criteria->add(TypesTableMap::COL_VOLUME, $this->volume);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_PACKAGED_VOLUME)) {
-            $criteria->add(TypesTableMap::COL_PACKAGED_VOLUME, $this->packaged_volume);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_ICON_ID)) {
-            $criteria->add(TypesTableMap::COL_ICON_ID, $this->icon_id);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_CAPACITY)) {
-            $criteria->add(TypesTableMap::COL_CAPACITY, $this->capacity);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_PORTION_SIZE)) {
-            $criteria->add(TypesTableMap::COL_PORTION_SIZE, $this->portion_size);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_MASS)) {
-            $criteria->add(TypesTableMap::COL_MASS, $this->mass);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_GRAPHIC_ID)) {
-            $criteria->add(TypesTableMap::COL_GRAPHIC_ID, $this->graphic_id);
-        }
-        if ($this->isColumnModified(TypesTableMap::COL_DOGMA_ATTRIBUTES)) {
-            $criteria->add(TypesTableMap::COL_DOGMA_ATTRIBUTES, $this->dogma_attributes);
+        if ($this->isColumnModified(GroupsTableMap::COL_CATEGORY_ID)) {
+            $criteria->add(GroupsTableMap::COL_CATEGORY_ID, $this->category_id);
         }
 
         return $criteria;
@@ -1575,8 +985,8 @@ abstract class Types implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildTypesQuery::create();
-        $criteria->add(TypesTableMap::COL_TYPE_ID, $this->type_id);
+        $criteria = ChildGroupsQuery::create();
+        $criteria->add(GroupsTableMap::COL_GROUP_ID, $this->group_id);
 
         return $criteria;
     }
@@ -1589,7 +999,7 @@ abstract class Types implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getTypeId();
+        $validPk = null !== $this->getGroupId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1609,18 +1019,18 @@ abstract class Types implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getTypeId();
+        return $this->getGroupId();
     }
 
     /**
-     * Generic method to set the primary key (type_id column).
+     * Generic method to set the primary key (group_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setTypeId($key);
+        $this->setGroupId($key);
     }
 
     /**
@@ -1629,7 +1039,7 @@ abstract class Types implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getTypeId();
+        return null === $this->getGroupId();
     }
 
     /**
@@ -1638,27 +1048,17 @@ abstract class Types implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Types (or compatible) type.
+     * @param      object $copyObj An object of \Groups (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setTypeId($this->getTypeId());
-        $copyObj->setName($this->getName());
-        $copyObj->setDescription($this->getDescription());
-        $copyObj->setPublished($this->getPublished());
         $copyObj->setGroupId($this->getGroupId());
-        $copyObj->setRadius($this->getRadius());
-        $copyObj->setVolume($this->getVolume());
-        $copyObj->setPackagedVolume($this->getPackagedVolume());
-        $copyObj->setIconId($this->getIconId());
-        $copyObj->setCapacity($this->getCapacity());
-        $copyObj->setPortionSize($this->getPortionSize());
-        $copyObj->setMass($this->getMass());
-        $copyObj->setGraphicId($this->getGraphicId());
-        $copyObj->setDogmaAttributes($this->getDogmaAttributes());
+        $copyObj->setName($this->getName());
+        $copyObj->setPublished($this->getPublished());
+        $copyObj->setCategoryId($this->getCategoryId());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1673,7 +1073,7 @@ abstract class Types implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Types Clone of current object.
+     * @return \Groups Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1693,20 +1093,10 @@ abstract class Types implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->type_id = null;
-        $this->name = null;
-        $this->description = null;
-        $this->published = null;
         $this->group_id = null;
-        $this->radius = null;
-        $this->volume = null;
-        $this->packaged_volume = null;
-        $this->icon_id = null;
-        $this->capacity = null;
-        $this->portion_size = null;
-        $this->mass = null;
-        $this->graphic_id = null;
-        $this->dogma_attributes = null;
+        $this->name = null;
+        $this->published = null;
+        $this->category_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1736,7 +1126,7 @@ abstract class Types implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(TypesTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(GroupsTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

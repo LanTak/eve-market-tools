@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Types;
-use \TypesQuery;
+use \Groups;
+use \GroupsQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'types' table.
+ * This class defines the structure of the 'groups' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class TypesTableMap extends TableMap
+class GroupsTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class TypesTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.TypesTableMap';
+    const CLASS_NAME = '.Map.GroupsTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class TypesTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'types';
+    const TABLE_NAME = 'groups';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Types';
+    const OM_CLASS = '\\Groups';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Types';
+    const CLASS_DEFAULT = 'Groups';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 14;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,77 +69,27 @@ class TypesTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 14;
-
-    /**
-     * the column name for the type_id field
-     */
-    const COL_TYPE_ID = 'types.type_id';
-
-    /**
-     * the column name for the name field
-     */
-    const COL_NAME = 'types.name';
-
-    /**
-     * the column name for the description field
-     */
-    const COL_DESCRIPTION = 'types.description';
-
-    /**
-     * the column name for the published field
-     */
-    const COL_PUBLISHED = 'types.published';
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the group_id field
      */
-    const COL_GROUP_ID = 'types.group_id';
+    const COL_GROUP_ID = 'groups.group_id';
 
     /**
-     * the column name for the radius field
+     * the column name for the name field
      */
-    const COL_RADIUS = 'types.radius';
+    const COL_NAME = 'groups.name';
 
     /**
-     * the column name for the volume field
+     * the column name for the published field
      */
-    const COL_VOLUME = 'types.volume';
+    const COL_PUBLISHED = 'groups.published';
 
     /**
-     * the column name for the packaged_volume field
+     * the column name for the category_id field
      */
-    const COL_PACKAGED_VOLUME = 'types.packaged_volume';
-
-    /**
-     * the column name for the icon_id field
-     */
-    const COL_ICON_ID = 'types.icon_id';
-
-    /**
-     * the column name for the capacity field
-     */
-    const COL_CAPACITY = 'types.capacity';
-
-    /**
-     * the column name for the portion_size field
-     */
-    const COL_PORTION_SIZE = 'types.portion_size';
-
-    /**
-     * the column name for the mass field
-     */
-    const COL_MASS = 'types.mass';
-
-    /**
-     * the column name for the graphic_id field
-     */
-    const COL_GRAPHIC_ID = 'types.graphic_id';
-
-    /**
-     * the column name for the dogma_attributes field
-     */
-    const COL_DOGMA_ATTRIBUTES = 'types.dogma_attributes';
+    const COL_CATEGORY_ID = 'groups.category_id';
 
     /**
      * The default string format for model objects of the related table
@@ -153,11 +103,11 @@ class TypesTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('TypeId', 'Name', 'Description', 'Published', 'GroupId', 'Radius', 'Volume', 'PackagedVolume', 'IconId', 'Capacity', 'PortionSize', 'Mass', 'GraphicId', 'DogmaAttributes', ),
-        self::TYPE_CAMELNAME     => array('typeId', 'name', 'description', 'published', 'groupId', 'radius', 'volume', 'packagedVolume', 'iconId', 'capacity', 'portionSize', 'mass', 'graphicId', 'dogmaAttributes', ),
-        self::TYPE_COLNAME       => array(TypesTableMap::COL_TYPE_ID, TypesTableMap::COL_NAME, TypesTableMap::COL_DESCRIPTION, TypesTableMap::COL_PUBLISHED, TypesTableMap::COL_GROUP_ID, TypesTableMap::COL_RADIUS, TypesTableMap::COL_VOLUME, TypesTableMap::COL_PACKAGED_VOLUME, TypesTableMap::COL_ICON_ID, TypesTableMap::COL_CAPACITY, TypesTableMap::COL_PORTION_SIZE, TypesTableMap::COL_MASS, TypesTableMap::COL_GRAPHIC_ID, TypesTableMap::COL_DOGMA_ATTRIBUTES, ),
-        self::TYPE_FIELDNAME     => array('type_id', 'name', 'description', 'published', 'group_id', 'radius', 'volume', 'packaged_volume', 'icon_id', 'capacity', 'portion_size', 'mass', 'graphic_id', 'dogma_attributes', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        self::TYPE_PHPNAME       => array('GroupId', 'Name', 'Published', 'CategoryId', ),
+        self::TYPE_CAMELNAME     => array('groupId', 'name', 'published', 'categoryId', ),
+        self::TYPE_COLNAME       => array(GroupsTableMap::COL_GROUP_ID, GroupsTableMap::COL_NAME, GroupsTableMap::COL_PUBLISHED, GroupsTableMap::COL_CATEGORY_ID, ),
+        self::TYPE_FIELDNAME     => array('group_id', 'name', 'published', 'category_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -167,11 +117,11 @@ class TypesTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('TypeId' => 0, 'Name' => 1, 'Description' => 2, 'Published' => 3, 'GroupId' => 4, 'Radius' => 5, 'Volume' => 6, 'PackagedVolume' => 7, 'IconId' => 8, 'Capacity' => 9, 'PortionSize' => 10, 'Mass' => 11, 'GraphicId' => 12, 'DogmaAttributes' => 13, ),
-        self::TYPE_CAMELNAME     => array('typeId' => 0, 'name' => 1, 'description' => 2, 'published' => 3, 'groupId' => 4, 'radius' => 5, 'volume' => 6, 'packagedVolume' => 7, 'iconId' => 8, 'capacity' => 9, 'portionSize' => 10, 'mass' => 11, 'graphicId' => 12, 'dogmaAttributes' => 13, ),
-        self::TYPE_COLNAME       => array(TypesTableMap::COL_TYPE_ID => 0, TypesTableMap::COL_NAME => 1, TypesTableMap::COL_DESCRIPTION => 2, TypesTableMap::COL_PUBLISHED => 3, TypesTableMap::COL_GROUP_ID => 4, TypesTableMap::COL_RADIUS => 5, TypesTableMap::COL_VOLUME => 6, TypesTableMap::COL_PACKAGED_VOLUME => 7, TypesTableMap::COL_ICON_ID => 8, TypesTableMap::COL_CAPACITY => 9, TypesTableMap::COL_PORTION_SIZE => 10, TypesTableMap::COL_MASS => 11, TypesTableMap::COL_GRAPHIC_ID => 12, TypesTableMap::COL_DOGMA_ATTRIBUTES => 13, ),
-        self::TYPE_FIELDNAME     => array('type_id' => 0, 'name' => 1, 'description' => 2, 'published' => 3, 'group_id' => 4, 'radius' => 5, 'volume' => 6, 'packaged_volume' => 7, 'icon_id' => 8, 'capacity' => 9, 'portion_size' => 10, 'mass' => 11, 'graphic_id' => 12, 'dogma_attributes' => 13, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        self::TYPE_PHPNAME       => array('GroupId' => 0, 'Name' => 1, 'Published' => 2, 'CategoryId' => 3, ),
+        self::TYPE_CAMELNAME     => array('groupId' => 0, 'name' => 1, 'published' => 2, 'categoryId' => 3, ),
+        self::TYPE_COLNAME       => array(GroupsTableMap::COL_GROUP_ID => 0, GroupsTableMap::COL_NAME => 1, GroupsTableMap::COL_PUBLISHED => 2, GroupsTableMap::COL_CATEGORY_ID => 3, ),
+        self::TYPE_FIELDNAME     => array('group_id' => 0, 'name' => 1, 'published' => 2, 'category_id' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -184,27 +134,17 @@ class TypesTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('types');
-        $this->setPhpName('Types');
+        $this->setName('groups');
+        $this->setPhpName('Groups');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Types');
+        $this->setClassName('\\Groups');
         $this->setPackage('');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('type_id', 'TypeId', 'INTEGER', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 128, null);
-        $this->addColumn('description', 'Description', 'VARCHAR', false, 512, null);
+        $this->addPrimaryKey('group_id', 'GroupId', 'INTEGER', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', false, 256, null);
         $this->addColumn('published', 'Published', 'TINYINT', false, null, null);
-        $this->addColumn('group_id', 'GroupId', 'INTEGER', false, null, null);
-        $this->addColumn('radius', 'Radius', 'INTEGER', false, null, null);
-        $this->addColumn('volume', 'Volume', 'DOUBLE', false, null, null);
-        $this->addColumn('packaged_volume', 'PackagedVolume', 'INTEGER', false, null, null);
-        $this->addColumn('icon_id', 'IconId', 'INTEGER', false, null, null);
-        $this->addColumn('capacity', 'Capacity', 'INTEGER', false, null, null);
-        $this->addColumn('portion_size', 'PortionSize', 'INTEGER', false, null, null);
-        $this->addColumn('mass', 'Mass', 'BIGINT', false, null, null);
-        $this->addColumn('graphic_id', 'GraphicId', 'INTEGER', false, null, null);
-        $this->addColumn('dogma_attributes', 'DogmaAttributes', 'TINYINT', false, null, null);
+        $this->addColumn('category_id', 'CategoryId', 'INTEGER', false, null, null);
     } // initialize()
 
     /**
@@ -230,11 +170,11 @@ class TypesTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -254,7 +194,7 @@ class TypesTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -271,7 +211,7 @@ class TypesTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? TypesTableMap::CLASS_DEFAULT : TypesTableMap::OM_CLASS;
+        return $withPrefix ? GroupsTableMap::CLASS_DEFAULT : GroupsTableMap::OM_CLASS;
     }
 
     /**
@@ -285,22 +225,22 @@ class TypesTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Types object, last column rank)
+     * @return array           (Groups object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = TypesTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = TypesTableMap::getInstanceFromPool($key))) {
+        $key = GroupsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = GroupsTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + TypesTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + GroupsTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = TypesTableMap::OM_CLASS;
-            /** @var Types $obj */
+            $cls = GroupsTableMap::OM_CLASS;
+            /** @var Groups $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            TypesTableMap::addInstanceToPool($obj, $key);
+            GroupsTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -323,18 +263,18 @@ class TypesTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = TypesTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = TypesTableMap::getInstanceFromPool($key))) {
+            $key = GroupsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = GroupsTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Types $obj */
+                /** @var Groups $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                TypesTableMap::addInstanceToPool($obj, $key);
+                GroupsTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -355,35 +295,15 @@ class TypesTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(TypesTableMap::COL_TYPE_ID);
-            $criteria->addSelectColumn(TypesTableMap::COL_NAME);
-            $criteria->addSelectColumn(TypesTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(TypesTableMap::COL_PUBLISHED);
-            $criteria->addSelectColumn(TypesTableMap::COL_GROUP_ID);
-            $criteria->addSelectColumn(TypesTableMap::COL_RADIUS);
-            $criteria->addSelectColumn(TypesTableMap::COL_VOLUME);
-            $criteria->addSelectColumn(TypesTableMap::COL_PACKAGED_VOLUME);
-            $criteria->addSelectColumn(TypesTableMap::COL_ICON_ID);
-            $criteria->addSelectColumn(TypesTableMap::COL_CAPACITY);
-            $criteria->addSelectColumn(TypesTableMap::COL_PORTION_SIZE);
-            $criteria->addSelectColumn(TypesTableMap::COL_MASS);
-            $criteria->addSelectColumn(TypesTableMap::COL_GRAPHIC_ID);
-            $criteria->addSelectColumn(TypesTableMap::COL_DOGMA_ATTRIBUTES);
+            $criteria->addSelectColumn(GroupsTableMap::COL_GROUP_ID);
+            $criteria->addSelectColumn(GroupsTableMap::COL_NAME);
+            $criteria->addSelectColumn(GroupsTableMap::COL_PUBLISHED);
+            $criteria->addSelectColumn(GroupsTableMap::COL_CATEGORY_ID);
         } else {
-            $criteria->addSelectColumn($alias . '.type_id');
-            $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.published');
             $criteria->addSelectColumn($alias . '.group_id');
-            $criteria->addSelectColumn($alias . '.radius');
-            $criteria->addSelectColumn($alias . '.volume');
-            $criteria->addSelectColumn($alias . '.packaged_volume');
-            $criteria->addSelectColumn($alias . '.icon_id');
-            $criteria->addSelectColumn($alias . '.capacity');
-            $criteria->addSelectColumn($alias . '.portion_size');
-            $criteria->addSelectColumn($alias . '.mass');
-            $criteria->addSelectColumn($alias . '.graphic_id');
-            $criteria->addSelectColumn($alias . '.dogma_attributes');
+            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.published');
+            $criteria->addSelectColumn($alias . '.category_id');
         }
     }
 
@@ -396,7 +316,7 @@ class TypesTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(TypesTableMap::DATABASE_NAME)->getTable(TypesTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(GroupsTableMap::DATABASE_NAME)->getTable(GroupsTableMap::TABLE_NAME);
     }
 
     /**
@@ -404,16 +324,16 @@ class TypesTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TypesTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(TypesTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new TypesTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(GroupsTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(GroupsTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new GroupsTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Types or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Groups or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Types object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Groups object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -424,27 +344,27 @@ class TypesTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TypesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GroupsTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Types) { // it's a model object
+        } elseif ($values instanceof \Groups) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(TypesTableMap::DATABASE_NAME);
-            $criteria->add(TypesTableMap::COL_TYPE_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(GroupsTableMap::DATABASE_NAME);
+            $criteria->add(GroupsTableMap::COL_GROUP_ID, (array) $values, Criteria::IN);
         }
 
-        $query = TypesQuery::create()->mergeWith($criteria);
+        $query = GroupsQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            TypesTableMap::clearInstancePool();
+            GroupsTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                TypesTableMap::removeInstanceFromPool($singleval);
+                GroupsTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -452,20 +372,20 @@ class TypesTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the types table.
+     * Deletes all rows from the groups table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return TypesQuery::create()->doDeleteAll($con);
+        return GroupsQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Types or Criteria object.
+     * Performs an INSERT on the database, given a Groups or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Types object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Groups object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -474,18 +394,18 @@ class TypesTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TypesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GroupsTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Types object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Groups object
         }
 
 
         // Set the correct dbName
-        $query = TypesQuery::create()->mergeWith($criteria);
+        $query = GroupsQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -494,7 +414,7 @@ class TypesTableMap extends TableMap
         });
     }
 
-} // TypesTableMap
+} // GroupsTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-TypesTableMap::buildTableMap();
+GroupsTableMap::buildTableMap();
