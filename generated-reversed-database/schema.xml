@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="systems" idMethod="native" phpName="Systems">
+    <column name="system_id" phpName="SystemId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="256"/>
+    <column name="pos_x" phpName="PosX" type="BIGINT"/>
+    <column name="pos_y" phpName="PosY" type="BIGINT"/>
+    <column name="pos_z" phpName="PosZ" type="BIGINT"/>
+    <column name="security_status" phpName="SecurityStatus" type="DOUBLE"/>
+    <column name="constellation_id" phpName="ConstellationId" type="DOUBLE"/>
+    <column name="star_id" phpName="StarId" type="INTEGER"/>
+    <column name="security_class" phpName="SecurityClass" type="VARCHAR" size="1"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="types" idMethod="native" phpName="Types">
+    <column name="type_id" phpName="TypeId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="128"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="512"/>
+    <column name="published" phpName="Published" type="VARCHAR" size="16"/>
+    <column name="group_id" phpName="GroupId" type="INTEGER"/>
+    <column name="radius" phpName="Radius" type="INTEGER"/>
+    <column name="volume" phpName="Volume" type="INTEGER"/>
+    <column name="packaged_volume" phpName="PackagedVolume" type="INTEGER"/>
+    <column name="capacity" phpName="Capacity" type="INTEGER"/>
+    <column name="portion_size" phpName="PortionSize" type="INTEGER"/>
+    <column name="mass" phpName="Mass" type="BIGINT"/>
+    <column name="graphic_id" phpName="GraphicId" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

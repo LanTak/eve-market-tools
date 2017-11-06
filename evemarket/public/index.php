@@ -15,6 +15,9 @@ session_start();
 
 require 'functions.inc.php';
 
+require '/var/www/eve/vendor/autoload.php';
+require '/var/www/eve/generated-conf/config.php';
+
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
