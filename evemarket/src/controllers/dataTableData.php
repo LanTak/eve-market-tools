@@ -34,11 +34,55 @@ $app->get('/db/systems/data', function (Request $request, Response $response, ar
 		array( 'db' => 'security_class', 'dt' => 5 )
 	);
 
-	
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* If you just want to use the basic configuration for DataTables with PHP
 	* server-side, there is no need to edit below this line.
 	*/
+	$conn = Propel::getConnection();
+	echo json_encode(
+		SSP::simple( $_GET, $conn, $table, $primaryKey, $columns )
+	);
+});
+
+$app->get('/db/types', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	// $this->logger->info("Slim-Skeleton '/db/systems' route");
+
+	// Render index view
+	return $this->renderer->render($response, 'dt/types.phtml', $args);
+
+});
+
+$app->get('/db/types/data', function (Request $request, Response $response, array $args) {
+	require 'datatables.php';
+	// DB table to use
+	$table = 'types';
+	 
+	// Table's primary key
+	$primaryKey = 'type_id';
+	 
+	// Array of database columns which should be read and sent back to DataTables.
+	// The `db` parameter represents the column name in the database, while the `dt`
+	// parameter represents the DataTables column identifier. In this case simple
+	// indexes
+	$columns = array(
+		array( 'db' => 'type_id', 'dt' => 0 ),
+		array( 'db' => 'name', 'dt' => 1 ),
+		array( 'db' => 'description', 'dt' => 2 ),
+		array( 'db' => 'published', 'dt' => 3 ),
+		array( 'db' => 'group_id', 'dt' => 4 ),
+		array( 'db' => 'radius', 'dt' => 5 ),
+		array( 'db' => 'volume', 'dt' => 6 ),
+		array( 'db' => 'packaged_volume', 'dt' => 7 ),
+		array( 'db' => 'icon_id', 'dt' => 8 ),
+		array( 'db' => 'capacity', 'dt' => 9 ),
+		array( 'db' => 'portion_size', 'dt' => 10 ),
+		array( 'db' => 'mass', 'dt' => 11 ),
+		array( 'db' => 'graphic_id', 'dt' => 12 ),
+		array( 'db' => 'dogma_attributes', 'dt' => 13 )
+	);
+
 	$conn = Propel::getConnection();
 	echo json_encode(
 		SSP::simple( $_GET, $conn, $table, $primaryKey, $columns )

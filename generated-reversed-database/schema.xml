@@ -18,15 +18,17 @@
     <column name="type_id" phpName="TypeId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="128"/>
     <column name="description" phpName="Description" type="VARCHAR" size="512"/>
-    <column name="published" phpName="Published" type="VARCHAR" size="16"/>
+    <column name="published" phpName="Published" type="TINYINT"/>
     <column name="group_id" phpName="GroupId" type="INTEGER"/>
     <column name="radius" phpName="Radius" type="INTEGER"/>
-    <column name="volume" phpName="Volume" type="INTEGER"/>
+    <column name="volume" phpName="Volume" type="DOUBLE"/>
     <column name="packaged_volume" phpName="PackagedVolume" type="INTEGER"/>
+    <column name="icon_id" phpName="IconId" type="INTEGER"/>
     <column name="capacity" phpName="Capacity" type="INTEGER"/>
     <column name="portion_size" phpName="PortionSize" type="INTEGER"/>
     <column name="mass" phpName="Mass" type="BIGINT"/>
     <column name="graphic_id" phpName="GraphicId" type="INTEGER"/>
+    <column name="dogma_attributes" phpName="DogmaAttributes" type="TINYINT"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
