@@ -1329,7 +1329,8 @@ body {
     font-family: -apple-system, "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
     font-size: 13px;
     line-height: 1.52857;
-    color: #5c5c5c
+    /*color: #5c5c5c*/
+    color: #eee;
 }
 
 button,
