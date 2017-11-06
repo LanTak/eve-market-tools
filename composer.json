@@ -1,5 +1,9 @@
 {
     "require": {
+    	"propel/propel": "~2.0@dev",
         "slim/slim-skeleton": "^3.1"
-    }
+    },
+    "autoload": {
+		"classmap": ["orm/models"]
+	}
 }

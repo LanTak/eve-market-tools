@@ -20,3 +20,7 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 	// Render index view
 	return $this->renderer->render($response, 'userlogin.phtml', $args);
 });
+
+$app->get('/update', function (Request $request, Response $response, array $args) {
+	echo "suck it trebeck!";
+});
