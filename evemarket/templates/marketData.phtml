@@ -3,7 +3,7 @@
 <?php 
 include_once('include/header.php');
 ?>
-	<body class="  loading">
+	<body class=" sidebar-fixed navbar-fixed sidebar-slim  loading">
 		<div id="initial-loader">
 			<div class="initial-loader-bottom">
 				Loading. Please Wait. <i class="fa fa-cricle" style="opacity: 0"></i>
@@ -20,7 +20,7 @@ include_once('include/header.php');
 				<div class="container-fluid">
 					<div class="row">
 						<div class="sub-navbar sub-navbar__header-breadcrumbs">
-							<div class="container">
+							<div class="container-fluid">
 								<div class="row">
 									<div class="col-lg-12 sub-navbar-column">
 										<div class="sub-navbar-header">
@@ -45,29 +45,84 @@ include_once('include/header.php');
 						</div>
 					</div>
 					<div class="row">
-						<table id="example" class="display table">
-							<thead>
-								<tr>
-									<th>Group Name</th>
-									<th>Type Name</th>
-									<th>Average Price</th>
-									<th>Adjusted Price</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>Group Name</th>
-									<th>Type Name</th>
-									<th>Average Price</th>
-									<th>Adjusted Price</th>
-								</tr>
-							</tfoot>
-						</table>
+						<div class="col-lg-12">
+
+							<div class="panel panel-default no-bg b-gray-dark b-a-2">
+								<div class="panel-heading">Categories Line Chart</div>
+								<div class="panel-body">
+
+									<!-- START ROW -->
+									<div class="row">
+										<!-- START Chart -->
+										<div class="col-lg-12">
+											<div class="highcharts-line-analytics-payment-received m-t-1"></div>
+										</div>
+										<!-- END Chart -->
+									</div>
+									<!-- END ROW #1 -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<!-- START Info Chart -->
+						<div class="col-lg-6">
+							<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+								<div class="panel-heading">Category Interactive Pie Chart</div>
+								<div class="panel-body">
+									<div class="highcharts-pie-with-legend"></div>
+								</div>
+							</div>
+						</div>
+						<!-- END Info Chart -->
+						<div class="col-lg-6">
+							<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+								<div class="panel-heading">Category Summary</div>
+								<div class="panel-body">
+									<table class="display table" id="sumTable"></table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+								<div class="panel-heading">Item Summary Table</div>
+								<div class="panel-body">
+									<table id="example" class="display table">
+										<thead>
+											<tr>
+												<th>Category Name</th>
+												<th>Group Name</th>
+												<th>Type Name</th>
+												<th>Average Price</th>
+												<th>Adjusted Price</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>Category Name</th>
+												<th>Group Name</th>
+												<th>Type Name</th>
+												<th>Average Price</th>
+												<th>Adjusted Price</th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+							
+						</div>
 					</div>
 				</div>
 			</div>
 			<script src="/assets/vendor/js/jquery.dataTables.js"></script>
 			<script src="/assets/vendor/js/datatables.bootstrap.js"></script>
+			<script src="/assets/vendor/js/highstock.js"></script>
+			<!-- <script src="/assets/javascript/highchart-themes/highcharts&amp;highstock-theme.js"></script> -->
+			<!-- <script src="/assets/javascript/highchart-themes/highcharts-settings.js"></script> -->
+			<script src="/assets/javascript/peity-settings.js"></script>
+
 			<script type="text/javascript">
 				$(document).ready(function() {
 					$('#example').DataTable( {
@@ -75,7 +130,191 @@ include_once('include/header.php');
 						"serverSide": true,
 						"ajax": "/db/MarketData/data"
 					} );
-				} );
+					var forTable = [];
+					$.get('/data/chart/main', function(info) {
+						console.log(info);
+						// forTable = info;
+						var cats = []; var totals = []; var sums = []; var tt = 0;
+						var json = $.parseJSON(info);
+						$.each(json, function(index, val) {
+							cats.push(val.category_name);
+							totals.push(parseInt(val.total));
+							sums.push(parseInt(val.sum));
+							tt+=parseInt(val.total);
+							// $('#sumTable tr:last').after('<tr><td>'+val.category_name+'</td><td>'+numberWithCommas(val.total)+'</td><td>'+numberWithCommas(val.sum)+'</td></tr>');
+							// forTable.data.push({category_name:val.category_name, total:numberWithCommas(val.total), sum: numberWithCommas(val.sum)});
+							forTable.push([val.category_name, numberWithCommas(val.total),numberWithCommas(val.sum) ]);
+						});
+						// var tt = sums.reduce(function(accumulator, currentValue) {
+						// 	return accumulator + currentValue;
+						// });
+						console.log(tt);
+						var pie = []
+						$.each(json, function(index, val) {
+							var ranCol = getRandomColor();
+							//Math.floor(( parseInt(val.total)/ tt ) * 100)
+							var tmp = {'name':val.category_name, 'y':(  parseInt(val.total) / tt ) * 100 , 'color':ranCol};
+							pie.push(tmp);
+						});
+						// console.log(pie);
+
+						Dashboard.Helpers.elementExists('.highcharts-line-analytics-payment-received', function() {
+							$(this).highcharts({
+								chart: {
+									renderTo: 'container',
+									backgroundColor: 'transparent',
+									type: 'line'
+								},
+								title: {
+									text: '',
+									x: -20 //center
+								},
+								subtitle: {
+									text: '',
+									x: -20
+								},
+								xAxis: {
+									gridLineWidth: 1,
+									// categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+									// 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+									categories: cats
+								},
+								credits: {
+									enabled: false
+								},
+								exporting: {
+									enabled: true
+								},
+								yAxis: {
+									gridLineWidth: 1,
+									title: {
+										text: ''
+									},
+									plotLines: [{
+										value: 0,
+										width: 1,
+										color: '#808080'
+									}]
+								},
+								tooltip: {
+									valueSuffix: ''
+								},
+								legend: {
+									layout: 'horizontal',
+									align: 'right',
+									verticalAlign: 'bottom',
+									borderWidth: 0
+								},
+								series: [{
+									name: 'Total',
+									type: 'area',
+									data:totals,
+									color: '#2E9BDA',
+									fillColor: {
+										linearGradient: {
+											x1: 0,
+											y1: 0,
+											x2: 0,
+											y2: 1
+										},
+										stops: [
+											[0, 'rgba(45, 153, 220, .4)'],
+											[1, 'rgba(45, 153, 220, 0)']
+										]},
+										lineWidth: '1',
+										marker: {
+											symbol: 'circle',
+										}
+									}, 
+									{
+									name: 'Sum',
+									data: sums,
+									color: '#35BDA8',
+									type: 'area',
+									fillColor: {
+										linearGradient: {
+											x1: 0,
+											y1: 0,
+											x2: 0,
+											y2: 1
+										},
+										stops: [
+											[0, 'rgba(59, 189, 168, .2)'],
+											[1, 'rgba(59, 189, 168, 0)']
+										]},
+										lineWidth: '1',
+										marker: {
+											symbol: 'circle',
+										}
+									}]
+								});
+						});
+
+						Dashboard.Helpers.elementExists('.highcharts-pie-with-legend', function() {
+							// Build the chart
+							$(this).highcharts({
+								chart: {
+									renderTo: 'container',
+									backgroundColor: 'transparent',
+									plotBackgroundColor: null,
+									plotBorderWidth: null,
+									plotShadow: true,
+									type: 'pie',
+									height: 500
+								},
+								title: {
+									text: ''
+								},
+								 credits: {
+								enabled: false
+							},
+							exporting: {
+								enabled: false
+							},
+								tooltip: {
+									pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+								},
+								plotOptions: {
+									pie: {
+										allowPointSelect: true,
+										borderColor: '#212121',
+										cursor: 'pointer',
+										dataLabels: {
+											enabled: true
+										},
+										showInLegend: true
+									}
+								},
+								series: [{
+									name: 'Categories',
+									colorByPoint: true,
+									data: pie
+								}]
+							});
+						});
+					}).done(function(){
+						$('#sumTable').DataTable({
+					        "data": forTable,
+					        "columns": [
+					            { title: "Category Name" },
+					            { title: "Total" },
+					            { title: "Sum" }
+					        ]
+					    });
+					});
+					
+				});
+				function getRandomColor() {
+					var letters = '0123456789ABCDEF';
+					var color = '#';
+					for (var i = 0; i < 6; i++) {
+						color += letters[Math.floor(Math.random() * 16)];
+					}
+					return color;
+				}
+				function numberWithCommas(x) {
+    				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				}
 			</script>
 			<?php include_once('include/footer.php');?>
 		</div>

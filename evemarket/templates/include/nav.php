@@ -92,7 +92,7 @@
 			<!-- START Tree Sidebar Common -->
 			<ul class="side-menu">
 
-				<li class="Databases primary-submenu has-submenu">
+				<!-- <li class="Databases primary-submenu has-submenu">
 					<a href="javascript: void(0)" title="Databases">
 						<i class="fa fa-table fa-lg fa-fw"></i><span class="nav-label">Databases</span><i class="fa arrow"></i>
 					</a>
@@ -107,8 +107,18 @@
 								<span class="nav-label">Types DB</span>
 							</a>
 						</li>
-						   
+
 					</ul>
+				</li> -->
+				<li class="">
+					<a href="/db/systems" title="Systems Search">
+						<i class="fa fa-lg fa-table  fa-fw"></i><span class="nav-label">Systems Search</span>
+					</a>
+				</li>
+				<li class="">
+					<a href="/db/types" title="Types (Items) Search">
+						<i class="fa fa-lg fa-table fa-fw"></i><span class="nav-label">Types Search</span>
+					</a>
 				</li>
 			</ul>
 		</div>

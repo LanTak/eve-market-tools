@@ -102,12 +102,13 @@ $app->get('/db/MarketData/data', function (Request $request, Response $response,
 	// parameter represents the DataTables column identifier. In this case simple
 	// indexes
 	$columns = array(
-		array( 'db' => 'Group_name', 'dt' => 0 ),
-		array( 'db' => 'type_name', 'dt' => 1 ),
-		array( 'db' => 'average_price', 'dt' => 2, 'formatter' => function($d, $row){ 
+		array( 'db' => 'category_name', 'dt' => 0 ),
+		array( 'db' => 'group_name', 'dt' => 1 ),
+		array( 'db' => 'type_name', 'dt' => 2 ),
+		array( 'db' => 'average_price', 'dt' => 3, 'formatter' => function($d, $row){ 
 			return "$".number_format($d,2);
 		}),
-		array( 'db' => 'adjusted_price', 'dt' => 3, 'formatter' => function($d, $row){ 
+		array( 'db' => 'adjusted_price', 'dt' => 4, 'formatter' => function($d, $row){ 
 			return "$".number_format($d,2);
 		})
 	);
@@ -121,4 +122,23 @@ $app->get('/db/MarketData/data', function (Request $request, Response $response,
 	echo json_encode(
 		SSP::simple( $_GET, $conn, $table, $primaryKey, $columns )
 	);
+});
+
+$app->get('/data/chart/main', function (Request $request, Response $response, array $args) {
+	$conn = Propel::getConnection();
+
+	$sql = "SELECT DISTINCT `category_name`,  count(*) as 'total',  ROUND(SUM(average_price), 2) as 'sum' FROM `MarketData` GROUP BY `category_name`";
+
+	$data = fetch($conn, $sql);
+	echo json_encode($data);
+	/*foreach ($data as $key => $d) {
+		$tmp1[] = $d['category_name'];
+		$tmp2[] = $d['total'];
+		$tmp3[] = $d['sum'];
+	}
+	$t['a1'] = $tmp1;
+	$t['a2'] = $tmp2;
+	$t['a3'] = $tmp3;
+	echo json_encode($t);*/
+
 });
