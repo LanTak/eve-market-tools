@@ -33,7 +33,9 @@ if ($err) {
 	foreach ($data as $key => $d) {
 		$price = new MarketPrices();
 		$price->setTypeId($d['type_id']);
-		$price->setAveragePrice($d['average_price']);
+		if(!empty($d['average_price'])){
+			$price->setAveragePrice($d['average_price']);
+		}
 		$price->setAdjustedPrice($d['adjusted_price']);
 		$price->save();
 	}
