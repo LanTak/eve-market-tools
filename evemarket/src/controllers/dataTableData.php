@@ -102,10 +102,14 @@ $app->get('/db/MarketData/data', function (Request $request, Response $response,
 	// parameter represents the DataTables column identifier. In this case simple
 	// indexes
 	$columns = array(
-		array( 'db' => 'type_name', 'dt' => 0 ),
-		array( 'db' => 'Group_name', 'dt' => 1 ),
-		array( 'db' => 'average_price', 'dt' => 2 ),
-		array( 'db' => 'adjusted_price', 'dt' => 3 )
+		array( 'db' => 'Group_name', 'dt' => 0 ),
+		array( 'db' => 'type_name', 'dt' => 1 ),
+		array( 'db' => 'average_price', 'dt' => 2, 'formatter' => function($d, $row){ 
+			return "$".number_format($d,2);
+		}),
+		array( 'db' => 'adjusted_price', 'dt' => 3, 'formatter' => function($d, $row){ 
+			return "$".number_format($d,2);
+		})
 	);
 
 
