@@ -17,6 +17,14 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="market_prices" idMethod="native" phpName="MarketPrices">
+    <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
+    <column name="average_price" phpName="AveragePrice" type="DOUBLE" required="true"/>
+    <column name="adjusted_price" phpName="AdjustedPrice" type="DOUBLE" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="systems" idMethod="native" phpName="Systems">
     <column name="system_id" phpName="SystemId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="256"/>

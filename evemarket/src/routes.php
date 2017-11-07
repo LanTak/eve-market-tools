@@ -10,7 +10,7 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 	$this->logger->info("Slim-Skeleton '/' route");
 
 	// Render index view
-	return $this->renderer->render($response, 'blank.phtml', $args);
+	return $this->renderer->render($response, 'marketData.phtml', $args);
 });
 
 $app->get('/update', function (Request $request, Response $response, array $args) {
