@@ -2,13 +2,14 @@
 
 namespace Map;
 
-use \Constellations;
-use \ConstellationsQuery;
+use \Orders;
+use \OrdersQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
+use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
@@ -16,7 +17,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'constellations' table.
+ * This class defines the structure of the 'orders' table.
  *
  *
  *
@@ -26,7 +27,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class ConstellationsTableMap extends TableMap
+class OrdersTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +35,7 @@ class ConstellationsTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.ConstellationsTableMap';
+    const CLASS_NAME = '.Map.OrdersTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +45,22 @@ class ConstellationsTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'constellations';
+    const TABLE_NAME = 'orders';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Constellations';
+    const OM_CLASS = '\\Orders';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Constellations';
+    const CLASS_DEFAULT = 'Orders';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +70,62 @@ class ConstellationsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
-     * the column name for the constellations_id field
+     * the column name for the order_id field
      */
-    const COL_CONSTELLATIONS_ID = 'constellations.constellations_id';
+    const COL_ORDER_ID = 'orders.order_id';
 
     /**
      * the column name for the region_id field
      */
-    const COL_REGION_ID = 'constellations.region_id';
+    const COL_REGION_ID = 'orders.region_id';
 
     /**
-     * the column name for the name field
+     * the column name for the type_id field
      */
-    const COL_NAME = 'constellations.name';
+    const COL_TYPE_ID = 'orders.type_id';
+
+    /**
+     * the column name for the location_id field
+     */
+    const COL_LOCATION_ID = 'orders.location_id';
+
+    /**
+     * the column name for the volume_total field
+     */
+    const COL_VOLUME_TOTAL = 'orders.volume_total';
+
+    /**
+     * the column name for the volume_remain field
+     */
+    const COL_VOLUME_REMAIN = 'orders.volume_remain';
+
+    /**
+     * the column name for the min_volume field
+     */
+    const COL_MIN_VOLUME = 'orders.min_volume';
+
+    /**
+     * the column name for the price field
+     */
+    const COL_PRICE = 'orders.price';
+
+    /**
+     * the column name for the is_buy_order field
+     */
+    const COL_IS_BUY_ORDER = 'orders.is_buy_order';
+
+    /**
+     * the column name for the duration field
+     */
+    const COL_DURATION = 'orders.duration';
+
+    /**
+     * the column name for the issued field
+     */
+    const COL_ISSUED = 'orders.issued';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +139,11 @@ class ConstellationsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('ConstellationsId', 'RegionId', 'Name', ),
-        self::TYPE_CAMELNAME     => array('constellationsId', 'regionId', 'name', ),
-        self::TYPE_COLNAME       => array(ConstellationsTableMap::COL_CONSTELLATIONS_ID, ConstellationsTableMap::COL_REGION_ID, ConstellationsTableMap::COL_NAME, ),
-        self::TYPE_FIELDNAME     => array('constellations_id', 'region_id', 'name', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('OrderId', 'RegionId', 'TypeId', 'LocationId', 'VolumeTotal', 'VolumeRemain', 'MinVolume', 'Price', 'IsBuyOrder', 'Duration', 'Issued', ),
+        self::TYPE_CAMELNAME     => array('orderId', 'regionId', 'typeId', 'locationId', 'volumeTotal', 'volumeRemain', 'minVolume', 'price', 'isBuyOrder', 'duration', 'issued', ),
+        self::TYPE_COLNAME       => array(OrdersTableMap::COL_ORDER_ID, OrdersTableMap::COL_REGION_ID, OrdersTableMap::COL_TYPE_ID, OrdersTableMap::COL_LOCATION_ID, OrdersTableMap::COL_VOLUME_TOTAL, OrdersTableMap::COL_VOLUME_REMAIN, OrdersTableMap::COL_MIN_VOLUME, OrdersTableMap::COL_PRICE, OrdersTableMap::COL_IS_BUY_ORDER, OrdersTableMap::COL_DURATION, OrdersTableMap::COL_ISSUED, ),
+        self::TYPE_FIELDNAME     => array('order_id', 'region_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -112,11 +153,11 @@ class ConstellationsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('ConstellationsId' => 0, 'RegionId' => 1, 'Name' => 2, ),
-        self::TYPE_CAMELNAME     => array('constellationsId' => 0, 'regionId' => 1, 'name' => 2, ),
-        self::TYPE_COLNAME       => array(ConstellationsTableMap::COL_CONSTELLATIONS_ID => 0, ConstellationsTableMap::COL_REGION_ID => 1, ConstellationsTableMap::COL_NAME => 2, ),
-        self::TYPE_FIELDNAME     => array('constellations_id' => 0, 'region_id' => 1, 'name' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('OrderId' => 0, 'RegionId' => 1, 'TypeId' => 2, 'LocationId' => 3, 'VolumeTotal' => 4, 'VolumeRemain' => 5, 'MinVolume' => 6, 'Price' => 7, 'IsBuyOrder' => 8, 'Duration' => 9, 'Issued' => 10, ),
+        self::TYPE_CAMELNAME     => array('orderId' => 0, 'regionId' => 1, 'typeId' => 2, 'locationId' => 3, 'volumeTotal' => 4, 'volumeRemain' => 5, 'minVolume' => 6, 'price' => 7, 'isBuyOrder' => 8, 'duration' => 9, 'issued' => 10, ),
+        self::TYPE_COLNAME       => array(OrdersTableMap::COL_ORDER_ID => 0, OrdersTableMap::COL_REGION_ID => 1, OrdersTableMap::COL_TYPE_ID => 2, OrdersTableMap::COL_LOCATION_ID => 3, OrdersTableMap::COL_VOLUME_TOTAL => 4, OrdersTableMap::COL_VOLUME_REMAIN => 5, OrdersTableMap::COL_MIN_VOLUME => 6, OrdersTableMap::COL_PRICE => 7, OrdersTableMap::COL_IS_BUY_ORDER => 8, OrdersTableMap::COL_DURATION => 9, OrdersTableMap::COL_ISSUED => 10, ),
+        self::TYPE_FIELDNAME     => array('order_id' => 0, 'region_id' => 1, 'type_id' => 2, 'location_id' => 3, 'volume_total' => 4, 'volume_remain' => 5, 'min_volume' => 6, 'price' => 7, 'is_buy_order' => 8, 'duration' => 9, 'issued' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -129,16 +170,24 @@ class ConstellationsTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('constellations');
-        $this->setPhpName('Constellations');
+        $this->setName('orders');
+        $this->setPhpName('Orders');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Constellations');
+        $this->setClassName('\\Orders');
         $this->setPackage('');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('constellations_id', 'ConstellationsId', 'INTEGER', true, null, null);
-        $this->addColumn('region_id', 'RegionId', 'INTEGER', false, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 128, null);
+        $this->addColumn('order_id', 'OrderId', 'INTEGER', true, 22, null);
+        $this->addColumn('region_id', 'RegionId', 'INTEGER', true, null, null);
+        $this->addColumn('type_id', 'TypeId', 'INTEGER', true, null, null);
+        $this->addColumn('location_id', 'LocationId', 'INTEGER', true, null, null);
+        $this->addColumn('volume_total', 'VolumeTotal', 'INTEGER', true, null, null);
+        $this->addColumn('volume_remain', 'VolumeRemain', 'INTEGER', true, null, null);
+        $this->addColumn('min_volume', 'MinVolume', 'INTEGER', true, null, null);
+        $this->addColumn('price', 'Price', 'DOUBLE', true, null, null);
+        $this->addColumn('is_buy_order', 'IsBuyOrder', 'TINYINT', true, null, null);
+        $this->addColumn('duration', 'Duration', 'INTEGER', true, null, null);
+        $this->addColumn('issued', 'Issued', 'TIMESTAMP', true, null, null);
     } // initialize()
 
     /**
@@ -163,12 +212,7 @@ class ConstellationsTableMap extends TableMap
      */
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
-            return null;
-        }
-
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)];
+        return null;
     }
 
     /**
@@ -185,11 +229,7 @@ class ConstellationsTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
-            $indexType == TableMap::TYPE_NUM
-                ? 0 + $offset
-                : self::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)
-        ];
+        return '';
     }
 
     /**
@@ -205,7 +245,7 @@ class ConstellationsTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? ConstellationsTableMap::CLASS_DEFAULT : ConstellationsTableMap::OM_CLASS;
+        return $withPrefix ? OrdersTableMap::CLASS_DEFAULT : OrdersTableMap::OM_CLASS;
     }
 
     /**
@@ -219,22 +259,22 @@ class ConstellationsTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Constellations object, last column rank)
+     * @return array           (Orders object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = ConstellationsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = ConstellationsTableMap::getInstanceFromPool($key))) {
+        $key = OrdersTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = OrdersTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + ConstellationsTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + OrdersTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = ConstellationsTableMap::OM_CLASS;
-            /** @var Constellations $obj */
+            $cls = OrdersTableMap::OM_CLASS;
+            /** @var Orders $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            ConstellationsTableMap::addInstanceToPool($obj, $key);
+            OrdersTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -257,18 +297,18 @@ class ConstellationsTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = ConstellationsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = ConstellationsTableMap::getInstanceFromPool($key))) {
+            $key = OrdersTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = OrdersTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Constellations $obj */
+                /** @var Orders $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                ConstellationsTableMap::addInstanceToPool($obj, $key);
+                OrdersTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -289,13 +329,29 @@ class ConstellationsTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(ConstellationsTableMap::COL_CONSTELLATIONS_ID);
-            $criteria->addSelectColumn(ConstellationsTableMap::COL_REGION_ID);
-            $criteria->addSelectColumn(ConstellationsTableMap::COL_NAME);
+            $criteria->addSelectColumn(OrdersTableMap::COL_ORDER_ID);
+            $criteria->addSelectColumn(OrdersTableMap::COL_REGION_ID);
+            $criteria->addSelectColumn(OrdersTableMap::COL_TYPE_ID);
+            $criteria->addSelectColumn(OrdersTableMap::COL_LOCATION_ID);
+            $criteria->addSelectColumn(OrdersTableMap::COL_VOLUME_TOTAL);
+            $criteria->addSelectColumn(OrdersTableMap::COL_VOLUME_REMAIN);
+            $criteria->addSelectColumn(OrdersTableMap::COL_MIN_VOLUME);
+            $criteria->addSelectColumn(OrdersTableMap::COL_PRICE);
+            $criteria->addSelectColumn(OrdersTableMap::COL_IS_BUY_ORDER);
+            $criteria->addSelectColumn(OrdersTableMap::COL_DURATION);
+            $criteria->addSelectColumn(OrdersTableMap::COL_ISSUED);
         } else {
-            $criteria->addSelectColumn($alias . '.constellations_id');
+            $criteria->addSelectColumn($alias . '.order_id');
             $criteria->addSelectColumn($alias . '.region_id');
-            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.type_id');
+            $criteria->addSelectColumn($alias . '.location_id');
+            $criteria->addSelectColumn($alias . '.volume_total');
+            $criteria->addSelectColumn($alias . '.volume_remain');
+            $criteria->addSelectColumn($alias . '.min_volume');
+            $criteria->addSelectColumn($alias . '.price');
+            $criteria->addSelectColumn($alias . '.is_buy_order');
+            $criteria->addSelectColumn($alias . '.duration');
+            $criteria->addSelectColumn($alias . '.issued');
         }
     }
 
@@ -308,7 +364,7 @@ class ConstellationsTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(ConstellationsTableMap::DATABASE_NAME)->getTable(ConstellationsTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(OrdersTableMap::DATABASE_NAME)->getTable(OrdersTableMap::TABLE_NAME);
     }
 
     /**
@@ -316,16 +372,16 @@ class ConstellationsTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(ConstellationsTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(ConstellationsTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new ConstellationsTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(OrdersTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(OrdersTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new OrdersTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Constellations or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Orders or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Constellations object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Orders object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -336,27 +392,26 @@ class ConstellationsTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(OrdersTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Constellations) { // it's a model object
-            // create criteria based on pk values
-            $criteria = $values->buildPkeyCriteria();
+        } elseif ($values instanceof \Orders) { // it's a model object
+            // create criteria based on pk value
+            $criteria = $values->buildCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(ConstellationsTableMap::DATABASE_NAME);
-            $criteria->add(ConstellationsTableMap::COL_CONSTELLATIONS_ID, (array) $values, Criteria::IN);
+            throw new LogicException('The Orders object has no primary key');
         }
 
-        $query = ConstellationsQuery::create()->mergeWith($criteria);
+        $query = OrdersQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            ConstellationsTableMap::clearInstancePool();
+            OrdersTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                ConstellationsTableMap::removeInstanceFromPool($singleval);
+                OrdersTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -364,20 +419,20 @@ class ConstellationsTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the constellations table.
+     * Deletes all rows from the orders table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return ConstellationsQuery::create()->doDeleteAll($con);
+        return OrdersQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Constellations or Criteria object.
+     * Performs an INSERT on the database, given a Orders or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Constellations object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Orders object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -386,18 +441,18 @@ class ConstellationsTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(OrdersTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Constellations object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Orders object
         }
 
 
         // Set the correct dbName
-        $query = ConstellationsQuery::create()->mergeWith($criteria);
+        $query = OrdersQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -406,7 +461,7 @@ class ConstellationsTableMap extends TableMap
         });
     }
 
-} // ConstellationsTableMap
+} // OrdersTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-ConstellationsTableMap::buildTableMap();
+OrdersTableMap::buildTableMap();

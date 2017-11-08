@@ -10,6 +10,8 @@
   </table>
   <table name="constellations" idMethod="native" phpName="Constellations">
     <column name="constellations_id" phpName="ConstellationsId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="region_id" phpName="RegionId" type="INTEGER"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="128"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -27,6 +29,34 @@
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
     <column name="average_price" phpName="AveragePrice" type="DOUBLE" required="true"/>
     <column name="adjusted_price" phpName="AdjustedPrice" type="DOUBLE" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="orders" idMethod="native" phpName="Orders">
+    <column name="order_id" phpName="OrderId" type="INTEGER" size="22" required="true"/>
+    <column name="region_id" phpName="RegionId" type="INTEGER" required="true"/>
+    <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
+    <column name="location_id" phpName="LocationId" type="INTEGER" required="true"/>
+    <column name="volume_total" phpName="VolumeTotal" type="INTEGER" required="true"/>
+    <column name="volume_remain" phpName="VolumeRemain" type="INTEGER" required="true"/>
+    <column name="min_volume" phpName="MinVolume" type="INTEGER" required="true"/>
+    <column name="price" phpName="Price" type="DOUBLE" required="true"/>
+    <column name="is_buy_order" phpName="IsBuyOrder" type="TINYINT" required="true"/>
+    <column name="duration" phpName="Duration" type="INTEGER" required="true"/>
+    <column name="issued" phpName="Issued" type="TIMESTAMP" required="true"/>
+    <index name="region_id">
+      <index-column name="region_id"/>
+    </index>
+    <index name="type_id">
+      <index-column name="type_id"/>
+    </index>
+    <index name="location_id">
+      <index-column name="location_id"/>
+    </index>
+    <index name="order_id">
+      <index-column name="order_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

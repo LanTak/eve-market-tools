@@ -2,10 +2,11 @@
 
 namespace Base;
 
-use \ConstellationsQuery as ChildConstellationsQuery;
+use \OrdersQuery as ChildOrdersQuery;
+use \DateTime;
 use \Exception;
 use \PDO;
-use Map\ConstellationsTableMap;
+use Map\OrdersTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -17,20 +18,21 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
+use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'constellations' table.
+ * Base class that represents a row from the 'orders' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Constellations implements ActiveRecordInterface
+abstract class Orders implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\ConstellationsTableMap';
+    const TABLE_MAP = '\\Map\\OrdersTableMap';
 
 
     /**
@@ -60,11 +62,11 @@ abstract class Constellations implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the constellations_id field.
+     * The value for the order_id field.
      *
      * @var        int
      */
-    protected $constellations_id;
+    protected $order_id;
 
     /**
      * The value for the region_id field.
@@ -74,11 +76,67 @@ abstract class Constellations implements ActiveRecordInterface
     protected $region_id;
 
     /**
-     * The value for the name field.
+     * The value for the type_id field.
      *
-     * @var        string
+     * @var        int
      */
-    protected $name;
+    protected $type_id;
+
+    /**
+     * The value for the location_id field.
+     *
+     * @var        int
+     */
+    protected $location_id;
+
+    /**
+     * The value for the volume_total field.
+     *
+     * @var        int
+     */
+    protected $volume_total;
+
+    /**
+     * The value for the volume_remain field.
+     *
+     * @var        int
+     */
+    protected $volume_remain;
+
+    /**
+     * The value for the min_volume field.
+     *
+     * @var        int
+     */
+    protected $min_volume;
+
+    /**
+     * The value for the price field.
+     *
+     * @var        double
+     */
+    protected $price;
+
+    /**
+     * The value for the is_buy_order field.
+     *
+     * @var        int
+     */
+    protected $is_buy_order;
+
+    /**
+     * The value for the duration field.
+     *
+     * @var        int
+     */
+    protected $duration;
+
+    /**
+     * The value for the issued field.
+     *
+     * @var        DateTime
+     */
+    protected $issued;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -89,7 +147,7 @@ abstract class Constellations implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Constellations object.
+     * Initializes internal state of Base\Orders object.
      */
     public function __construct()
     {
@@ -184,9 +242,9 @@ abstract class Constellations implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Constellations</code> instance.  If
-     * <code>obj</code> is an instance of <code>Constellations</code>, delegates to
-     * <code>equals(Constellations)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Orders</code> instance.  If
+     * <code>obj</code> is an instance of <code>Orders</code>, delegates to
+     * <code>equals(Orders)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -252,7 +310,7 @@ abstract class Constellations implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Constellations The current object, for fluid interface
+     * @return $this|Orders The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -314,13 +372,13 @@ abstract class Constellations implements ActiveRecordInterface
     }
 
     /**
-     * Get the [constellations_id] column value.
+     * Get the [order_id] column value.
      *
      * @return int
      */
-    public function getConstellationsId()
+    public function getOrderId()
     {
-        return $this->constellations_id;
+        return $this->order_id;
     }
 
     /**
@@ -334,40 +392,130 @@ abstract class Constellations implements ActiveRecordInterface
     }
 
     /**
-     * Get the [name] column value.
+     * Get the [type_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getName()
+    public function getTypeId()
     {
-        return $this->name;
+        return $this->type_id;
     }
 
     /**
-     * Set the value of [constellations_id] column.
+     * Get the [location_id] column value.
+     *
+     * @return int
+     */
+    public function getLocationId()
+    {
+        return $this->location_id;
+    }
+
+    /**
+     * Get the [volume_total] column value.
+     *
+     * @return int
+     */
+    public function getVolumeTotal()
+    {
+        return $this->volume_total;
+    }
+
+    /**
+     * Get the [volume_remain] column value.
+     *
+     * @return int
+     */
+    public function getVolumeRemain()
+    {
+        return $this->volume_remain;
+    }
+
+    /**
+     * Get the [min_volume] column value.
+     *
+     * @return int
+     */
+    public function getMinVolume()
+    {
+        return $this->min_volume;
+    }
+
+    /**
+     * Get the [price] column value.
+     *
+     * @return double
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Get the [is_buy_order] column value.
+     *
+     * @return int
+     */
+    public function getIsBuyOrder()
+    {
+        return $this->is_buy_order;
+    }
+
+    /**
+     * Get the [duration] column value.
+     *
+     * @return int
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [issued] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getIssued($format = NULL)
+    {
+        if ($format === null) {
+            return $this->issued;
+        } else {
+            return $this->issued instanceof \DateTimeInterface ? $this->issued->format($format) : null;
+        }
+    }
+
+    /**
+     * Set the value of [order_id] column.
      *
      * @param int $v new value
-     * @return $this|\Constellations The current object (for fluent API support)
+     * @return $this|\Orders The current object (for fluent API support)
      */
-    public function setConstellationsId($v)
+    public function setOrderId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->constellations_id !== $v) {
-            $this->constellations_id = $v;
-            $this->modifiedColumns[ConstellationsTableMap::COL_CONSTELLATIONS_ID] = true;
+        if ($this->order_id !== $v) {
+            $this->order_id = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_ORDER_ID] = true;
         }
 
         return $this;
-    } // setConstellationsId()
+    } // setOrderId()
 
     /**
      * Set the value of [region_id] column.
      *
      * @param int $v new value
-     * @return $this|\Constellations The current object (for fluent API support)
+     * @return $this|\Orders The current object (for fluent API support)
      */
     public function setRegionId($v)
     {
@@ -377,31 +525,191 @@ abstract class Constellations implements ActiveRecordInterface
 
         if ($this->region_id !== $v) {
             $this->region_id = $v;
-            $this->modifiedColumns[ConstellationsTableMap::COL_REGION_ID] = true;
+            $this->modifiedColumns[OrdersTableMap::COL_REGION_ID] = true;
         }
 
         return $this;
     } // setRegionId()
 
     /**
-     * Set the value of [name] column.
+     * Set the value of [type_id] column.
      *
-     * @param string $v new value
-     * @return $this|\Constellations The current object (for fluent API support)
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
      */
-    public function setName($v)
+    public function setTypeId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->name !== $v) {
-            $this->name = $v;
-            $this->modifiedColumns[ConstellationsTableMap::COL_NAME] = true;
+        if ($this->type_id !== $v) {
+            $this->type_id = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_TYPE_ID] = true;
         }
 
         return $this;
-    } // setName()
+    } // setTypeId()
+
+    /**
+     * Set the value of [location_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setLocationId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->location_id !== $v) {
+            $this->location_id = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_LOCATION_ID] = true;
+        }
+
+        return $this;
+    } // setLocationId()
+
+    /**
+     * Set the value of [volume_total] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setVolumeTotal($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->volume_total !== $v) {
+            $this->volume_total = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_VOLUME_TOTAL] = true;
+        }
+
+        return $this;
+    } // setVolumeTotal()
+
+    /**
+     * Set the value of [volume_remain] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setVolumeRemain($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->volume_remain !== $v) {
+            $this->volume_remain = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_VOLUME_REMAIN] = true;
+        }
+
+        return $this;
+    } // setVolumeRemain()
+
+    /**
+     * Set the value of [min_volume] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setMinVolume($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->min_volume !== $v) {
+            $this->min_volume = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_MIN_VOLUME] = true;
+        }
+
+        return $this;
+    } // setMinVolume()
+
+    /**
+     * Set the value of [price] column.
+     *
+     * @param double $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setPrice($v)
+    {
+        if ($v !== null) {
+            $v = (double) $v;
+        }
+
+        if ($this->price !== $v) {
+            $this->price = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_PRICE] = true;
+        }
+
+        return $this;
+    } // setPrice()
+
+    /**
+     * Set the value of [is_buy_order] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setIsBuyOrder($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->is_buy_order !== $v) {
+            $this->is_buy_order = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_IS_BUY_ORDER] = true;
+        }
+
+        return $this;
+    } // setIsBuyOrder()
+
+    /**
+     * Set the value of [duration] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setDuration($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->duration !== $v) {
+            $this->duration = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_DURATION] = true;
+        }
+
+        return $this;
+    } // setDuration()
+
+    /**
+     * Sets the value of [issued] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setIssued($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->issued !== null || $dt !== null) {
+            if ($this->issued === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->issued->format("Y-m-d H:i:s.u")) {
+                $this->issued = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[OrdersTableMap::COL_ISSUED] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setIssued()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -439,14 +747,41 @@ abstract class Constellations implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ConstellationsTableMap::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->constellations_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : OrdersTableMap::translateFieldName('OrderId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->order_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ConstellationsTableMap::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : OrdersTableMap::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->region_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ConstellationsTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->name = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrdersTableMap::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->type_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrdersTableMap::translateFieldName('LocationId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->location_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrdersTableMap::translateFieldName('VolumeTotal', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->volume_total = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : OrdersTableMap::translateFieldName('VolumeRemain', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->volume_remain = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : OrdersTableMap::translateFieldName('MinVolume', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->min_volume = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : OrdersTableMap::translateFieldName('Price', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->price = (null !== $col) ? (double) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : OrdersTableMap::translateFieldName('IsBuyOrder', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->is_buy_order = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : OrdersTableMap::translateFieldName('Duration', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->duration = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : OrdersTableMap::translateFieldName('Issued', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->issued = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -455,10 +790,10 @@ abstract class Constellations implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = ConstellationsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = OrdersTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Constellations'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Orders'), 0, $e);
         }
     }
 
@@ -500,13 +835,13 @@ abstract class Constellations implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(ConstellationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(OrdersTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildConstellationsQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildOrdersQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -525,8 +860,8 @@ abstract class Constellations implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Constellations::setDeleted()
-     * @see Constellations::isDeleted()
+     * @see Orders::setDeleted()
+     * @see Orders::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -535,11 +870,11 @@ abstract class Constellations implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(OrdersTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildConstellationsQuery::create()
+            $deleteQuery = ChildOrdersQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -574,7 +909,7 @@ abstract class Constellations implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(OrdersTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -593,7 +928,7 @@ abstract class Constellations implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                ConstellationsTableMap::addInstanceToPool($this);
+                OrdersTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -652,18 +987,42 @@ abstract class Constellations implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(ConstellationsTableMap::COL_CONSTELLATIONS_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'constellations_id';
+        if ($this->isColumnModified(OrdersTableMap::COL_ORDER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'order_id';
         }
-        if ($this->isColumnModified(ConstellationsTableMap::COL_REGION_ID)) {
+        if ($this->isColumnModified(OrdersTableMap::COL_REGION_ID)) {
             $modifiedColumns[':p' . $index++]  = 'region_id';
         }
-        if ($this->isColumnModified(ConstellationsTableMap::COL_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'name';
+        if ($this->isColumnModified(OrdersTableMap::COL_TYPE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'type_id';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_LOCATION_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'location_id';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_VOLUME_TOTAL)) {
+            $modifiedColumns[':p' . $index++]  = 'volume_total';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_VOLUME_REMAIN)) {
+            $modifiedColumns[':p' . $index++]  = 'volume_remain';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_MIN_VOLUME)) {
+            $modifiedColumns[':p' . $index++]  = 'min_volume';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_PRICE)) {
+            $modifiedColumns[':p' . $index++]  = 'price';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_IS_BUY_ORDER)) {
+            $modifiedColumns[':p' . $index++]  = 'is_buy_order';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_DURATION)) {
+            $modifiedColumns[':p' . $index++]  = 'duration';
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_ISSUED)) {
+            $modifiedColumns[':p' . $index++]  = 'issued';
         }
 
         $sql = sprintf(
-            'INSERT INTO constellations (%s) VALUES (%s)',
+            'INSERT INTO orders (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -672,14 +1031,38 @@ abstract class Constellations implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'constellations_id':
-                        $stmt->bindValue($identifier, $this->constellations_id, PDO::PARAM_INT);
+                    case 'order_id':
+                        $stmt->bindValue($identifier, $this->order_id, PDO::PARAM_INT);
                         break;
                     case 'region_id':
                         $stmt->bindValue($identifier, $this->region_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
-                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                    case 'type_id':
+                        $stmt->bindValue($identifier, $this->type_id, PDO::PARAM_INT);
+                        break;
+                    case 'location_id':
+                        $stmt->bindValue($identifier, $this->location_id, PDO::PARAM_INT);
+                        break;
+                    case 'volume_total':
+                        $stmt->bindValue($identifier, $this->volume_total, PDO::PARAM_INT);
+                        break;
+                    case 'volume_remain':
+                        $stmt->bindValue($identifier, $this->volume_remain, PDO::PARAM_INT);
+                        break;
+                    case 'min_volume':
+                        $stmt->bindValue($identifier, $this->min_volume, PDO::PARAM_INT);
+                        break;
+                    case 'price':
+                        $stmt->bindValue($identifier, $this->price, PDO::PARAM_STR);
+                        break;
+                    case 'is_buy_order':
+                        $stmt->bindValue($identifier, $this->is_buy_order, PDO::PARAM_INT);
+                        break;
+                    case 'duration':
+                        $stmt->bindValue($identifier, $this->duration, PDO::PARAM_INT);
+                        break;
+                    case 'issued':
+                        $stmt->bindValue($identifier, $this->issued ? $this->issued->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -720,7 +1103,7 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = ConstellationsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = OrdersTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -737,13 +1120,37 @@ abstract class Constellations implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getConstellationsId();
+                return $this->getOrderId();
                 break;
             case 1:
                 return $this->getRegionId();
                 break;
             case 2:
-                return $this->getName();
+                return $this->getTypeId();
+                break;
+            case 3:
+                return $this->getLocationId();
+                break;
+            case 4:
+                return $this->getVolumeTotal();
+                break;
+            case 5:
+                return $this->getVolumeRemain();
+                break;
+            case 6:
+                return $this->getMinVolume();
+                break;
+            case 7:
+                return $this->getPrice();
+                break;
+            case 8:
+                return $this->getIsBuyOrder();
+                break;
+            case 9:
+                return $this->getDuration();
+                break;
+            case 10:
+                return $this->getIssued();
                 break;
             default:
                 return null;
@@ -768,16 +1175,28 @@ abstract class Constellations implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Constellations'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Orders'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Constellations'][$this->hashCode()] = true;
-        $keys = ConstellationsTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Orders'][$this->hashCode()] = true;
+        $keys = OrdersTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getConstellationsId(),
+            $keys[0] => $this->getOrderId(),
             $keys[1] => $this->getRegionId(),
-            $keys[2] => $this->getName(),
+            $keys[2] => $this->getTypeId(),
+            $keys[3] => $this->getLocationId(),
+            $keys[4] => $this->getVolumeTotal(),
+            $keys[5] => $this->getVolumeRemain(),
+            $keys[6] => $this->getMinVolume(),
+            $keys[7] => $this->getPrice(),
+            $keys[8] => $this->getIsBuyOrder(),
+            $keys[9] => $this->getDuration(),
+            $keys[10] => $this->getIssued(),
         );
+        if ($result[$keys[10]] instanceof \DateTimeInterface) {
+            $result[$keys[10]] = $result[$keys[10]]->format('c');
+        }
+
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
@@ -796,11 +1215,11 @@ abstract class Constellations implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Constellations
+     * @return $this|\Orders
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = ConstellationsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = OrdersTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -811,19 +1230,43 @@ abstract class Constellations implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Constellations
+     * @return $this|\Orders
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setConstellationsId($value);
+                $this->setOrderId($value);
                 break;
             case 1:
                 $this->setRegionId($value);
                 break;
             case 2:
-                $this->setName($value);
+                $this->setTypeId($value);
+                break;
+            case 3:
+                $this->setLocationId($value);
+                break;
+            case 4:
+                $this->setVolumeTotal($value);
+                break;
+            case 5:
+                $this->setVolumeRemain($value);
+                break;
+            case 6:
+                $this->setMinVolume($value);
+                break;
+            case 7:
+                $this->setPrice($value);
+                break;
+            case 8:
+                $this->setIsBuyOrder($value);
+                break;
+            case 9:
+                $this->setDuration($value);
+                break;
+            case 10:
+                $this->setIssued($value);
                 break;
         } // switch()
 
@@ -849,16 +1292,40 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = ConstellationsTableMap::getFieldNames($keyType);
+        $keys = OrdersTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setConstellationsId($arr[$keys[0]]);
+            $this->setOrderId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setRegionId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setName($arr[$keys[2]]);
+            $this->setTypeId($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setLocationId($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setVolumeTotal($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setVolumeRemain($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setMinVolume($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setPrice($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setIsBuyOrder($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setDuration($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setIssued($arr[$keys[10]]);
         }
     }
 
@@ -879,7 +1346,7 @@ abstract class Constellations implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Constellations The current object, for fluid interface
+     * @return $this|\Orders The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -899,16 +1366,40 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(ConstellationsTableMap::DATABASE_NAME);
+        $criteria = new Criteria(OrdersTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(ConstellationsTableMap::COL_CONSTELLATIONS_ID)) {
-            $criteria->add(ConstellationsTableMap::COL_CONSTELLATIONS_ID, $this->constellations_id);
+        if ($this->isColumnModified(OrdersTableMap::COL_ORDER_ID)) {
+            $criteria->add(OrdersTableMap::COL_ORDER_ID, $this->order_id);
         }
-        if ($this->isColumnModified(ConstellationsTableMap::COL_REGION_ID)) {
-            $criteria->add(ConstellationsTableMap::COL_REGION_ID, $this->region_id);
+        if ($this->isColumnModified(OrdersTableMap::COL_REGION_ID)) {
+            $criteria->add(OrdersTableMap::COL_REGION_ID, $this->region_id);
         }
-        if ($this->isColumnModified(ConstellationsTableMap::COL_NAME)) {
-            $criteria->add(ConstellationsTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(OrdersTableMap::COL_TYPE_ID)) {
+            $criteria->add(OrdersTableMap::COL_TYPE_ID, $this->type_id);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_LOCATION_ID)) {
+            $criteria->add(OrdersTableMap::COL_LOCATION_ID, $this->location_id);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_VOLUME_TOTAL)) {
+            $criteria->add(OrdersTableMap::COL_VOLUME_TOTAL, $this->volume_total);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_VOLUME_REMAIN)) {
+            $criteria->add(OrdersTableMap::COL_VOLUME_REMAIN, $this->volume_remain);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_MIN_VOLUME)) {
+            $criteria->add(OrdersTableMap::COL_MIN_VOLUME, $this->min_volume);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_PRICE)) {
+            $criteria->add(OrdersTableMap::COL_PRICE, $this->price);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_IS_BUY_ORDER)) {
+            $criteria->add(OrdersTableMap::COL_IS_BUY_ORDER, $this->is_buy_order);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_DURATION)) {
+            $criteria->add(OrdersTableMap::COL_DURATION, $this->duration);
+        }
+        if ($this->isColumnModified(OrdersTableMap::COL_ISSUED)) {
+            $criteria->add(OrdersTableMap::COL_ISSUED, $this->issued);
         }
 
         return $criteria;
@@ -926,8 +1417,7 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildConstellationsQuery::create();
-        $criteria->add(ConstellationsTableMap::COL_CONSTELLATIONS_ID, $this->constellations_id);
+        throw new LogicException('The Orders object has no primary key');
 
         return $criteria;
     }
@@ -940,7 +1430,7 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getConstellationsId();
+        $validPk = false;
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -955,23 +1445,27 @@ abstract class Constellations implements ActiveRecordInterface
     }
 
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns NULL since this table doesn't have a primary key.
+     * This method exists only for BC and is deprecated!
+     * @return null
      */
     public function getPrimaryKey()
     {
-        return $this->getConstellationsId();
+        return null;
     }
 
     /**
-     * Generic method to set the primary key (constellations_id column).
+     * Dummy primary key setter.
      *
-     * @param       int $key Primary key.
-     * @return void
+     * This function only exists to preserve backwards compatibility.  It is no longer
+     * needed or required by the Persistent interface.  It will be removed in next BC-breaking
+     * release of Propel.
+     *
+     * @deprecated
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($pk)
     {
-        $this->setConstellationsId($key);
+        // do nothing, because this object doesn't have any primary keys
     }
 
     /**
@@ -980,7 +1474,7 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getConstellationsId();
+        return ;
     }
 
     /**
@@ -989,16 +1483,24 @@ abstract class Constellations implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Constellations (or compatible) type.
+     * @param      object $copyObj An object of \Orders (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setConstellationsId($this->getConstellationsId());
+        $copyObj->setOrderId($this->getOrderId());
         $copyObj->setRegionId($this->getRegionId());
-        $copyObj->setName($this->getName());
+        $copyObj->setTypeId($this->getTypeId());
+        $copyObj->setLocationId($this->getLocationId());
+        $copyObj->setVolumeTotal($this->getVolumeTotal());
+        $copyObj->setVolumeRemain($this->getVolumeRemain());
+        $copyObj->setMinVolume($this->getMinVolume());
+        $copyObj->setPrice($this->getPrice());
+        $copyObj->setIsBuyOrder($this->getIsBuyOrder());
+        $copyObj->setDuration($this->getDuration());
+        $copyObj->setIssued($this->getIssued());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1013,7 +1515,7 @@ abstract class Constellations implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Constellations Clone of current object.
+     * @return \Orders Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1033,9 +1535,17 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->constellations_id = null;
+        $this->order_id = null;
         $this->region_id = null;
-        $this->name = null;
+        $this->type_id = null;
+        $this->location_id = null;
+        $this->volume_total = null;
+        $this->volume_remain = null;
+        $this->min_volume = null;
+        $this->price = null;
+        $this->is_buy_order = null;
+        $this->duration = null;
+        $this->issued = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1065,7 +1575,7 @@ abstract class Constellations implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(ConstellationsTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(OrdersTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

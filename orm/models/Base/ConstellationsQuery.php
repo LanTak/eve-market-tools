@@ -20,8 +20,12 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildConstellationsQuery orderByConstellationsId($order = Criteria::ASC) Order by the constellations_id column
+ * @method     ChildConstellationsQuery orderByRegionId($order = Criteria::ASC) Order by the region_id column
+ * @method     ChildConstellationsQuery orderByName($order = Criteria::ASC) Order by the name column
  *
  * @method     ChildConstellationsQuery groupByConstellationsId() Group by the constellations_id column
+ * @method     ChildConstellationsQuery groupByRegionId() Group by the region_id column
+ * @method     ChildConstellationsQuery groupByName() Group by the name column
  *
  * @method     ChildConstellationsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildConstellationsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -34,15 +38,21 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildConstellations findOne(ConnectionInterface $con = null) Return the first ChildConstellations matching the query
  * @method     ChildConstellations findOneOrCreate(ConnectionInterface $con = null) Return the first ChildConstellations matching the query, or a new ChildConstellations object populated from the query conditions when no match is found
  *
- * @method     ChildConstellations findOneByConstellationsId(int $constellations_id) Return the first ChildConstellations filtered by the constellations_id column *
+ * @method     ChildConstellations findOneByConstellationsId(int $constellations_id) Return the first ChildConstellations filtered by the constellations_id column
+ * @method     ChildConstellations findOneByRegionId(int $region_id) Return the first ChildConstellations filtered by the region_id column
+ * @method     ChildConstellations findOneByName(string $name) Return the first ChildConstellations filtered by the name column *
 
  * @method     ChildConstellations requirePk($key, ConnectionInterface $con = null) Return the ChildConstellations by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildConstellations requireOne(ConnectionInterface $con = null) Return the first ChildConstellations matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildConstellations requireOneByConstellationsId(int $constellations_id) Return the first ChildConstellations filtered by the constellations_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConstellations requireOneByRegionId(int $region_id) Return the first ChildConstellations filtered by the region_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConstellations requireOneByName(string $name) Return the first ChildConstellations filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildConstellations[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildConstellations objects based on current ModelCriteria
  * @method     ChildConstellations[]|ObjectCollection findByConstellationsId(int $constellations_id) Return ChildConstellations objects filtered by the constellations_id column
+ * @method     ChildConstellations[]|ObjectCollection findByRegionId(int $region_id) Return ChildConstellations objects filtered by the region_id column
+ * @method     ChildConstellations[]|ObjectCollection findByName(string $name) Return ChildConstellations objects filtered by the name column
  * @method     ChildConstellations[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -141,7 +151,7 @@ abstract class ConstellationsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT constellations_id FROM constellations WHERE constellations_id = :p0';
+        $sql = 'SELECT constellations_id, region_id, name FROM constellations WHERE constellations_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -270,6 +280,72 @@ abstract class ConstellationsQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ConstellationsTableMap::COL_CONSTELLATIONS_ID, $constellationsId, $comparison);
+    }
+
+    /**
+     * Filter the query on the region_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByRegionId(1234); // WHERE region_id = 1234
+     * $query->filterByRegionId(array(12, 34)); // WHERE region_id IN (12, 34)
+     * $query->filterByRegionId(array('min' => 12)); // WHERE region_id > 12
+     * </code>
+     *
+     * @param     mixed $regionId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildConstellationsQuery The current query, for fluid interface
+     */
+    public function filterByRegionId($regionId = null, $comparison = null)
+    {
+        if (is_array($regionId)) {
+            $useMinMax = false;
+            if (isset($regionId['min'])) {
+                $this->addUsingAlias(ConstellationsTableMap::COL_REGION_ID, $regionId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($regionId['max'])) {
+                $this->addUsingAlias(ConstellationsTableMap::COL_REGION_ID, $regionId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ConstellationsTableMap::COL_REGION_ID, $regionId, $comparison);
+    }
+
+    /**
+     * Filter the query on the name column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
+     * $query->filterByName('%fooValue%', Criteria::LIKE); // WHERE name LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $name The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildConstellationsQuery The current query, for fluid interface
+     */
+    public function filterByName($name = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($name)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ConstellationsTableMap::COL_NAME, $name, $comparison);
     }
 
     /**
