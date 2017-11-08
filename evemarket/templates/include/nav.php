@@ -110,12 +110,23 @@
 
 					</ul>
 				</li> -->
-				<li class="">
+				<!-- <?php //echo $_SERVER['REQUEST_URI']; ?> -->
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/"){echo "active";} ?>">
+					<a href="/" title="Systems Search">
+						<i class="fa fa-lg fa-home  fa-fw"></i><span class="nav-label">Home</span>
+					</a>
+				</li>
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/marketDashboard"){echo "active";} ?>">
+					<a href="/marketDashboard" title="Systems Search">
+						<i class="fa fa-lg fa-tachometer  fa-fw"></i><span class="nav-label">Market Data</span>
+					</a>
+				</li>
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/db/systems"){echo "active";} ?>">
 					<a href="/db/systems" title="Systems Search">
 						<i class="fa fa-lg fa-table  fa-fw"></i><span class="nav-label">Systems Search</span>
 					</a>
 				</li>
-				<li class="">
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/db/types"){echo "active";} ?>">
 					<a href="/db/types" title="Types (Items) Search">
 						<i class="fa fa-lg fa-table fa-fw"></i><span class="nav-label">Types Search</span>
 					</a>

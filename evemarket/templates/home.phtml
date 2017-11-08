@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php 
+include_once('include/header.php');
+?>
+	<body class=" sidebar-fixed navbar-fixed  loading">
+		<div id="initial-loader">
+			<div class="initial-loader-bottom">
+				Loading. Please Wait. <i class="fa fa-cricle" style="opacity: 0"></i>
+			</div>
+		</div>
+
+		<!-- Bower Libraries Scripts -->
+		<script src="/assets/vendor/js/lib.js"></script>
+
+		<div class="main-wrap">
+			<?php include_once('include/nav.php');?>
+
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="sub-navbar sub-navbar__header-breadcrumbs">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-lg-12 sub-navbar-column">
+										<div class="sub-navbar-header">
+											<h3>Home</h3>
+										</div>
+										<ol class="breadcrumb navbar-text navbar-right no-bg">
+											<li class="current-parent">
+												<a class="current-parent" href="/">
+													<i class="fa fa-fw fa-home"></i>
+												</a>
+											</li>
+											<li>
+												<a href="javascript: void(0)">
+													Over All Data
+												</a>
+											</li>
+											<li class="active">Right here!</li>
+										</ol>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Total Orders <small class="pull-right text-gray-lighter">last updated date -></small></div>
+								<div class="panel-body">
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Total Volume <small class="pull-right text-gray-lighter">last updated date -></small></div>
+								<div class="panel-body">
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Total ISK <small class="pull-right text-gray-lighter">last updated date -></small></div>
+								<div class="panel-body">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Select Region</label>
+									<div class="col-sm-8">
+										<select id="region" name="region" onchange="javascript:regionChange();" class="form-control">
+											
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Select Catagory</label>
+									<div class="col-sm-8">
+										<select id="catagory" name="catagory" onchange="javascript:getGroups();" class="form-control">
+											
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Select Group</label>
+									<div class="col-sm-8">
+										<select id="group" name="group" onchange="javascript:getItems();" class="form-control">
+											
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Select Item</label>
+									<div class="col-sm-8">
+										<select id="item" name="item" class="form-control">
+											
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12">
+							<ul class="nav nav-tabs nav-justified">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Category</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " data-toggle="tab" href="#tab2" role="tab">Group</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " data-toggle="tab" href="#tab3" role="tab">Items</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " data-toggle="tab" href="#tab4" role="tab">Orders</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab1" role="tabpanel">
+									<!-- <div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<a href="javascript:getCatByOrders();" class="btn btn-primary">Load Buy Orders</a>
+										</div>
+									</div> -->
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Catagory Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder1">
+													
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Catagory Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder2">
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab2" role="tabpanel">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Group Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder3">
+													
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Group Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder4">
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab3" role="tabpanel">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Items Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder5">
+													
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Items Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder6">
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php include_once('include/footer.php');?>
+		</div>
+		<script>
+			// Hide loader
+			(function() {
+				var bodyElement = document.querySelector('body');
+				bodyElement.classList.add('loading');
+
+				document.addEventListener('readystatechange', function() {
+					if(document.readyState === 'complete') {
+						var bodyElement = document.querySelector('body');
+						var loaderElement = document.querySelector('#initial-loader');
+
+						bodyElement.classList.add('loaded');
+						setTimeout(function() {
+							bodyElement.removeChild(loaderElement);
+							bodyElement.classList.remove('loading', 'loaded');
+						}, 200);
+					}
+				});
+			})();
+
+			/*$.get('/data/home/catBuyOrdersSum', function(data) {
+				$('#holder1').html(data);
+			});
+
+			$.get('/data/home/catSellOrdersSum', function(data) {
+				$('#holder2').html(data);
+			});*/
+
+			function loadCatBuyTable(regionId){
+				$.get('/data/home/catOrdersSum', {byOrder:1, regionId:regionId},function(data) {
+					$('#holder1').html(data);
+				});
+			}
+
+			function getCatSellTable(regionId){
+				$.get('/data/home/catOrdersSum',{byOrder:0, regionId:regionId}, function(data) {
+					$('#holder2').html(data);
+				});
+			}
+
+			function getRegions(){
+				$.get('/data/home/getRegions', function(data) {
+					// console.log(data);
+					var json = jQuery.parseJSON(data);
+					$('#region').append($("<option></option>").attr("value", "All").text("All Regions"));
+					$.each(json, function(index, val) {
+						// console.log(val.regionId);
+						$('#region').append($("<option></option>").attr("value", val.regionId).text(val.name));
+					});
+				});
+			}
+
+			function getCatagory(){
+				$.get('/data/home/getCatagories', function(data) {
+					var json = jQuery.parseJSON(data);
+					$('#catagory').append($("<option></option>").attr("value", "All").text("All Categories"));
+					$.each(json, function(index, val) {
+						$('#catagory').append($("<option></option>").attr("value", val.catagoryId).text(val.name));
+					});
+				});
+			}
+
+			function getGroups(){
+				var catagoryId = $('#catagory').val();
+				var regionId = $('#region').val();
+				$("#group").empty();
+				$("#item").empty();
+				$.get('/getGroupsByCatagory',{catagoryId:catagoryId}, function(data) {
+					var json = jQuery.parseJSON(data);
+					$('#group').append($("<option></option>").attr("value", "All").text("Select Group"));
+					$.each(json, function(index, val) {
+						$('#group').append($("<option></option>").attr("value", val.groupId).text(val.name));
+					});
+				});
+
+				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:regionId, byOrder:1 }, function(data) {
+					$('#holder3').html(data);
+				});
+
+				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:regionId, byOrder:0 }, function(data) {
+					$('#holder4').html(data);
+				});
+			}
+
+			function getItems(){
+				var groupId = $('#group').val();
+				var catagoryId = $('#catagory').val();
+				var regionId = $('#region').val();
+				$("#item").empty();
+				$.get('/getItemsByGroup',{groupId:groupId}, function(data) {
+					var json = jQuery.parseJSON(data);
+					$('#item').append($("<option></option>").attr("value", "All").text("Select Item"));
+					$.each(json, function(index, val) {
+						$('#item').append($("<option></option>").attr("value", val.itemId).text(val.name));
+					});
+				});
+
+				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:regionId, groupId:groupId, byOrder:1 }, function(data) {
+					$('#holder5').html(data);
+				});
+
+				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:regionId, groupId:groupId, byOrder:0 }, function(data) {
+					$('#holder6').html(data);
+				});
+			}
+
+			function regionChange(){
+				var regionId = $('#region').val();
+				loadCatBuyTable(regionId);
+				getCatSellTable(regionId);
+			}
+
+			$(document).ready(function() {
+
+				getRegions();
+				getCatagory();
+				loadCatBuyTable("All");
+				getCatSellTable("All");
+			});
+
+		</script>
+		<!-- Bower Libraries Styles -->
+		<link rel="stylesheet" href="/assets/vendor/css/lib.css">
+
+		<script src="/js/app.js"></script>
+
+		<script src="/js/plugins-init.js"></script>
+		<script src="/js/switchery-settings.js"></script>
+	</body>
+</html

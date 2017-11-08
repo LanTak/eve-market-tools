@@ -24,3 +24,31 @@ function fetch($conn = null,$query,$params=array()){
 	}
 	return $rows;
 };
+
+function html_table($data = array())
+{
+	$rows = array();
+	foreach ($data as $row) {
+		$cells = array();
+		foreach ($row as $cell) {
+			$cells[] = "<td>{$cell}</td>";
+		}
+		$rows[] = "<tr>" . implode('', $cells) . "</tr>";
+	}
+	return "<div class='table-responsive'><table class='table table-bordered table-hover table-striped table-responsive'>" . implode('', $rows) . "</table></div>";
+};
+
+function html_table2($data = array())
+{
+	$rows = array();
+	$html = "<div class='table-responsive'> <table class='table table-bordered table-hover table-striped'>";
+	foreach ($data as $key => $value) {
+		$html .= "<tr>
+					<td>".$key."</td>
+					<td>".$value."</td>
+				</tr>";
+	}
+	$html .= "</table><div>";
+
+	return $html;
+};
