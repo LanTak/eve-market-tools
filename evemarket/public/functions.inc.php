@@ -52,3 +52,37 @@ function html_table2($data = array())
 
 	return $html;
 };
+
+function html_table_pdf($data = array())
+{
+	$rows = array();
+	foreach ($data as $row) {
+		$cells = array();
+		foreach ($row as $cell) {
+			$cells[] = "<td>{$cell}</td>";
+		}
+		$rows[] = "<tr>" . implode('', $cells) . "</tr>";
+	}
+	$html = "<style type=\"text/css\">";
+	$html .= "	table {
+					width:1000px;
+				}
+				table, th, td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+				th, td {
+					padding: 5px;
+					text-align: left;
+				}
+				table tr:nth-child(even) {
+					background-color: #eee;
+				}
+				table tr:nth-child(odd) {
+					background-color: #fff;
+				}";
+	$html .= "</style>";
+	$html .=  "<table>" . implode('', $rows) . "</table>";
+
+	return $html;
+};

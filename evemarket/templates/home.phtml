@@ -79,14 +79,29 @@ include_once('include/header.php');
 						<div class="col-lg-3 col-md-3 col-sm-3">
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Select Region</label>
+									<label class="col-sm-4 control-label">Sell Region</label>
 									<div class="col-sm-8">
-										<select id="region" name="region" onchange="javascript:regionChange();" class="form-control">
+										<select id="region" name="region"  class="form-control">
 											
 										</select>
 									</div>
 								</div>
 							</form>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Buy Region</label>
+									<div class="col-sm-8">
+										<select id="region2" name="region2"  class="form-control">
+											
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<a href="javascript:runIt()" class="btn btn-success">Run it</a>
 						</div>
 					</div>
 
@@ -155,7 +170,7 @@ include_once('include/header.php');
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Catagory Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-heading">Catagory Sell Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder1">
 													
 												</div>
@@ -163,7 +178,7 @@ include_once('include/header.php');
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Catagory Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-heading">Catagory Buy Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder2">
 													
 												</div>
@@ -175,7 +190,7 @@ include_once('include/header.php');
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Group Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-heading">Group Sell Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder3">
 													
 												</div>
@@ -183,7 +198,7 @@ include_once('include/header.php');
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Group Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-heading">Group Buy Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder4">
 													
 												</div>
@@ -195,7 +210,7 @@ include_once('include/header.php');
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Items Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-heading">Items Sell Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder5">
 													
 												</div>
@@ -203,7 +218,7 @@ include_once('include/header.php');
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Items Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-heading">Items Buy Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder6">
 													
 												</div>
@@ -248,13 +263,13 @@ include_once('include/header.php');
 
 			function loadCatBuyTable(regionId){
 				$.get('/data/home/catOrdersSum', {byOrder:1, regionId:regionId},function(data) {
-					$('#holder1').html(data);
+					$('#holder2').html(data);
 				});
 			}
 
 			function getCatSellTable(regionId){
 				$.get('/data/home/catOrdersSum',{byOrder:0, regionId:regionId}, function(data) {
-					$('#holder2').html(data);
+					$('#holder1').html(data);
 				});
 			}
 
@@ -263,9 +278,11 @@ include_once('include/header.php');
 					// console.log(data);
 					var json = jQuery.parseJSON(data);
 					$('#region').append($("<option></option>").attr("value", "All").text("All Regions"));
+					$('#region2').append($("<option></option>").attr("value", "All").text("All Regions"));
 					$.each(json, function(index, val) {
 						// console.log(val.regionId);
 						$('#region').append($("<option></option>").attr("value", val.regionId).text(val.name));
+						$('#region2').append($("<option></option>").attr("value", val.regionId).text(val.name));
 					});
 				});
 			}
@@ -282,7 +299,10 @@ include_once('include/header.php');
 
 			function getGroups(){
 				var catagoryId = $('#catagory').val();
-				var regionId = $('#region').val();
+				// var regionId = $('#region').val();
+				var buyRegionId = $('#region').val();
+				var sellRegionId = $('#region2').val();
+
 				$("#group").empty();
 				$("#item").empty();
 				$.get('/getGroupsByCatagory',{catagoryId:catagoryId}, function(data) {
@@ -293,11 +313,11 @@ include_once('include/header.php');
 					});
 				});
 
-				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:regionId, byOrder:1 }, function(data) {
+				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:sellRegionId, byOrder:1 }, function(data) {
 					$('#holder3').html(data);
 				});
 
-				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:regionId, byOrder:0 }, function(data) {
+				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:buyRegionId, byOrder:0 }, function(data) {
 					$('#holder4').html(data);
 				});
 			}
@@ -305,7 +325,10 @@ include_once('include/header.php');
 			function getItems(){
 				var groupId = $('#group').val();
 				var catagoryId = $('#catagory').val();
-				var regionId = $('#region').val();
+				// var regionId = $('#region').val();
+
+				var buyRegionId = $('#region').val();
+				var sellRegionId = $('#region2').val();
 				$("#item").empty();
 				$.get('/getItemsByGroup',{groupId:groupId}, function(data) {
 					var json = jQuery.parseJSON(data);
@@ -315,27 +338,35 @@ include_once('include/header.php');
 					});
 				});
 
-				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:regionId, groupId:groupId, byOrder:1 }, function(data) {
+				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:sellRegionId, groupId:groupId, byOrder:1 }, function(data) {
 					$('#holder5').html(data);
 				});
 
-				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:regionId, groupId:groupId, byOrder:0 }, function(data) {
+				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:buyRegionId, groupId:groupId, byOrder:0 }, function(data) {
 					$('#holder6').html(data);
 				});
 			}
 
 			function regionChange(){
 				var regionId = $('#region').val();
-				loadCatBuyTable(regionId);
-				getCatSellTable(regionId);
+				// loadCatBuyTable(regionId);
+				// getCatSellTable(regionId);
+			}
+
+			function runIt(){
+				var buyRegionId = $('#region').val();
+				var sellRegionId = $('#region2').val();
+				loadCatBuyTable(buyRegionId);
+				getCatSellTable(sellRegionId);
 			}
 
 			$(document).ready(function() {
 
 				getRegions();
 				getCatagory();
-				loadCatBuyTable("All");
-				getCatSellTable("All");
+				/* load everything off the bat */
+				// loadCatBuyTable("All");
+				// getCatSellTable("All");
 			});
 
 		</script>
