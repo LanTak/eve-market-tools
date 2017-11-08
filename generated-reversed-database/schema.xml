@@ -8,6 +8,12 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="constellations" idMethod="native" phpName="Constellations">
+    <column name="constellations_id" phpName="ConstellationsId" type="INTEGER" primaryKey="true" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="groups" idMethod="native" phpName="Groups">
     <column name="group_id" phpName="GroupId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="256"/>
@@ -21,6 +27,14 @@
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
     <column name="average_price" phpName="AveragePrice" type="DOUBLE" required="true"/>
     <column name="adjusted_price" phpName="AdjustedPrice" type="DOUBLE" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="regions" idMethod="native" phpName="Regions">
+    <column name="region_id" phpName="RegionId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="128" required="true"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

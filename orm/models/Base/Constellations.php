@@ -2,10 +2,10 @@
 
 namespace Base;
 
-use \RegionsQuery as ChildRegionsQuery;
+use \ConstellationsQuery as ChildConstellationsQuery;
 use \Exception;
 use \PDO;
-use Map\RegionsTableMap;
+use Map\ConstellationsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -19,18 +19,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'regions' table.
+ * Base class that represents a row from the 'constellations' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Regions implements ActiveRecordInterface
+abstract class Constellations implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\RegionsTableMap';
+    const TABLE_MAP = '\\Map\\ConstellationsTableMap';
 
 
     /**
@@ -60,25 +60,11 @@ abstract class Regions implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the region_id field.
+     * The value for the constellations_id field.
      *
      * @var        int
      */
-    protected $region_id;
-
-    /**
-     * The value for the name field.
-     *
-     * @var        string
-     */
-    protected $name;
-
-    /**
-     * The value for the description field.
-     *
-     * @var        string
-     */
-    protected $description;
+    protected $constellations_id;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -89,7 +75,7 @@ abstract class Regions implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Regions object.
+     * Initializes internal state of Base\Constellations object.
      */
     public function __construct()
     {
@@ -184,9 +170,9 @@ abstract class Regions implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Regions</code> instance.  If
-     * <code>obj</code> is an instance of <code>Regions</code>, delegates to
-     * <code>equals(Regions)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Constellations</code> instance.  If
+     * <code>obj</code> is an instance of <code>Constellations</code>, delegates to
+     * <code>equals(Constellations)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -252,7 +238,7 @@ abstract class Regions implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Regions The current object, for fluid interface
+     * @return $this|Constellations The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -314,94 +300,34 @@ abstract class Regions implements ActiveRecordInterface
     }
 
     /**
-     * Get the [region_id] column value.
+     * Get the [constellations_id] column value.
      *
      * @return int
      */
-    public function getRegionId()
+    public function getConstellationsId()
     {
-        return $this->region_id;
+        return $this->constellations_id;
     }
 
     /**
-     * Get the [name] column value.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the [description] column value.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set the value of [region_id] column.
+     * Set the value of [constellations_id] column.
      *
      * @param int $v new value
-     * @return $this|\Regions The current object (for fluent API support)
+     * @return $this|\Constellations The current object (for fluent API support)
      */
-    public function setRegionId($v)
+    public function setConstellationsId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->region_id !== $v) {
-            $this->region_id = $v;
-            $this->modifiedColumns[RegionsTableMap::COL_REGION_ID] = true;
+        if ($this->constellations_id !== $v) {
+            $this->constellations_id = $v;
+            $this->modifiedColumns[ConstellationsTableMap::COL_CONSTELLATIONS_ID] = true;
         }
 
         return $this;
-    } // setRegionId()
-
-    /**
-     * Set the value of [name] column.
-     *
-     * @param string $v new value
-     * @return $this|\Regions The current object (for fluent API support)
-     */
-    public function setName($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->name !== $v) {
-            $this->name = $v;
-            $this->modifiedColumns[RegionsTableMap::COL_NAME] = true;
-        }
-
-        return $this;
-    } // setName()
-
-    /**
-     * Set the value of [description] column.
-     *
-     * @param string $v new value
-     * @return $this|\Regions The current object (for fluent API support)
-     */
-    public function setDescription($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[RegionsTableMap::COL_DESCRIPTION] = true;
-        }
-
-        return $this;
-    } // setDescription()
+    } // setConstellationsId()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -439,14 +365,8 @@ abstract class Regions implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : RegionsTableMap::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->region_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RegionsTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->name = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RegionsTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->description = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ConstellationsTableMap::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->constellations_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -455,10 +375,10 @@ abstract class Regions implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = RegionsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 1; // 1 = ConstellationsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Regions'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Constellations'), 0, $e);
         }
     }
 
@@ -500,13 +420,13 @@ abstract class Regions implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(RegionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(ConstellationsTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildRegionsQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildConstellationsQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -525,8 +445,8 @@ abstract class Regions implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Regions::setDeleted()
-     * @see Regions::isDeleted()
+     * @see Constellations::setDeleted()
+     * @see Constellations::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -535,11 +455,11 @@ abstract class Regions implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RegionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildRegionsQuery::create()
+            $deleteQuery = ChildConstellationsQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -574,7 +494,7 @@ abstract class Regions implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RegionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -593,7 +513,7 @@ abstract class Regions implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                RegionsTableMap::addInstanceToPool($this);
+                ConstellationsTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -652,18 +572,12 @@ abstract class Regions implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(RegionsTableMap::COL_REGION_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'region_id';
-        }
-        if ($this->isColumnModified(RegionsTableMap::COL_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'name';
-        }
-        if ($this->isColumnModified(RegionsTableMap::COL_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'description';
+        if ($this->isColumnModified(ConstellationsTableMap::COL_CONSTELLATIONS_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'constellations_id';
         }
 
         $sql = sprintf(
-            'INSERT INTO regions (%s) VALUES (%s)',
+            'INSERT INTO constellations (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -672,14 +586,8 @@ abstract class Regions implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'region_id':
-                        $stmt->bindValue($identifier, $this->region_id, PDO::PARAM_INT);
-                        break;
-                    case 'name':
-                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
-                        break;
-                    case 'description':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                    case 'constellations_id':
+                        $stmt->bindValue($identifier, $this->constellations_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -720,7 +628,7 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = RegionsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = ConstellationsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -737,13 +645,7 @@ abstract class Regions implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getRegionId();
-                break;
-            case 1:
-                return $this->getName();
-                break;
-            case 2:
-                return $this->getDescription();
+                return $this->getConstellationsId();
                 break;
             default:
                 return null;
@@ -768,15 +670,13 @@ abstract class Regions implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Regions'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Constellations'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Regions'][$this->hashCode()] = true;
-        $keys = RegionsTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Constellations'][$this->hashCode()] = true;
+        $keys = ConstellationsTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getRegionId(),
-            $keys[1] => $this->getName(),
-            $keys[2] => $this->getDescription(),
+            $keys[0] => $this->getConstellationsId(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -796,11 +696,11 @@ abstract class Regions implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Regions
+     * @return $this|\Constellations
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = RegionsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = ConstellationsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -811,19 +711,13 @@ abstract class Regions implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Regions
+     * @return $this|\Constellations
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setRegionId($value);
-                break;
-            case 1:
-                $this->setName($value);
-                break;
-            case 2:
-                $this->setDescription($value);
+                $this->setConstellationsId($value);
                 break;
         } // switch()
 
@@ -849,16 +743,10 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = RegionsTableMap::getFieldNames($keyType);
+        $keys = ConstellationsTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setRegionId($arr[$keys[0]]);
-        }
-        if (array_key_exists($keys[1], $arr)) {
-            $this->setName($arr[$keys[1]]);
-        }
-        if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
+            $this->setConstellationsId($arr[$keys[0]]);
         }
     }
 
@@ -879,7 +767,7 @@ abstract class Regions implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Regions The current object, for fluid interface
+     * @return $this|\Constellations The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -899,16 +787,10 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(RegionsTableMap::DATABASE_NAME);
+        $criteria = new Criteria(ConstellationsTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(RegionsTableMap::COL_REGION_ID)) {
-            $criteria->add(RegionsTableMap::COL_REGION_ID, $this->region_id);
-        }
-        if ($this->isColumnModified(RegionsTableMap::COL_NAME)) {
-            $criteria->add(RegionsTableMap::COL_NAME, $this->name);
-        }
-        if ($this->isColumnModified(RegionsTableMap::COL_DESCRIPTION)) {
-            $criteria->add(RegionsTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(ConstellationsTableMap::COL_CONSTELLATIONS_ID)) {
+            $criteria->add(ConstellationsTableMap::COL_CONSTELLATIONS_ID, $this->constellations_id);
         }
 
         return $criteria;
@@ -926,8 +808,8 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildRegionsQuery::create();
-        $criteria->add(RegionsTableMap::COL_REGION_ID, $this->region_id);
+        $criteria = ChildConstellationsQuery::create();
+        $criteria->add(ConstellationsTableMap::COL_CONSTELLATIONS_ID, $this->constellations_id);
 
         return $criteria;
     }
@@ -940,7 +822,7 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getRegionId();
+        $validPk = null !== $this->getConstellationsId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -960,18 +842,18 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getRegionId();
+        return $this->getConstellationsId();
     }
 
     /**
-     * Generic method to set the primary key (region_id column).
+     * Generic method to set the primary key (constellations_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setRegionId($key);
+        $this->setConstellationsId($key);
     }
 
     /**
@@ -980,7 +862,7 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getRegionId();
+        return null === $this->getConstellationsId();
     }
 
     /**
@@ -989,16 +871,14 @@ abstract class Regions implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Regions (or compatible) type.
+     * @param      object $copyObj An object of \Constellations (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setRegionId($this->getRegionId());
-        $copyObj->setName($this->getName());
-        $copyObj->setDescription($this->getDescription());
+        $copyObj->setConstellationsId($this->getConstellationsId());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1013,7 +893,7 @@ abstract class Regions implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Regions Clone of current object.
+     * @return \Constellations Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1033,9 +913,7 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->region_id = null;
-        $this->name = null;
-        $this->description = null;
+        $this->constellations_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1065,7 +943,7 @@ abstract class Regions implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(RegionsTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(ConstellationsTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

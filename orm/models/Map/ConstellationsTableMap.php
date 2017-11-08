@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Regions;
-use \RegionsQuery;
+use \Constellations;
+use \ConstellationsQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'regions' table.
+ * This class defines the structure of the 'constellations' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class RegionsTableMap extends TableMap
+class ConstellationsTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class RegionsTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.RegionsTableMap';
+    const CLASS_NAME = '.Map.ConstellationsTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class RegionsTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'regions';
+    const TABLE_NAME = 'constellations';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Regions';
+    const OM_CLASS = '\\Constellations';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Regions';
+    const CLASS_DEFAULT = 'Constellations';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 1;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +69,12 @@ class RegionsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 1;
 
     /**
-     * the column name for the region_id field
+     * the column name for the constellations_id field
      */
-    const COL_REGION_ID = 'regions.region_id';
-
-    /**
-     * the column name for the name field
-     */
-    const COL_NAME = 'regions.name';
-
-    /**
-     * the column name for the description field
-     */
-    const COL_DESCRIPTION = 'regions.description';
+    const COL_CONSTELLATIONS_ID = 'constellations.constellations_id';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +88,11 @@ class RegionsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('RegionId', 'Name', 'Description', ),
-        self::TYPE_CAMELNAME     => array('regionId', 'name', 'description', ),
-        self::TYPE_COLNAME       => array(RegionsTableMap::COL_REGION_ID, RegionsTableMap::COL_NAME, RegionsTableMap::COL_DESCRIPTION, ),
-        self::TYPE_FIELDNAME     => array('region_id', 'name', 'description', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('ConstellationsId', ),
+        self::TYPE_CAMELNAME     => array('constellationsId', ),
+        self::TYPE_COLNAME       => array(ConstellationsTableMap::COL_CONSTELLATIONS_ID, ),
+        self::TYPE_FIELDNAME     => array('constellations_id', ),
+        self::TYPE_NUM           => array(0, )
     );
 
     /**
@@ -112,11 +102,11 @@ class RegionsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('RegionId' => 0, 'Name' => 1, 'Description' => 2, ),
-        self::TYPE_CAMELNAME     => array('regionId' => 0, 'name' => 1, 'description' => 2, ),
-        self::TYPE_COLNAME       => array(RegionsTableMap::COL_REGION_ID => 0, RegionsTableMap::COL_NAME => 1, RegionsTableMap::COL_DESCRIPTION => 2, ),
-        self::TYPE_FIELDNAME     => array('region_id' => 0, 'name' => 1, 'description' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('ConstellationsId' => 0, ),
+        self::TYPE_CAMELNAME     => array('constellationsId' => 0, ),
+        self::TYPE_COLNAME       => array(ConstellationsTableMap::COL_CONSTELLATIONS_ID => 0, ),
+        self::TYPE_FIELDNAME     => array('constellations_id' => 0, ),
+        self::TYPE_NUM           => array(0, )
     );
 
     /**
@@ -129,16 +119,14 @@ class RegionsTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('regions');
-        $this->setPhpName('Regions');
+        $this->setName('constellations');
+        $this->setPhpName('Constellations');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Regions');
+        $this->setClassName('\\Constellations');
         $this->setPackage('');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('region_id', 'RegionId', 'INTEGER', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', true, 128, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', true, null, null);
+        $this->addPrimaryKey('constellations_id', 'ConstellationsId', 'INTEGER', true, null, null);
     } // initialize()
 
     /**
@@ -164,11 +152,11 @@ class RegionsTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -188,7 +176,7 @@ class RegionsTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('ConstellationsId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -205,7 +193,7 @@ class RegionsTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? RegionsTableMap::CLASS_DEFAULT : RegionsTableMap::OM_CLASS;
+        return $withPrefix ? ConstellationsTableMap::CLASS_DEFAULT : ConstellationsTableMap::OM_CLASS;
     }
 
     /**
@@ -219,22 +207,22 @@ class RegionsTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Regions object, last column rank)
+     * @return array           (Constellations object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = RegionsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = RegionsTableMap::getInstanceFromPool($key))) {
+        $key = ConstellationsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = ConstellationsTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + RegionsTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + ConstellationsTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = RegionsTableMap::OM_CLASS;
-            /** @var Regions $obj */
+            $cls = ConstellationsTableMap::OM_CLASS;
+            /** @var Constellations $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            RegionsTableMap::addInstanceToPool($obj, $key);
+            ConstellationsTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -257,18 +245,18 @@ class RegionsTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = RegionsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = RegionsTableMap::getInstanceFromPool($key))) {
+            $key = ConstellationsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = ConstellationsTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Regions $obj */
+                /** @var Constellations $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                RegionsTableMap::addInstanceToPool($obj, $key);
+                ConstellationsTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -289,13 +277,9 @@ class RegionsTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(RegionsTableMap::COL_REGION_ID);
-            $criteria->addSelectColumn(RegionsTableMap::COL_NAME);
-            $criteria->addSelectColumn(RegionsTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(ConstellationsTableMap::COL_CONSTELLATIONS_ID);
         } else {
-            $criteria->addSelectColumn($alias . '.region_id');
-            $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.constellations_id');
         }
     }
 
@@ -308,7 +292,7 @@ class RegionsTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(RegionsTableMap::DATABASE_NAME)->getTable(RegionsTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(ConstellationsTableMap::DATABASE_NAME)->getTable(ConstellationsTableMap::TABLE_NAME);
     }
 
     /**
@@ -316,16 +300,16 @@ class RegionsTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(RegionsTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(RegionsTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new RegionsTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(ConstellationsTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(ConstellationsTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new ConstellationsTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Regions or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Constellations or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Regions object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Constellations object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -336,27 +320,27 @@ class RegionsTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RegionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Regions) { // it's a model object
+        } elseif ($values instanceof \Constellations) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(RegionsTableMap::DATABASE_NAME);
-            $criteria->add(RegionsTableMap::COL_REGION_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(ConstellationsTableMap::DATABASE_NAME);
+            $criteria->add(ConstellationsTableMap::COL_CONSTELLATIONS_ID, (array) $values, Criteria::IN);
         }
 
-        $query = RegionsQuery::create()->mergeWith($criteria);
+        $query = ConstellationsQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            RegionsTableMap::clearInstancePool();
+            ConstellationsTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                RegionsTableMap::removeInstanceFromPool($singleval);
+                ConstellationsTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -364,20 +348,20 @@ class RegionsTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the regions table.
+     * Deletes all rows from the constellations table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return RegionsQuery::create()->doDeleteAll($con);
+        return ConstellationsQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Regions or Criteria object.
+     * Performs an INSERT on the database, given a Constellations or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Regions object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Constellations object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -386,18 +370,18 @@ class RegionsTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RegionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConstellationsTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Regions object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Constellations object
         }
 
 
         // Set the correct dbName
-        $query = RegionsQuery::create()->mergeWith($criteria);
+        $query = ConstellationsQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -406,7 +390,7 @@ class RegionsTableMap extends TableMap
         });
     }
 
-} // RegionsTableMap
+} // ConstellationsTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-RegionsTableMap::buildTableMap();
+ConstellationsTableMap::buildTableMap();
