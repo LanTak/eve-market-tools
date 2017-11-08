@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="activity_log" idMethod="native" phpName="ActivityLog">
+    <column name="log_id" phpName="LogId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="start_time" phpName="StartTime" type="TIMESTAMP" required="true"/>
+    <column name="end_time" phpName="EndTime" type="TIMESTAMP" required="true"/>
+    <column name="activity" phpName="Activity" type="VARCHAR" size="256" required="true"/>
+    <column name="object_id" phpName="ObjectId" type="INTEGER"/>
+    <column name="api_pages" phpName="ApiPages" type="INTEGER" defaultValue="1"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="category" idMethod="native" phpName="Category">
     <column name="category_id" phpName="CategoryId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="256"/>
@@ -65,6 +76,22 @@
     <column name="region_id" phpName="RegionId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="128" required="true"/>
     <column name="description" phpName="Description" type="LONGVARCHAR" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="station" idMethod="native" phpName="Station">
+    <column name="station_id" phpName="StationId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="128"/>
+    <column name="type_id" phpName="TypeId" type="INTEGER"/>
+    <column name="system_id" phpName="SystemId" type="INTEGER"/>
+    <column name="reprocessing_efficiency" phpName="ReprocessingEfficiency" type="DOUBLE"/>
+    <column name="reprocessing_stations_take" phpName="ReprocessingStationsTake" type="DOUBLE"/>
+    <column name="max_dockable_ship_volume" phpName="MaxDockableShipVolume" type="DOUBLE"/>
+    <column name="office_rental_cost" phpName="OfficeRentalCost" type="DOUBLE"/>
+    <column name="services" phpName="Services" type="VARCHAR" size="1028"/>
+    <column name="owner" phpName="Owner" type="INTEGER"/>
+    <column name="race_id" phpName="RaceId" type="INTEGER"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
