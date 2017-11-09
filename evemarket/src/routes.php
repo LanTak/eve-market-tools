@@ -73,13 +73,10 @@ $app->get('/data/home/catOrdersSum', function (Request $request, Response $respo
 		$sql = 'SELECT DISTINCT category_name, SUM(volume_total) AS "Total Volume", SUM(volume_remain) AS "Total Volume Remaining", COUNT(*) AS "Total Orders", FORMAT(ROUND(SUM(price)),2) AS "Total ISK" FROM MarketOrders WHERE is_buy_order = '.$allGetVars['byOrder'].' and region_id = '.$allGetVars['regionId'].' GROUP BY category_id ORDER BY category_name ASC';
 	}
 	// echo $sql;
-	$table[] = array('Category Name', 'Total Volume', 'Total Volume Remaining', 'Total Orders', 'Total isk' );
+	$json = array();
+	$json['columns'] = array('Category Name', 'Total Volume', 'Total Volume Remaining', 'Total Orders', 'Total isk' );
 	$data = fetch($conn, $sql);
-	foreach ($data as $key => $d) {
-		$table[] =$d;
-	}
-	echo html_table($table);
-	// echo json_encode($data);
+	echo json_encode($data);
 });
 
 $app->get('/data/home/groupOrders', function (Request $request, Response $response, array $args) {
@@ -91,12 +88,14 @@ $app->get('/data/home/groupOrders', function (Request $request, Response $respon
 		$sql = 'SELECT DISTINCT group_name, SUM(volume_total) AS "Total Volume", SUM(volume_remain) AS "Total Volume Remaining", COUNT(*) AS "Total Orders", FORMAT(ROUND(SUM(price)),2) AS "Total ISK" FROM MarketOrders WHERE is_buy_order = '.$allGetVars['byOrder'].' and category_id = '.$allGetVars['catagoryId'].' and region_id = '.$allGetVars['regionId'].' GROUP BY group_id ORDER BY group_name ASC';
 	}
 	$data = fetch($conn, $sql);
-	$table[] = array('Group Name', 'Total Volume', 'Total Volume Remaining', 'Total Orders', 'Total isk' );
+	/*$table[] = array('Group Name', 'Total Volume', 'Total Volume Remaining', 'Total Orders', 'Total isk' );
 	$data = fetch($conn, $sql);
 	foreach ($data as $key => $d) {
 		$table[] =$d;
 	}
-	echo html_table($table);
+	echo html_table($table);*/
+	$data = fetch($conn, $sql);
+	echo json_encode($data);
 });
 
 $app->get('/data/home/itemOrders', function (Request $request, Response $response, array $args) {
@@ -109,12 +108,14 @@ $app->get('/data/home/itemOrders', function (Request $request, Response $respons
 	}
 	// echo $sql;
 	$data = fetch($conn, $sql);
-	$table[] = array('Item Name', 'Total Volume', 'Total Volume Remaining', 'Total Orders', 'Total isk' );
+	/*$table[] = array('Item Name', 'Total Volume', 'Total Volume Remaining', 'Total Orders', 'Total isk' );
 	$data = fetch($conn, $sql);
 	foreach ($data as $key => $d) {
 		$table[] =$d;
 	}
-	echo html_table($table);
+	echo html_table($table);*/
+	echo json_encode($data);
+
 });
 
 $app->get('/data/home/getRegions', function (Request $request, Response $response, array $args) {

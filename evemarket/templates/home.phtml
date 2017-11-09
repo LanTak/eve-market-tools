@@ -81,7 +81,7 @@ include_once('include/header.php');
 								<div class="form-group">
 									<label class="col-sm-4 control-label">Sell Region</label>
 									<div class="col-sm-8">
-										<select id="region" name="region"  class="form-control">
+										<select id="sellRegion" name="sellRegion"  class="form-control">
 											
 										</select>
 									</div>
@@ -93,7 +93,7 @@ include_once('include/header.php');
 								<div class="form-group">
 									<label class="col-sm-4 control-label">Buy Region</label>
 									<div class="col-sm-8">
-										<select id="region2" name="region2"  class="form-control">
+										<select id="buyRegion" name="buyRegion"  class="form-control">
 											
 										</select>
 									</div>
@@ -101,7 +101,7 @@ include_once('include/header.php');
 							</form>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3">
-							<a href="javascript:runIt()" class="btn btn-success">Run it</a>
+							
 						</div>
 					</div>
 
@@ -142,23 +142,29 @@ include_once('include/header.php');
 								</div>
 							</form>
 						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3">
+							<!-- <a href="javascript:runIt()" class="btn btn-success">Run it</a> -->
+						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-lg-12">
 							<ul class="nav nav-tabs nav-justified">
 								<li class="nav-item">
-									<a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Category</a>
+									<a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Region Categories</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " data-toggle="tab" href="#tab2" role="tab">Group</a>
+									<a class="nav-link " data-toggle="tab" href="#tab2" role="tab">Category Groups</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " data-toggle="tab" href="#tab3" role="tab">Items</a>
+									<a class="nav-link " data-toggle="tab" href="#tab3" role="tab">Group Items</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " data-toggle="tab" href="#tab4" role="tab">Orders</a>
+									<a class="nav-link " data-toggle="tab" href="#tab4" role="tab">Items Orders</a>
 								</li>
+								<!-- <li class="nav-item">
+									<a class="nav-link " data-toggle="tab" href="#tab5" role="tab">Orders </a>
+								</li> -->
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab1" role="tabpanel">
@@ -170,17 +176,55 @@ include_once('include/header.php');
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Catagory Sell Orders <small class="pull-right text-gray-lighter"></small></div>
-												<div class="panel-body" id="holder1">
-													
+												<div class="panel-heading">Region Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holderRegionSell">
+													<table id="tableRegionSell" class="display table">
+														<thead>
+															<tr>
+																<th>Category Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Category Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table>
 												</div>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
-												<div class="panel-heading">Catagory Buy Orders <small class="pull-right text-gray-lighter"></small></div>
-												<div class="panel-body" id="holder2">
-													
+												<div class="panel-heading">Region Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holderRegionBuy">
+													<table id="tableRegionBuy" class="display table">
+														<thead>
+															<tr>
+																<th>Category Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Category Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -192,7 +236,26 @@ include_once('include/header.php');
 											<div class="panel panel-default b-a-0 bg-gray-dark">
 												<div class="panel-heading">Group Sell Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder3">
-													
+													<table id="tableGroupSell" class="display table">
+														<thead>
+															<tr>
+																<th>Group Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Group Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -200,7 +263,26 @@ include_once('include/header.php');
 											<div class="panel panel-default b-a-0 bg-gray-dark">
 												<div class="panel-heading">Group Buy Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder4">
-													
+													<table id="tableGroupBuy" class="display table">
+														<thead>
+															<tr>
+																<th>Group Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Group Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -212,7 +294,26 @@ include_once('include/header.php');
 											<div class="panel panel-default b-a-0 bg-gray-dark">
 												<div class="panel-heading">Items Sell Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder5">
-													
+													<table id="tableItemSell" class="display table">
+														<thead>
+															<tr>
+																<th>Item Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Item Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -220,17 +321,97 @@ include_once('include/header.php');
 											<div class="panel panel-default b-a-0 bg-gray-dark">
 												<div class="panel-heading">Items Buy Orders <small class="pull-right text-gray-lighter"></small></div>
 												<div class="panel-body" id="holder6">
+													<table id="tableItemBuy" class="display table">
+														<thead>
+															<tr>
+																<th>Item Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Item Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab4" role="tabpanel">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Items Sell Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder7">
+													<!-- <table id="tableOrderSell" class="display table">
+														<thead>
+															<tr>
+																<th>Item Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<th>Item Name</th>
+																<th>Total Volume</th>
+																<th>Total Volume Remaining</th>
+																<th>Total Orders</th>
+																<th>Total isk</th>
+															</tr>
+														</tfoot>
+													</table> -->
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">Items Buy Orders <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holder8">
 													
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								<!-- <div class="tab-pane" id="tab5" role="tabpanel">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">none yet <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holdernone">
+													
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<div class="panel panel-default b-a-0 bg-gray-dark">
+												<div class="panel-heading">none <small class="pull-right text-gray-lighter"></small></div>
+												<div class="panel-body" id="holdernone2">
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<script src="/assets/vendor/js/jquery.dataTables.js"></script>
+			<script src="/assets/vendor/js/datatables.bootstrap.js"></script>
 			<?php include_once('include/footer.php');?>
 		</div>
 		<script>
@@ -261,6 +442,60 @@ include_once('include/header.php');
 				$('#holder2').html(data);
 			});*/
 
+
+			var table1 = $('#tableRegionSell').DataTable();
+			var table2 = $('#tableRegionBuy').DataTable();
+			var table3 = $('#tableGroupSell').DataTable();
+			var table4 = $('#tableGroupBuy').DataTable();
+			var table5 = $('#tableItemSell').DataTable();
+			var table6 = $('#tableItemBuy').DataTable();
+
+			$('#sellRegion').on('change', function(event) {
+				event.preventDefault();
+				var regionId = $(this).val();
+				if(regionId != -1){
+					table1.destroy();
+					$.get('/data/home/catOrdersSum', {regionId:regionId,byOrder:0 }, function(data) {
+						// $('#tableRegionSell').html(data);
+						var json = jQuery.parseJSON(data);
+						// console.log(json);
+						table1 = $('#tableRegionSell').DataTable( {
+							data: json,
+							"columns": [
+								{ "data": "category_name" },
+								{ "data": "Total Volume" },
+								{ "data": "Total Volume Remaining" },
+								{ "data": "Total Orders" },
+								{ "data": "Total ISK" }
+							]
+						});
+					});
+				}
+			});
+
+			$('#buyRegion').on('change', function(event) {
+				event.preventDefault();
+				var regionId = $(this).val();
+				if(regionId != -1){
+					table2.destroy();
+					$.get('/data/home/catOrdersSum', {regionId:regionId,byOrder:1 }, function(data) {
+						// $('#tableRegionSell').html(data);
+						var json = jQuery.parseJSON(data);
+						// console.log(json);
+						table2 = $('#tableRegionBuy').DataTable( {
+							data: json,
+							"columns": [
+								{ "data": "category_name" },
+								{ "data": "Total Volume" },
+								{ "data": "Total Volume Remaining" },
+								{ "data": "Total Orders" },
+								{ "data": "Total ISK" }
+							]
+						});
+					});
+				}
+			});
+
 			function loadCatBuyTable(regionId){
 				$.get('/data/home/catOrdersSum', {byOrder:1, regionId:regionId},function(data) {
 					$('#holder2').html(data);
@@ -277,12 +512,14 @@ include_once('include/header.php');
 				$.get('/data/home/getRegions', function(data) {
 					// console.log(data);
 					var json = jQuery.parseJSON(data);
-					$('#region').append($("<option></option>").attr("value", "All").text("All Regions"));
-					$('#region2').append($("<option></option>").attr("value", "All").text("All Regions"));
+					$('#sellRegion').append($("<option></option>").attr("value", "-1").text("Select Region"));
+					$('#buyRegion').append($("<option></option>").attr("value", "-1").text("Select Region"));
+					$('#sellRegion').append($("<option></option>").attr("value", "All").text("All Regions"));
+					$('#buyRegion').append($("<option></option>").attr("value", "All").text("All Regions"));
 					$.each(json, function(index, val) {
 						// console.log(val.regionId);
-						$('#region').append($("<option></option>").attr("value", val.regionId).text(val.name));
-						$('#region2').append($("<option></option>").attr("value", val.regionId).text(val.name));
+						$('#sellRegion').append($("<option></option>").attr("value", val.regionId).text(val.name));
+						$('#buyRegion').append($("<option></option>").attr("value", val.regionId).text(val.name));
 					});
 				});
 			}
@@ -299,9 +536,8 @@ include_once('include/header.php');
 
 			function getGroups(){
 				var catagoryId = $('#catagory').val();
-				// var regionId = $('#region').val();
-				var buyRegionId = $('#region').val();
-				var sellRegionId = $('#region2').val();
+				var buyRegionId = $('#buyRegion').val();
+				var sellRegionId = $('#sellRegion').val();
 
 				$("#group").empty();
 				$("#item").empty();
@@ -313,22 +549,57 @@ include_once('include/header.php');
 					});
 				});
 
-				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:sellRegionId, byOrder:1 }, function(data) {
+				/*$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:sellRegionId, byOrder:1 }, function(data) {
 					$('#holder3').html(data);
 				});
 
 				$.get('/data/home/groupOrders',{catagoryId:catagoryId, regionId:buyRegionId, byOrder:0 }, function(data) {
 					$('#holder4').html(data);
+				});*/
+
+				table3.destroy();
+				$.get('/data/home/groupOrders', {catagoryId:catagoryId, regionId:sellRegionId, byOrder:0 }, function(data) {
+					// $('#tableRegionSell').html(data);
+					var json = jQuery.parseJSON(data);
+					// console.log(json);
+					table3 = $('#tableGroupSell').DataTable( {
+						data: json,
+						"columns": [
+							{ "data": "group_name" },
+							{ "data": "Total Volume" },
+							{ "data": "Total Volume Remaining" },
+							{ "data": "Total Orders" },
+							{ "data": "Total ISK" }
+						]
+					});
 				});
+
+				table4.destroy();
+				$.get('/data/home/groupOrders', {catagoryId:catagoryId, regionId:buyRegionId, byOrder:1 }, function(data) {
+					// $('#tableRegionSell').html(data);
+					var json = jQuery.parseJSON(data);
+					// console.log(json);
+					table3 = $('#tableGroupBuy').DataTable( {
+						data: json,
+						"columns": [
+							{ "data": "group_name" },
+							{ "data": "Total Volume" },
+							{ "data": "Total Volume Remaining" },
+							{ "data": "Total Orders" },
+							{ "data": "Total ISK" }
+						]
+					});
+				});
+
 			}
 
 			function getItems(){
 				var groupId = $('#group').val();
 				var catagoryId = $('#catagory').val();
 				// var regionId = $('#region').val();
+				var buyRegionId = $('#buyRegion').val();
+				var sellRegionId = $('#sellRegion').val();
 
-				var buyRegionId = $('#region').val();
-				var sellRegionId = $('#region2').val();
 				$("#item").empty();
 				$.get('/getItemsByGroup',{groupId:groupId}, function(data) {
 					var json = jQuery.parseJSON(data);
@@ -338,30 +609,52 @@ include_once('include/header.php');
 					});
 				});
 
-				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:sellRegionId, groupId:groupId, byOrder:1 }, function(data) {
-					$('#holder5').html(data);
+				table5.destroy();
+				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:sellRegionId, groupId:groupId, byOrder:0 }, function(data) {
+					var json = jQuery.parseJSON(data);
+					table5 = $('#tableItemSell').DataTable( {
+						data: json,
+						"columns": [
+							{ "data": "item_name" },
+							{ "data": "Total Volume" },
+							{ "data": "Total Volume Remaining" },
+							{ "data": "Total Orders" },
+							{ "data": "Total ISK" }
+						]
+					});
 				});
 
-				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:buyRegionId, groupId:groupId, byOrder:0 }, function(data) {
-					$('#holder6').html(data);
+				table6.destroy();
+				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:buyRegionId, groupId:groupId, byOrder:1 }, function(data) {
+					var json = jQuery.parseJSON(data);
+					// console.log(json);
+					table6 = $('#tableItemBuy').DataTable( {
+						data: json,
+						"columns": [
+							{ "data": "item_name" },
+							{ "data": "Total Volume" },
+							{ "data": "Total Volume Remaining" },
+							{ "data": "Total Orders" },
+							{ "data": "Total ISK" }
+						]
+					});
 				});
 			}
 
-			function regionChange(){
-				var regionId = $('#region').val();
+			// function regionChange(){
+				// var regionId = $('#region').val();
 				// loadCatBuyTable(regionId);
 				// getCatSellTable(regionId);
-			}
+			// }
 
-			function runIt(){
+			/*function runIt(){
 				var buyRegionId = $('#region').val();
 				var sellRegionId = $('#region2').val();
 				loadCatBuyTable(buyRegionId);
 				getCatSellTable(sellRegionId);
-			}
+			}*/
 
 			$(document).ready(function() {
-
 				getRegions();
 				getCatagory();
 				/* load everything off the bat */
