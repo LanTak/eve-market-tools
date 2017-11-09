@@ -58,7 +58,6 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 $app->get('/marketDashboard', function (Request $request, Response $response, array $args) {
 	// Sample log message
 	$this->logger->info("Slim-Skeleton '/marketData' route");
-
 	// Render index view
 	return $this->renderer->render($response, 'marketData.phtml', $args);
 });
@@ -119,16 +118,24 @@ $app->get('/data/home/itemOrders', function (Request $request, Response $respons
 });
 
 $app->get('/data/home/getRegions', function (Request $request, Response $response, array $args) {
-	$regions = RegionsQuery::Create()->orderBy('name', 'ASC')->find();
+	// $regions = RegionsQuery::Create()->orderBy('name', 'ASC')->find();
 	// echo $regions->toJson();
 	// $data = $regions->toArray();
+	$conn = Propel::getConnection();
+	$sql = "SELECT DISTINCT region_id FROM orders";
+	$regions = fetch($conn, $sql);
+	// echo print_array($regions);
 	$tmp = array();
-	foreach ($regions as $key => $r) {
+	foreach ($regions as $key => $region) {
+		$r = new Regions($region['region_id']);
+		// echo print_array($r->toArray());
 		$a = array();
 		$a['regionId'] = $r->getRegionId();
 		$a['name'] = $r->getName();
 		$tmp[] = $a;
+		// this who thing is terrible programming but whatever fix it later! dick
 	}
+	// natsort($tmp); // tried to sort this array it's dumb 
 	echo json_encode($tmp);
 });
 

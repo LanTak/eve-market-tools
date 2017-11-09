@@ -14,5 +14,15 @@ use Base\Regions as BaseRegions;
  */
 class Regions extends BaseRegions
 {
+	public function __construct($id = null){
+		if(!empty ($id) && is_numeric($id)){
+			$this->loadByPK($id);
+		}
+	}
 
+	public function loadByPK($id = null){
+		$r = RegionsQuery::Create()->findPK($id);
+		$this->fromArray($r->toArray());
+		$this->setNew(false);
+	}
 }

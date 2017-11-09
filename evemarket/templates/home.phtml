@@ -3,7 +3,7 @@
 <?php 
 include_once('include/header.php');
 ?>
-	<body class=" sidebar-fixed navbar-fixed  loading">
+	<body class=" sidebar-fixed navbar-fixed sidebar-slim loading">
 		<div id="initial-loader">
 			<div class="initial-loader-bottom">
 				Loading. Please Wait. <i class="fa fa-cricle" style="opacity: 0"></i>
@@ -34,10 +34,15 @@ include_once('include/header.php');
 											</li>
 											<li>
 												<a href="javascript: void(0)">
-													Over All Data
+													Metz's Market Exploration
 												</a>
 											</li>
-											<li class="active">Right here!</li>
+											Easy as 
+											<span class="badge badge-heliotrope">1</span>
+											<span class="badge badge-dodger-blue">2</span>
+											<span class="badge badge-malibu">3</span>
+											<span class="badge badge-aquamarine">4</span>
+											<span class="badge badge-mint-green">5</span>
 										</ol>
 									</div>
 								</div>
@@ -51,7 +56,7 @@ include_once('include/header.php');
 					<div class="row">
 						<div class="col-lg-4 col-md-4 col-sm-4">
 							<div class="panel panel-default b-a-0 bg-gray-dark">
-								<div class="panel-heading">Total Orders <small class="pull-right text-gray-lighter">last updated date -></small></div>
+								<div class="panel-heading">Total Orders </div>
 								<div class="panel-body">
 									
 								</div>
@@ -59,7 +64,7 @@ include_once('include/header.php');
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-4">
 							<div class="panel panel-default b-a-0 bg-gray-dark">
-								<div class="panel-heading">Total Volume <small class="pull-right text-gray-lighter">last updated date -></small></div>
+								<div class="panel-heading">Total Volume </div>
 								<div class="panel-body">
 									
 								</div>
@@ -67,7 +72,7 @@ include_once('include/header.php');
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-4">
 							<div class="panel panel-default b-a-0 bg-gray-dark">
-								<div class="panel-heading">Total ISK <small class="pull-right text-gray-lighter">last updated date -></small></div>
+								<div class="panel-heading">Total ISK </div>
 								<div class="panel-body">
 									
 								</div>
@@ -76,10 +81,17 @@ include_once('include/header.php');
 					</div>
 					
 					<div class="row">
-						<div class="col-lg-3 col-md-3 col-sm-3">
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Sell Region</label>
+									<label class="col-sm-4 control-label">
+										Where to buy
+										<span>
+											<i class=" fa fa-lg fa-fw fa-check-square"></i>
+											<span class="badge badge-heliotrope badge-with-icon ">1</span>
+										</span>
+									</label>
 									<div class="col-sm-8">
 										<select id="sellRegion" name="sellRegion"  class="form-control">
 											
@@ -88,10 +100,16 @@ include_once('include/header.php');
 								</div>
 							</form>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3">
+						<div class="col-lg-4 col-md-4 col-sm-4">
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Buy Region</label>
+									<label class="col-sm-4 control-label">
+										Where to sell
+									<span>
+										<i class=" fa fa-lg fa-fw fa-check-square"></i>
+										<span class="badge badge-dodger-blue badge-with-icon ">2</span>
+									</span>
+									</label>
 									<div class="col-sm-8">
 										<select id="buyRegion" name="buyRegion"  class="form-control">
 											
@@ -100,16 +118,22 @@ include_once('include/header.php');
 								</div>
 							</form>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3">
-							
+						<div class="col-lg-4 col-md-4 col-sm-4">
+
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="col-lg-3 col-md-3 col-sm-3">
+						<div class="col-lg-4 col-md-4 col-sm-4">
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Select Catagory</label>
+									<label class="col-sm-4 control-label">
+										Catagory
+										<span>
+											<i class=" fa fa-lg fa-fw fa-check-square"></i>
+											<span class="badge badge-malibu badge-with-icon ">3</span>
+										</span>
+									</label>
 									<div class="col-sm-8">
 										<select id="catagory" name="catagory" onchange="javascript:getGroups();" class="form-control">
 											
@@ -118,10 +142,16 @@ include_once('include/header.php');
 								</div>
 							</form>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3">
+						<div class="col-lg-4 col-md-4 col-sm-4">
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Select Group</label>
+									<label class="col-sm-4 control-label">
+										Group
+										<span>
+											<i class=" fa fa-lg fa-fw fa-check-square"></i>
+											<span class="badge badge-aquamarine badge-with-icon ">4</span>
+										</span>
+									</label>
 									<div class="col-sm-8">
 										<select id="group" name="group" onchange="javascript:getItems();" class="form-control">
 											
@@ -130,10 +160,16 @@ include_once('include/header.php');
 								</div>
 							</form>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3">
+						<div class="col-lg-4 col-md-4 col-sm-4">
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Select Item</label>
+									<label class="col-sm-4 control-label text-left">
+										Item
+										<span>
+											<i class=" fa fa-lg fa-fw fa-check-square"></i>
+											<span class="badge badge-mint-green badge-with-icon ">5</span>
+										</span>
+									</label>
 									<div class="col-sm-8">
 										<select id="item" name="item" class="form-control">
 											
@@ -148,19 +184,32 @@ include_once('include/header.php');
 					</div>
 
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-12" id="tabs">
 							<ul class="nav nav-tabs nav-justified">
 								<li class="nav-item">
-									<a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Region Categories</a>
+									<a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">
+										<span class="badge badge-heliotrope">1</span> &amp;
+										<span class="badge badge-dodger-blue">2</span>
+										Region Categories
+									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " data-toggle="tab" href="#tab2" role="tab">Category Groups</a>
+									<a class="nav-link " data-toggle="tab" href="#tab2" role="tab">
+										<span class="badge badge-malibu">3</span>
+										Category Groups
+									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " data-toggle="tab" href="#tab3" role="tab">Group Items</a>
+									<a class="nav-link " data-toggle="tab" href="#tab3" role="tab">
+										<span class="badge badge-aquamarine">4</span>
+										Group Items
+									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " data-toggle="tab" href="#tab4" role="tab">Items Orders</a>
+									<a class="nav-link " data-toggle="tab" href="#tab4" role="tab">
+										<span class="badge badge-mint-green">5</span>
+										Items Orders
+									</a>
 								</li>
 								<!-- <li class="nav-item">
 									<a class="nav-link " data-toggle="tab" href="#tab5" role="tab">Orders </a>
@@ -348,6 +397,9 @@ include_once('include/header.php');
 								</div>
 								<div class="tab-pane" id="tab4" role="tabpanel">
 									<div class="row">
+										<h2>Not done yet</h2>
+									</div>
+									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="panel panel-default b-a-0 bg-gray-dark">
 												<div class="panel-heading">Items Sell Orders <small class="pull-right text-gray-lighter"></small></div>
@@ -412,6 +464,7 @@ include_once('include/header.php');
 			</div>
 			<script src="/assets/vendor/js/jquery.dataTables.js"></script>
 			<script src="/assets/vendor/js/datatables.bootstrap.js"></script>
+			<script src="/assets/vendor/js/toastr.js"></script>
 			<?php include_once('include/footer.php');?>
 		</div>
 		<script>
@@ -557,40 +610,54 @@ include_once('include/header.php');
 					$('#holder4').html(data);
 				});*/
 
-				table3.destroy();
+				// table3.destroy();
 				$.get('/data/home/groupOrders', {catagoryId:catagoryId, regionId:sellRegionId, byOrder:0 }, function(data) {
 					// $('#tableRegionSell').html(data);
 					var json = jQuery.parseJSON(data);
-					// console.log(json);
-					table3 = $('#tableGroupSell').DataTable( {
-						data: json,
-						"columns": [
-							{ "data": "group_name" },
-							{ "data": "Total Volume" },
-							{ "data": "Total Volume Remaining" },
-							{ "data": "Total Orders" },
-							{ "data": "Total ISK" }
-						]
-					});
+
+					if(Object.keys(json).length != 0){
+						// alert('inhere');
+						table3.destroy();
+						table3 = $('#tableGroupSell').DataTable( {
+							data: json,
+							"columns": [
+								{ "data": "group_name" },
+								{ "data": "Total Volume" },
+								{ "data": "Total Volume Remaining" },
+								{ "data": "Total Orders" },
+								{ "data": "Total ISK" }
+							]
+						});
+					}else{
+						table3.clear().draw();
+					}
+					
 				});
 
-				table4.destroy();
+				// table4.destroy();
 				$.get('/data/home/groupOrders', {catagoryId:catagoryId, regionId:buyRegionId, byOrder:1 }, function(data) {
 					// $('#tableRegionSell').html(data);
 					var json = jQuery.parseJSON(data);
 					// console.log(json);
-					table3 = $('#tableGroupBuy').DataTable( {
-						data: json,
-						"columns": [
-							{ "data": "group_name" },
-							{ "data": "Total Volume" },
-							{ "data": "Total Volume Remaining" },
-							{ "data": "Total Orders" },
-							{ "data": "Total ISK" }
-						]
-					});
+					if(Object.keys(json).length != 0){
+						// alert('inhere');
+						table4.destroy();
+						table4 = $('#tableGroupBuy').DataTable( {
+							data: json,
+							"columns": [
+								{ "data": "group_name" },
+								{ "data": "Total Volume" },
+								{ "data": "Total Volume Remaining" },
+								{ "data": "Total Orders" },
+								{ "data": "Total ISK" }
+							]
+						});
+					}else{
+						table4.clear().draw();
+					}
 				});
 
+				activaTab("tab2");
 			}
 
 			function getItems(){
@@ -609,36 +676,48 @@ include_once('include/header.php');
 					});
 				});
 
-				table5.destroy();
+				// table5.destroy();
 				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:sellRegionId, groupId:groupId, byOrder:0 }, function(data) {
 					var json = jQuery.parseJSON(data);
-					table5 = $('#tableItemSell').DataTable( {
-						data: json,
-						"columns": [
-							{ "data": "item_name" },
-							{ "data": "Total Volume" },
-							{ "data": "Total Volume Remaining" },
-							{ "data": "Total Orders" },
-							{ "data": "Total ISK" }
-						]
-					});
+					
+					if(Object.keys(json).length != 0){
+						table5.destroy();
+						table5 = $('#tableItemSell').DataTable( {
+							data: json,
+							"columns": [
+								{ "data": "item_name" },
+								{ "data": "Total Volume" },
+								{ "data": "Total Volume Remaining" },
+								{ "data": "Total Orders" },
+								{ "data": "Total ISK" }
+							]
+						});
+					}else{
+						table5.clear().draw();
+					}
 				});
 
-				table6.destroy();
+				// table6.destroy();
 				$.get('/data/home/itemOrders',{catagoryId:catagoryId, regionId:buyRegionId, groupId:groupId, byOrder:1 }, function(data) {
 					var json = jQuery.parseJSON(data);
 					// console.log(json);
-					table6 = $('#tableItemBuy').DataTable( {
-						data: json,
-						"columns": [
-							{ "data": "item_name" },
-							{ "data": "Total Volume" },
-							{ "data": "Total Volume Remaining" },
-							{ "data": "Total Orders" },
-							{ "data": "Total ISK" }
-						]
-					});
+					if(Object.keys(json).length != 0){
+						table6.destroy();
+						table6 = $('#tableItemBuy').DataTable( {
+							data: json,
+							"columns": [
+								{ "data": "item_name" },
+								{ "data": "Total Volume" },
+								{ "data": "Total Volume Remaining" },
+								{ "data": "Total Orders" },
+								{ "data": "Total ISK" }
+							]
+						});
+					}else{
+						table6.clear().draw();
+					}
 				});
+				activaTab("tab3");
 			}
 
 			// function regionChange(){
@@ -662,6 +741,9 @@ include_once('include/header.php');
 				// getCatSellTable("All");
 			});
 
+			function activaTab(tab){
+				$('.nav-tabs a[href="#' + tab + '"]').tab('show');
+			};
 		</script>
 		<!-- Bower Libraries Styles -->
 		<link rel="stylesheet" href="/assets/vendor/css/lib.css">
