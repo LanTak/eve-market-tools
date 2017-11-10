@@ -122,7 +122,8 @@ $app->get('/data/home/getRegions', function (Request $request, Response $respons
 	// echo $regions->toJson();
 	// $data = $regions->toArray();
 	$conn = Propel::getConnection();
-	$sql = "SELECT DISTINCT region_id FROM orders";
+	// $sql = "SELECT DISTINCT region_id FROM orders";
+	$sql = "SELECT DISTINCT region_id, COUNT(*) FROM orders GROUP BY region_id ORDER BY COUNT(*) DESC";
 	$regions = fetch($conn, $sql);
 	// echo print_array($regions);
 	$tmp = array();
@@ -176,4 +177,29 @@ $app->get('/getItemsByGroup', function (Request $request, Response $response, ar
 	}
 	echo json_encode($tmp);
 });
+
+$app->get('/data/home/getOrders', function (Request $request, Response $response, array $args) {
+	$conn = Propel::getConnection();
+	$allGetVars = $request->getQueryParams();
+	if($allGetVars['buyOrder'] == 1){
+		$ob = "DESC";
+	}else{
+		$ob = "ASC";
+	}
+	$params[0] = $allGetVars['regionId'];
+	$params[1] = $allGetVars['typeId'];
+	$params[2] = $allGetVars['buyOrder'];
+
+	$sql = "SELECT region_id, location_id,  region_name, item_name, FORMAT(volume_total,0), FORMAT(volume_remain,0), FORMAT(price,2), is_buy_order FROM MarketOrders WHERE region_id = ? AND type_id = ? AND is_buy_order = ? ORDER BY price ".$ob.";";
+	$data = fetch($conn, $sql, $params);
+	// echo print_array($data);
+	$table[] = array( 'Buy/Sell','Location', 'Region', 'Item Name', 'Volume Total', 'Volume Remain', 'Price', 'is_buy_order' );
+	foreach ($data as $key => $d) {
+		$d['region_id'] = "<div id='$key".$d['region_id']."'><a href='javascript:addOrder(\"$key".$d['region_id']."\", \"".$d['FORMAT(volume_remain,0)']."\", \"".$d['FORMAT(price,2)']."\", ".$allGetVars['buyOrder']."  );' btn='btn btn-succuss'>Add </a></div>";
+		$table[] = $d;
+		// print_array($d);
+	}
+	echo html_table($table);
+});
+
 require_once 'controllers/dataTableData.php';
