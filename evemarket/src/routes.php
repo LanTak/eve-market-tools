@@ -62,6 +62,13 @@ $app->get('/marketDashboard', function (Request $request, Response $response, ar
 	return $this->renderer->render($response, 'marketData.phtml', $args);
 });
 
+$app->get('/db/searchOrders', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/db/searchOrders' route");
+	// Render index view
+	return $this->renderer->render($response, 'searchOrders.phtml', $args);
+});
+
 $app->get('/data/home/catOrdersSum', function (Request $request, Response $response, array $args) {
 	$conn = Propel::getConnection();
 	$allGetVars = $request->getQueryParams();

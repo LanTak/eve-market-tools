@@ -62,6 +62,13 @@ abstract class Orders implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
+     * The value for the my_order_id field.
+     *
+     * @var        int
+     */
+    protected $my_order_id;
+
+    /**
      * The value for the order_id field.
      *
      * @var        int
@@ -372,6 +379,16 @@ abstract class Orders implements ActiveRecordInterface
     }
 
     /**
+     * Get the [my_order_id] column value.
+     *
+     * @return int
+     */
+    public function getMyOrderId()
+    {
+        return $this->my_order_id;
+    }
+
+    /**
      * Get the [order_id] column value.
      *
      * @return int
@@ -490,6 +507,26 @@ abstract class Orders implements ActiveRecordInterface
             return $this->issued instanceof \DateTimeInterface ? $this->issued->format($format) : null;
         }
     }
+
+    /**
+     * Set the value of [my_order_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\Orders The current object (for fluent API support)
+     */
+    public function setMyOrderId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->my_order_id !== $v) {
+            $this->my_order_id = $v;
+            $this->modifiedColumns[OrdersTableMap::COL_MY_ORDER_ID] = true;
+        }
+
+        return $this;
+    } // setMyOrderId()
 
     /**
      * Set the value of [order_id] column.
@@ -747,37 +784,40 @@ abstract class Orders implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : OrdersTableMap::translateFieldName('OrderId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : OrdersTableMap::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->my_order_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : OrdersTableMap::translateFieldName('OrderId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->order_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : OrdersTableMap::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrdersTableMap::translateFieldName('RegionId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->region_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrdersTableMap::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrdersTableMap::translateFieldName('TypeId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->type_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrdersTableMap::translateFieldName('LocationId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrdersTableMap::translateFieldName('LocationId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->location_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrdersTableMap::translateFieldName('VolumeTotal', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : OrdersTableMap::translateFieldName('VolumeTotal', TableMap::TYPE_PHPNAME, $indexType)];
             $this->volume_total = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : OrdersTableMap::translateFieldName('VolumeRemain', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : OrdersTableMap::translateFieldName('VolumeRemain', TableMap::TYPE_PHPNAME, $indexType)];
             $this->volume_remain = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : OrdersTableMap::translateFieldName('MinVolume', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : OrdersTableMap::translateFieldName('MinVolume', TableMap::TYPE_PHPNAME, $indexType)];
             $this->min_volume = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : OrdersTableMap::translateFieldName('Price', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : OrdersTableMap::translateFieldName('Price', TableMap::TYPE_PHPNAME, $indexType)];
             $this->price = (null !== $col) ? (double) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : OrdersTableMap::translateFieldName('IsBuyOrder', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : OrdersTableMap::translateFieldName('IsBuyOrder', TableMap::TYPE_PHPNAME, $indexType)];
             $this->is_buy_order = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : OrdersTableMap::translateFieldName('Duration', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : OrdersTableMap::translateFieldName('Duration', TableMap::TYPE_PHPNAME, $indexType)];
             $this->duration = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : OrdersTableMap::translateFieldName('Issued', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : OrdersTableMap::translateFieldName('Issued', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -790,7 +830,7 @@ abstract class Orders implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 11; // 11 = OrdersTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 12; // 12 = OrdersTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Orders'), 0, $e);
@@ -985,8 +1025,15 @@ abstract class Orders implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
+        $this->modifiedColumns[OrdersTableMap::COL_MY_ORDER_ID] = true;
+        if (null !== $this->my_order_id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . OrdersTableMap::COL_MY_ORDER_ID . ')');
+        }
 
          // check the columns in natural order for more readable SQL queries
+        if ($this->isColumnModified(OrdersTableMap::COL_MY_ORDER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'my_order_id';
+        }
         if ($this->isColumnModified(OrdersTableMap::COL_ORDER_ID)) {
             $modifiedColumns[':p' . $index++]  = 'order_id';
         }
@@ -1031,6 +1078,9 @@ abstract class Orders implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
+                    case 'my_order_id':
+                        $stmt->bindValue($identifier, $this->my_order_id, PDO::PARAM_INT);
+                        break;
                     case 'order_id':
                         $stmt->bindValue($identifier, $this->order_id, PDO::PARAM_INT);
                         break;
@@ -1071,6 +1121,13 @@ abstract class Orders implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
+
+        try {
+            $pk = $con->lastInsertId();
+        } catch (Exception $e) {
+            throw new PropelException('Unable to get autoincrement id.', 0, $e);
+        }
+        $this->setMyOrderId($pk);
 
         $this->setNew(false);
     }
@@ -1120,36 +1177,39 @@ abstract class Orders implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getOrderId();
+                return $this->getMyOrderId();
                 break;
             case 1:
-                return $this->getRegionId();
+                return $this->getOrderId();
                 break;
             case 2:
-                return $this->getTypeId();
+                return $this->getRegionId();
                 break;
             case 3:
-                return $this->getLocationId();
+                return $this->getTypeId();
                 break;
             case 4:
-                return $this->getVolumeTotal();
+                return $this->getLocationId();
                 break;
             case 5:
-                return $this->getVolumeRemain();
+                return $this->getVolumeTotal();
                 break;
             case 6:
-                return $this->getMinVolume();
+                return $this->getVolumeRemain();
                 break;
             case 7:
-                return $this->getPrice();
+                return $this->getMinVolume();
                 break;
             case 8:
-                return $this->getIsBuyOrder();
+                return $this->getPrice();
                 break;
             case 9:
-                return $this->getDuration();
+                return $this->getIsBuyOrder();
                 break;
             case 10:
+                return $this->getDuration();
+                break;
+            case 11:
                 return $this->getIssued();
                 break;
             default:
@@ -1181,20 +1241,21 @@ abstract class Orders implements ActiveRecordInterface
         $alreadyDumpedObjects['Orders'][$this->hashCode()] = true;
         $keys = OrdersTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getOrderId(),
-            $keys[1] => $this->getRegionId(),
-            $keys[2] => $this->getTypeId(),
-            $keys[3] => $this->getLocationId(),
-            $keys[4] => $this->getVolumeTotal(),
-            $keys[5] => $this->getVolumeRemain(),
-            $keys[6] => $this->getMinVolume(),
-            $keys[7] => $this->getPrice(),
-            $keys[8] => $this->getIsBuyOrder(),
-            $keys[9] => $this->getDuration(),
-            $keys[10] => $this->getIssued(),
+            $keys[0] => $this->getMyOrderId(),
+            $keys[1] => $this->getOrderId(),
+            $keys[2] => $this->getRegionId(),
+            $keys[3] => $this->getTypeId(),
+            $keys[4] => $this->getLocationId(),
+            $keys[5] => $this->getVolumeTotal(),
+            $keys[6] => $this->getVolumeRemain(),
+            $keys[7] => $this->getMinVolume(),
+            $keys[8] => $this->getPrice(),
+            $keys[9] => $this->getIsBuyOrder(),
+            $keys[10] => $this->getDuration(),
+            $keys[11] => $this->getIssued(),
         );
-        if ($result[$keys[10]] instanceof \DateTimeInterface) {
-            $result[$keys[10]] = $result[$keys[10]]->format('c');
+        if ($result[$keys[11]] instanceof \DateTimeInterface) {
+            $result[$keys[11]] = $result[$keys[11]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1236,36 +1297,39 @@ abstract class Orders implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setOrderId($value);
+                $this->setMyOrderId($value);
                 break;
             case 1:
-                $this->setRegionId($value);
+                $this->setOrderId($value);
                 break;
             case 2:
-                $this->setTypeId($value);
+                $this->setRegionId($value);
                 break;
             case 3:
-                $this->setLocationId($value);
+                $this->setTypeId($value);
                 break;
             case 4:
-                $this->setVolumeTotal($value);
+                $this->setLocationId($value);
                 break;
             case 5:
-                $this->setVolumeRemain($value);
+                $this->setVolumeTotal($value);
                 break;
             case 6:
-                $this->setMinVolume($value);
+                $this->setVolumeRemain($value);
                 break;
             case 7:
-                $this->setPrice($value);
+                $this->setMinVolume($value);
                 break;
             case 8:
-                $this->setIsBuyOrder($value);
+                $this->setPrice($value);
                 break;
             case 9:
-                $this->setDuration($value);
+                $this->setIsBuyOrder($value);
                 break;
             case 10:
+                $this->setDuration($value);
+                break;
+            case 11:
                 $this->setIssued($value);
                 break;
         } // switch()
@@ -1295,37 +1359,40 @@ abstract class Orders implements ActiveRecordInterface
         $keys = OrdersTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setOrderId($arr[$keys[0]]);
+            $this->setMyOrderId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setRegionId($arr[$keys[1]]);
+            $this->setOrderId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setTypeId($arr[$keys[2]]);
+            $this->setRegionId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setLocationId($arr[$keys[3]]);
+            $this->setTypeId($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setVolumeTotal($arr[$keys[4]]);
+            $this->setLocationId($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setVolumeRemain($arr[$keys[5]]);
+            $this->setVolumeTotal($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setMinVolume($arr[$keys[6]]);
+            $this->setVolumeRemain($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setPrice($arr[$keys[7]]);
+            $this->setMinVolume($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setIsBuyOrder($arr[$keys[8]]);
+            $this->setPrice($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setDuration($arr[$keys[9]]);
+            $this->setIsBuyOrder($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setIssued($arr[$keys[10]]);
+            $this->setDuration($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setIssued($arr[$keys[11]]);
         }
     }
 
@@ -1368,6 +1435,9 @@ abstract class Orders implements ActiveRecordInterface
     {
         $criteria = new Criteria(OrdersTableMap::DATABASE_NAME);
 
+        if ($this->isColumnModified(OrdersTableMap::COL_MY_ORDER_ID)) {
+            $criteria->add(OrdersTableMap::COL_MY_ORDER_ID, $this->my_order_id);
+        }
         if ($this->isColumnModified(OrdersTableMap::COL_ORDER_ID)) {
             $criteria->add(OrdersTableMap::COL_ORDER_ID, $this->order_id);
         }
@@ -1417,7 +1487,8 @@ abstract class Orders implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        throw new LogicException('The Orders object has no primary key');
+        $criteria = ChildOrdersQuery::create();
+        $criteria->add(OrdersTableMap::COL_MY_ORDER_ID, $this->my_order_id);
 
         return $criteria;
     }
@@ -1430,7 +1501,7 @@ abstract class Orders implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = false;
+        $validPk = null !== $this->getMyOrderId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1445,27 +1516,23 @@ abstract class Orders implements ActiveRecordInterface
     }
 
     /**
-     * Returns NULL since this table doesn't have a primary key.
-     * This method exists only for BC and is deprecated!
-     * @return null
+     * Returns the primary key for this object (row).
+     * @return int
      */
     public function getPrimaryKey()
     {
-        return null;
+        return $this->getMyOrderId();
     }
 
     /**
-     * Dummy primary key setter.
+     * Generic method to set the primary key (my_order_id column).
      *
-     * This function only exists to preserve backwards compatibility.  It is no longer
-     * needed or required by the Persistent interface.  It will be removed in next BC-breaking
-     * release of Propel.
-     *
-     * @deprecated
+     * @param       int $key Primary key.
+     * @return void
      */
-    public function setPrimaryKey($pk)
+    public function setPrimaryKey($key)
     {
-        // do nothing, because this object doesn't have any primary keys
+        $this->setMyOrderId($key);
     }
 
     /**
@@ -1474,7 +1541,7 @@ abstract class Orders implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return ;
+        return null === $this->getMyOrderId();
     }
 
     /**
@@ -1503,6 +1570,7 @@ abstract class Orders implements ActiveRecordInterface
         $copyObj->setIssued($this->getIssued());
         if ($makeNew) {
             $copyObj->setNew(true);
+            $copyObj->setMyOrderId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1535,6 +1603,7 @@ abstract class Orders implements ActiveRecordInterface
      */
     public function clear()
     {
+        $this->my_order_id = null;
         $this->order_id = null;
         $this->region_id = null;
         $this->type_id = null;

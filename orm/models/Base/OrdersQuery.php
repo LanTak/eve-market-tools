@@ -5,13 +5,13 @@ namespace Base;
 use \Orders as ChildOrders;
 use \OrdersQuery as ChildOrdersQuery;
 use \Exception;
+use \PDO;
 use Map\OrdersTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -19,6 +19,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  *
+ * @method     ChildOrdersQuery orderByMyOrderId($order = Criteria::ASC) Order by the my_order_id column
  * @method     ChildOrdersQuery orderByOrderId($order = Criteria::ASC) Order by the order_id column
  * @method     ChildOrdersQuery orderByRegionId($order = Criteria::ASC) Order by the region_id column
  * @method     ChildOrdersQuery orderByTypeId($order = Criteria::ASC) Order by the type_id column
@@ -31,6 +32,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildOrdersQuery orderByDuration($order = Criteria::ASC) Order by the duration column
  * @method     ChildOrdersQuery orderByIssued($order = Criteria::ASC) Order by the issued column
  *
+ * @method     ChildOrdersQuery groupByMyOrderId() Group by the my_order_id column
  * @method     ChildOrdersQuery groupByOrderId() Group by the order_id column
  * @method     ChildOrdersQuery groupByRegionId() Group by the region_id column
  * @method     ChildOrdersQuery groupByTypeId() Group by the type_id column
@@ -54,6 +56,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildOrders findOne(ConnectionInterface $con = null) Return the first ChildOrders matching the query
  * @method     ChildOrders findOneOrCreate(ConnectionInterface $con = null) Return the first ChildOrders matching the query, or a new ChildOrders object populated from the query conditions when no match is found
  *
+ * @method     ChildOrders findOneByMyOrderId(int $my_order_id) Return the first ChildOrders filtered by the my_order_id column
  * @method     ChildOrders findOneByOrderId(int $order_id) Return the first ChildOrders filtered by the order_id column
  * @method     ChildOrders findOneByRegionId(int $region_id) Return the first ChildOrders filtered by the region_id column
  * @method     ChildOrders findOneByTypeId(int $type_id) Return the first ChildOrders filtered by the type_id column
@@ -69,6 +72,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildOrders requirePk($key, ConnectionInterface $con = null) Return the ChildOrders by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildOrders requireOne(ConnectionInterface $con = null) Return the first ChildOrders matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
+ * @method     ChildOrders requireOneByMyOrderId(int $my_order_id) Return the first ChildOrders filtered by the my_order_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildOrders requireOneByOrderId(int $order_id) Return the first ChildOrders filtered by the order_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildOrders requireOneByRegionId(int $region_id) Return the first ChildOrders filtered by the region_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildOrders requireOneByTypeId(int $type_id) Return the first ChildOrders filtered by the type_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -82,6 +86,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildOrders requireOneByIssued(string $issued) Return the first ChildOrders filtered by the issued column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildOrders[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildOrders objects based on current ModelCriteria
+ * @method     ChildOrders[]|ObjectCollection findByMyOrderId(int $my_order_id) Return ChildOrders objects filtered by the my_order_id column
  * @method     ChildOrders[]|ObjectCollection findByOrderId(int $order_id) Return ChildOrders objects filtered by the order_id column
  * @method     ChildOrders[]|ObjectCollection findByRegionId(int $region_id) Return ChildOrders objects filtered by the region_id column
  * @method     ChildOrders[]|ObjectCollection findByTypeId(int $type_id) Return ChildOrders objects filtered by the type_id column
@@ -152,13 +157,89 @@ abstract class OrdersQuery extends ModelCriteria
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
-        throw new LogicException('The Orders object has no primary key');
+        if ($key === null) {
+            return null;
+        }
+
+        if ($con === null) {
+            $con = Propel::getServiceContainer()->getReadConnection(OrdersTableMap::DATABASE_NAME);
+        }
+
+        $this->basePreSelect($con);
+
+        if (
+            $this->formatter || $this->modelAlias || $this->with || $this->select
+            || $this->selectColumns || $this->asColumns || $this->selectModifiers
+            || $this->map || $this->having || $this->joins
+        ) {
+            return $this->findPkComplex($key, $con);
+        }
+
+        if ((null !== ($obj = OrdersTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key)))) {
+            // the object is already in the instance pool
+            return $obj;
+        }
+
+        return $this->findPkSimple($key, $con);
+    }
+
+    /**
+     * Find object by primary key using raw SQL to go fast.
+     * Bypass doSelect() and the object formatter by using generated code.
+     *
+     * @param     mixed $key Primary key to use for the query
+     * @param     ConnectionInterface $con A connection object
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildOrders A model object, or null if the key is not found
+     */
+    protected function findPkSimple($key, ConnectionInterface $con)
+    {
+        $sql = 'SELECT my_order_id, order_id, region_id, type_id, location_id, volume_total, volume_remain, min_volume, price, is_buy_order, duration, issued FROM orders WHERE my_order_id = :p0';
+        try {
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (Exception $e) {
+            Propel::log($e->getMessage(), Propel::LOG_ERR);
+            throw new PropelException(sprintf('Unable to execute SELECT statement [%s]', $sql), 0, $e);
+        }
+        $obj = null;
+        if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
+            /** @var ChildOrders $obj */
+            $obj = new ChildOrders();
+            $obj->hydrate($row);
+            OrdersTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
+        }
+        $stmt->closeCursor();
+
+        return $obj;
+    }
+
+    /**
+     * Find object by primary key.
+     *
+     * @param     mixed $key Primary key to use for the query
+     * @param     ConnectionInterface $con A connection object
+     *
+     * @return ChildOrders|array|mixed the result, formatted by the current formatter
+     */
+    protected function findPkComplex($key, ConnectionInterface $con)
+    {
+        // As the query uses a PK condition, no limit(1) is necessary.
+        $criteria = $this->isKeepQuery() ? clone $this : $this;
+        $dataFetcher = $criteria
+            ->filterByPrimaryKey($key)
+            ->doSelect($con);
+
+        return $criteria->getFormatter()->init($criteria)->formatOne($dataFetcher);
     }
 
     /**
      * Find objects by primary key
      * <code>
-     * $objs = $c->findPks(array(array(12, 56), array(832, 123), array(123, 456)), $con);
+     * $objs = $c->findPks(array(12, 56, 832), $con);
      * </code>
      * @param     array $keys Primary keys to use for the query
      * @param     ConnectionInterface $con an optional connection object
@@ -167,7 +248,16 @@ abstract class OrdersQuery extends ModelCriteria
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
-        throw new LogicException('The Orders object has no primary key');
+        if (null === $con) {
+            $con = Propel::getServiceContainer()->getReadConnection($this->getDbName());
+        }
+        $this->basePreSelect($con);
+        $criteria = $this->isKeepQuery() ? clone $this : $this;
+        $dataFetcher = $criteria
+            ->filterByPrimaryKeys($keys)
+            ->doSelect($con);
+
+        return $criteria->getFormatter()->init($criteria)->format($dataFetcher);
     }
 
     /**
@@ -179,7 +269,8 @@ abstract class OrdersQuery extends ModelCriteria
      */
     public function filterByPrimaryKey($key)
     {
-        throw new LogicException('The Orders object has no primary key');
+
+        return $this->addUsingAlias(OrdersTableMap::COL_MY_ORDER_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -191,7 +282,49 @@ abstract class OrdersQuery extends ModelCriteria
      */
     public function filterByPrimaryKeys($keys)
     {
-        throw new LogicException('The Orders object has no primary key');
+
+        return $this->addUsingAlias(OrdersTableMap::COL_MY_ORDER_ID, $keys, Criteria::IN);
+    }
+
+    /**
+     * Filter the query on the my_order_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMyOrderId(1234); // WHERE my_order_id = 1234
+     * $query->filterByMyOrderId(array(12, 34)); // WHERE my_order_id IN (12, 34)
+     * $query->filterByMyOrderId(array('min' => 12)); // WHERE my_order_id > 12
+     * </code>
+     *
+     * @param     mixed $myOrderId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildOrdersQuery The current query, for fluid interface
+     */
+    public function filterByMyOrderId($myOrderId = null, $comparison = null)
+    {
+        if (is_array($myOrderId)) {
+            $useMinMax = false;
+            if (isset($myOrderId['min'])) {
+                $this->addUsingAlias(OrdersTableMap::COL_MY_ORDER_ID, $myOrderId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($myOrderId['max'])) {
+                $this->addUsingAlias(OrdersTableMap::COL_MY_ORDER_ID, $myOrderId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(OrdersTableMap::COL_MY_ORDER_ID, $myOrderId, $comparison);
     }
 
     /**
@@ -657,8 +790,7 @@ abstract class OrdersQuery extends ModelCriteria
     public function prune($orders = null)
     {
         if ($orders) {
-            throw new LogicException('Orders object has no primary key');
-
+            $this->addUsingAlias(OrdersTableMap::COL_MY_ORDER_ID, $orders->getMyOrderId(), Criteria::NOT_EQUAL);
         }
 
         return $this;

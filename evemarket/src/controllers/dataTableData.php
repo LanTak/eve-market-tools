@@ -149,7 +149,7 @@ $app->get('/db/orders', function (Request $request, Response $response, array $a
 	$table = 'MarketOrders';
 	 
 	// Table's primary key
-	$primaryKey = 'type_id';
+	$primaryKey = 'order_id';
 	 
 	// Array of database columns which should be read and sent back to DataTables.
 	// The `db` parameter represents the column name in the database, while the `dt`
@@ -167,6 +167,7 @@ $app->get('/db/orders', function (Request $request, Response $response, array $a
 		array( 'db' => 'average_price', 'dt' => 8 ),
 		array( 'db' => 'MarketCompair', 'dt' => 9 ),
 		array( 'db' => 'is_buy_order', 'dt' => 10 ),
+		array( 'db' => 'my_order_id', 'dt' => 11 ),
 		/*array( 'db' => 'average_price', 'dt' => 3, 'formatter' => function($d, $row){ 
 			return "$".number_format($d,2);
 		}),

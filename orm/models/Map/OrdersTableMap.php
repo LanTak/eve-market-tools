@@ -9,7 +9,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
-use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
@@ -60,7 +59,7 @@ class OrdersTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 11;
+    const NUM_COLUMNS = 12;
 
     /**
      * The number of lazy-loaded columns
@@ -70,7 +69,12 @@ class OrdersTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 11;
+    const NUM_HYDRATE_COLUMNS = 12;
+
+    /**
+     * the column name for the my_order_id field
+     */
+    const COL_MY_ORDER_ID = 'orders.my_order_id';
 
     /**
      * the column name for the order_id field
@@ -139,11 +143,11 @@ class OrdersTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('OrderId', 'RegionId', 'TypeId', 'LocationId', 'VolumeTotal', 'VolumeRemain', 'MinVolume', 'Price', 'IsBuyOrder', 'Duration', 'Issued', ),
-        self::TYPE_CAMELNAME     => array('orderId', 'regionId', 'typeId', 'locationId', 'volumeTotal', 'volumeRemain', 'minVolume', 'price', 'isBuyOrder', 'duration', 'issued', ),
-        self::TYPE_COLNAME       => array(OrdersTableMap::COL_ORDER_ID, OrdersTableMap::COL_REGION_ID, OrdersTableMap::COL_TYPE_ID, OrdersTableMap::COL_LOCATION_ID, OrdersTableMap::COL_VOLUME_TOTAL, OrdersTableMap::COL_VOLUME_REMAIN, OrdersTableMap::COL_MIN_VOLUME, OrdersTableMap::COL_PRICE, OrdersTableMap::COL_IS_BUY_ORDER, OrdersTableMap::COL_DURATION, OrdersTableMap::COL_ISSUED, ),
-        self::TYPE_FIELDNAME     => array('order_id', 'region_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('MyOrderId', 'OrderId', 'RegionId', 'TypeId', 'LocationId', 'VolumeTotal', 'VolumeRemain', 'MinVolume', 'Price', 'IsBuyOrder', 'Duration', 'Issued', ),
+        self::TYPE_CAMELNAME     => array('myOrderId', 'orderId', 'regionId', 'typeId', 'locationId', 'volumeTotal', 'volumeRemain', 'minVolume', 'price', 'isBuyOrder', 'duration', 'issued', ),
+        self::TYPE_COLNAME       => array(OrdersTableMap::COL_MY_ORDER_ID, OrdersTableMap::COL_ORDER_ID, OrdersTableMap::COL_REGION_ID, OrdersTableMap::COL_TYPE_ID, OrdersTableMap::COL_LOCATION_ID, OrdersTableMap::COL_VOLUME_TOTAL, OrdersTableMap::COL_VOLUME_REMAIN, OrdersTableMap::COL_MIN_VOLUME, OrdersTableMap::COL_PRICE, OrdersTableMap::COL_IS_BUY_ORDER, OrdersTableMap::COL_DURATION, OrdersTableMap::COL_ISSUED, ),
+        self::TYPE_FIELDNAME     => array('my_order_id', 'order_id', 'region_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -153,11 +157,11 @@ class OrdersTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('OrderId' => 0, 'RegionId' => 1, 'TypeId' => 2, 'LocationId' => 3, 'VolumeTotal' => 4, 'VolumeRemain' => 5, 'MinVolume' => 6, 'Price' => 7, 'IsBuyOrder' => 8, 'Duration' => 9, 'Issued' => 10, ),
-        self::TYPE_CAMELNAME     => array('orderId' => 0, 'regionId' => 1, 'typeId' => 2, 'locationId' => 3, 'volumeTotal' => 4, 'volumeRemain' => 5, 'minVolume' => 6, 'price' => 7, 'isBuyOrder' => 8, 'duration' => 9, 'issued' => 10, ),
-        self::TYPE_COLNAME       => array(OrdersTableMap::COL_ORDER_ID => 0, OrdersTableMap::COL_REGION_ID => 1, OrdersTableMap::COL_TYPE_ID => 2, OrdersTableMap::COL_LOCATION_ID => 3, OrdersTableMap::COL_VOLUME_TOTAL => 4, OrdersTableMap::COL_VOLUME_REMAIN => 5, OrdersTableMap::COL_MIN_VOLUME => 6, OrdersTableMap::COL_PRICE => 7, OrdersTableMap::COL_IS_BUY_ORDER => 8, OrdersTableMap::COL_DURATION => 9, OrdersTableMap::COL_ISSUED => 10, ),
-        self::TYPE_FIELDNAME     => array('order_id' => 0, 'region_id' => 1, 'type_id' => 2, 'location_id' => 3, 'volume_total' => 4, 'volume_remain' => 5, 'min_volume' => 6, 'price' => 7, 'is_buy_order' => 8, 'duration' => 9, 'issued' => 10, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('MyOrderId' => 0, 'OrderId' => 1, 'RegionId' => 2, 'TypeId' => 3, 'LocationId' => 4, 'VolumeTotal' => 5, 'VolumeRemain' => 6, 'MinVolume' => 7, 'Price' => 8, 'IsBuyOrder' => 9, 'Duration' => 10, 'Issued' => 11, ),
+        self::TYPE_CAMELNAME     => array('myOrderId' => 0, 'orderId' => 1, 'regionId' => 2, 'typeId' => 3, 'locationId' => 4, 'volumeTotal' => 5, 'volumeRemain' => 6, 'minVolume' => 7, 'price' => 8, 'isBuyOrder' => 9, 'duration' => 10, 'issued' => 11, ),
+        self::TYPE_COLNAME       => array(OrdersTableMap::COL_MY_ORDER_ID => 0, OrdersTableMap::COL_ORDER_ID => 1, OrdersTableMap::COL_REGION_ID => 2, OrdersTableMap::COL_TYPE_ID => 3, OrdersTableMap::COL_LOCATION_ID => 4, OrdersTableMap::COL_VOLUME_TOTAL => 5, OrdersTableMap::COL_VOLUME_REMAIN => 6, OrdersTableMap::COL_MIN_VOLUME => 7, OrdersTableMap::COL_PRICE => 8, OrdersTableMap::COL_IS_BUY_ORDER => 9, OrdersTableMap::COL_DURATION => 10, OrdersTableMap::COL_ISSUED => 11, ),
+        self::TYPE_FIELDNAME     => array('my_order_id' => 0, 'order_id' => 1, 'region_id' => 2, 'type_id' => 3, 'location_id' => 4, 'volume_total' => 5, 'volume_remain' => 6, 'min_volume' => 7, 'price' => 8, 'is_buy_order' => 9, 'duration' => 10, 'issued' => 11, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -175,8 +179,9 @@ class OrdersTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Orders');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
+        $this->addPrimaryKey('my_order_id', 'MyOrderId', 'INTEGER', true, null, null);
         $this->addColumn('order_id', 'OrderId', 'INTEGER', true, 22, null);
         $this->addColumn('region_id', 'RegionId', 'INTEGER', true, null, null);
         $this->addColumn('type_id', 'TypeId', 'INTEGER', true, null, null);
@@ -212,7 +217,12 @@ class OrdersTableMap extends TableMap
      */
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return null;
+        // If the PK cannot be derived from the row, return NULL.
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+            return null;
+        }
+
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -229,7 +239,11 @@ class OrdersTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return '';
+        return (int) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 0 + $offset
+                : self::translateFieldName('MyOrderId', TableMap::TYPE_PHPNAME, $indexType)
+        ];
     }
 
     /**
@@ -329,6 +343,7 @@ class OrdersTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
+            $criteria->addSelectColumn(OrdersTableMap::COL_MY_ORDER_ID);
             $criteria->addSelectColumn(OrdersTableMap::COL_ORDER_ID);
             $criteria->addSelectColumn(OrdersTableMap::COL_REGION_ID);
             $criteria->addSelectColumn(OrdersTableMap::COL_TYPE_ID);
@@ -341,6 +356,7 @@ class OrdersTableMap extends TableMap
             $criteria->addSelectColumn(OrdersTableMap::COL_DURATION);
             $criteria->addSelectColumn(OrdersTableMap::COL_ISSUED);
         } else {
+            $criteria->addSelectColumn($alias . '.my_order_id');
             $criteria->addSelectColumn($alias . '.order_id');
             $criteria->addSelectColumn($alias . '.region_id');
             $criteria->addSelectColumn($alias . '.type_id');
@@ -399,10 +415,11 @@ class OrdersTableMap extends TableMap
             // rename for clarity
             $criteria = $values;
         } elseif ($values instanceof \Orders) { // it's a model object
-            // create criteria based on pk value
-            $criteria = $values->buildCriteria();
+            // create criteria based on pk values
+            $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            throw new LogicException('The Orders object has no primary key');
+            $criteria = new Criteria(OrdersTableMap::DATABASE_NAME);
+            $criteria->add(OrdersTableMap::COL_MY_ORDER_ID, (array) $values, Criteria::IN);
         }
 
         $query = OrdersQuery::create()->mergeWith($criteria);
@@ -448,6 +465,10 @@ class OrdersTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from Orders object
+        }
+
+        if ($criteria->containsKey(OrdersTableMap::COL_MY_ORDER_ID) && $criteria->keyContainsValue(OrdersTableMap::COL_MY_ORDER_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.OrdersTableMap::COL_MY_ORDER_ID.')');
         }
 
 

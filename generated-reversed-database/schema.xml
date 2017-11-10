@@ -57,6 +57,7 @@
     </vendor>
   </table>
   <table name="orders" idMethod="native" phpName="Orders">
+    <column name="my_order_id" phpName="MyOrderId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="order_id" phpName="OrderId" type="INTEGER" size="22" required="true"/>
     <column name="region_id" phpName="RegionId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>

@@ -131,6 +131,11 @@
 						<i class="fa fa-lg fa-table fa-fw"></i><span class="nav-label">Types Search</span>
 					</a>
 				</li>
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/db/searchOrders"){echo "active";} ?>">
+					<a href="/db/searchOrders" title="Types (Items) Search">
+						<i class="fa fa-lg fa-table fa-fw"></i><span class="nav-label">Search Orders</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</aside>
