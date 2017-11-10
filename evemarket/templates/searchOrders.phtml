@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php 
+include_once('include/header.php');
+?>
+	<body class=" sidebar-fixed navbar-fixed sidebar-slim loading">
+		<div id="initial-loader">
+			<div class="initial-loader-bottom">
+				Loading. Please Wait. <i class="fa fa-cricle" style="opacity: 0"></i>
+			</div>
+		</div>
+
+		<!-- Bower Libraries Scripts -->
+		<script src="/assets/vendor/js/lib.js"></script>
+
+		<div class="main-wrap">
+			<?php include_once('include/nav.php');?>
+
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="sub-navbar sub-navbar__header-breadcrumbs">
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-12 sub-navbar-column">
+										<div class="sub-navbar-header">
+											<h3>Search</h3>
+										</div>
+										<ol class="breadcrumb navbar-text navbar-right no-bg">
+											<li class="current-parent">
+												<a class="current-parent" href="/">
+													<i class="fa fa-fw fa-home"></i>
+												</a>
+											</li>
+											<li>
+												<a href="javascript: void(0)">
+													All Market Orders
+												</a>
+											</li>
+											
+										</ol>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<table id="orders" class="display table">
+							<thead>
+								<tr>
+									<th>Type Id</th>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Published</th>
+									<th>Group Id</th>
+									<th>Radius</th>
+									<th>volume</th>
+									<th>packaged_volume</th>
+									<th>icon_id</th>
+									<th>capacity</th>
+									<th>portion_size</th>
+									<th>mass</th>
+									<th>graphic_id</th>
+									<th>dogma_attributes</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Type Id</th>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Published</th>
+									<th>Group Id</th>
+									<th>Radius</th>
+									<th>volume</th>
+									<th>packaged_volume</th>
+									<th>icon_id</th>
+									<th>capacity</th>
+									<th>portion_size</th>
+									<th>mass</th>
+									<th>graphic_id</th>
+									<th>dogma_attributes</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+				<script src="/assets/vendor/js/jquery.dataTables.js"></script>
+				<script src="/assets/vendor/js/datatables.bootstrap.js"></script>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$('#orders').DataTable( {
+							"processing": true,
+							"serverSide": true,
+							"ajax": "/db/orders"
+						} );
+					} );
+				</script>
+			</div>
+			<?php include_once('include/footer.php');?>
+		</div>
+		<script>
+			// Hide loader
+			(function() {
+				var bodyElement = document.querySelector('body');
+				bodyElement.classList.add('loading');
+
+				document.addEventListener('readystatechange', function() {
+					if(document.readyState === 'complete') {
+						var bodyElement = document.querySelector('body');
+						var loaderElement = document.querySelector('#initial-loader');
+
+						bodyElement.classList.add('loaded');
+						setTimeout(function() {
+							bodyElement.removeChild(loaderElement);
+							bodyElement.classList.remove('loading', 'loaded');
+						}, 200);
+					}
+				});
+			})();
+		</script>
+
+		<!-- Bower Libraries Styles -->
+		<link rel="stylesheet" href="/assets/vendor/css/lib.css">
+
+		<script src="/js/app.js"></script>
+
+		<script src="/js/plugins-init.js"></script>
+		<script src="/js/switchery-settings.js"></script>
+	</body>
+</html
