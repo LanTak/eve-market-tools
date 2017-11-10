@@ -10,7 +10,7 @@ use Propel\Runtime\Propel;
 
 $conn = Propel::getConnection();
 // $sql = "SELECT * FROM regions WHERE region_id != 10000002 AND region_id != 10000033";
-$sql = "SELECT * FROM regions";
+$sql = "SELECT * FROM regions where region_id < 10000070";
 $regions = fetch($conn, $sql);
 
 // $regions = RegionsQuery::Create()->find(); // do this one day
