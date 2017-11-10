@@ -104,6 +104,15 @@
     <column name="services" phpName="Services" type="VARCHAR" size="1028"/>
     <column name="owner" phpName="Owner" type="INTEGER"/>
     <column name="race_id" phpName="RaceId" type="INTEGER"/>
+    <index name="system_id">
+      <index-column name="system_id"/>
+    </index>
+    <index name="type_id">
+      <index-column name="type_id"/>
+    </index>
+    <index name="race_id">
+      <index-column name="race_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
