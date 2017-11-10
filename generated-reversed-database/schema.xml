@@ -15,6 +15,9 @@
     <column name="category_id" phpName="CategoryId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="256"/>
     <column name="published" phpName="Published" type="TINYINT"/>
+    <index name="published">
+      <index-column name="published"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -40,6 +43,15 @@
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
     <column name="average_price" phpName="AveragePrice" type="DOUBLE" required="true"/>
     <column name="adjusted_price" phpName="AdjustedPrice" type="DOUBLE" required="true"/>
+    <index name="type_id">
+      <index-column name="type_id"/>
+    </index>
+    <index name="average_price">
+      <index-column name="average_price"/>
+    </index>
+    <index name="adjusted_price">
+      <index-column name="adjusted_price"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
