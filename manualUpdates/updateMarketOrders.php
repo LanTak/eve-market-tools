@@ -10,8 +10,13 @@ use Propel\Runtime\Propel;
 
 $conn = Propel::getConnection();
 // $sql = "SELECT * FROM regions WHERE region_id != 10000002 AND region_id != 10000033";
-$sql = "SELECT * FROM regions where region_id < 10000070";
+// $sql = "SELECT * FROM regions where region_id < 10000070";
+$sql = "SELECT DISTINCT regions.region_id, regions.name FROM systems JOIN constellations ON systems.constellation_id = constellations.constellations_id LEFT JOIN regions ON constellations.region_id = regions.region_id WHERE security_status > .51 GROUP BY regions.region_id";
 $regions = fetch($conn, $sql);
+
+// echo print_array($regions);
+// echo var_dump($regions);
+// exit();
 
 // $regions = RegionsQuery::Create()->find(); // do this one day
 

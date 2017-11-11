@@ -7,6 +7,13 @@ use Propel\Runtime\Propel;
 // is_buy_order = 0 selling
 // is_buy_order = 1 buying
 
+function cmp($a, $b) {
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a < $b) ? -1 : 1;
+}
+
 $app->get('/db/dataSearch', function (Request $request, Response $response, array $args) {
 
 	
@@ -20,10 +27,10 @@ $app->get('/db/dataSearch', function (Request $request, Response $response, arra
 		$data = fetch($conn, $sql, $params);
 		foreach ($data as $key => $d) {
 			// print_array($d);
-			$qu = OrdersQuery::Create()->filterByTypeId($d['type_id'])->filterByIsBuyOrder(1)->orderBy('price','DESC')->findOne();
+			$qu = OrdersQuery::Create()->filterByTypeId($d['type_id'])->filterByIsBuyOrder(1)->filterByMinVolume(1)->orderBy('price','DESC')->findOne();
 			if(!empty($qu)){
 				$d['max'] = $qu->getPrice();
-				$d['margin'] =  $d['max'] - $d['min'];
+				$d['margin'] =  number_format($d['max'] - $d['min'],0);
 				if($d['margin'] > 0){
 					$d['type_id'] = "<a href='javascript:getItemInfo(\"".$d['type_id']."\");'>".$d['type_id']."</a>";
 					$table[] = $d;
@@ -32,6 +39,7 @@ $app->get('/db/dataSearch', function (Request $request, Response $response, arra
 		}
 		$pos = count($table) - 1;
 		echo "Total Items:".count($data). "  Total Positive $pos";
+		// uasort($table, 'cmp');
 		echo html_table($table);
 	}
 
@@ -60,9 +68,9 @@ $app->get('/db/getSell', function (Request $request, Response $response, array $
 	$allGetVars = $request->getQueryParams();
 	if(!empty($allGetVars['type_id'])){
 		$conn = Propel::getConnection();
-		$sql = "SELECT region_name,item_name,volume_total,volume_remain,price FROM MarketOrders WHERE type_id = ? AND is_buy_order = 1 ORDER BY price DESC";
+		$sql = "SELECT region_name,item_name,volume_total,volume_remain,min_volume ,price FROM MarketOrders WHERE type_id = ? AND is_buy_order = 1 ORDER BY price DESC";
 		$params = array( $allGetVars['type_id'] );
-		$table[] = array('region_name', 'item_name', 'volume_total', 'volume_remain', 'price' );
+		$table[] = array('region_name', 'item_name', 'volume_total', 'volume_remain', 'min','price' );
 		$data = fetch($conn, $sql, $params);
 		foreach ($data as $key => $d) {
 			$d['price'] = number_format($d['price'],0);
