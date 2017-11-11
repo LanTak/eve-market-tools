@@ -146,7 +146,7 @@ $app->get('/data/chart/main', function (Request $request, Response $response, ar
 $app->get('/db/orders', function (Request $request, Response $response, array $args) {
 	require 'datatables.php';
 	// DB table to use
-	$table = 'MarketOrders';
+	$table = 'MarketOrderSearch';
 	 
 	// Table's primary key
 	$primaryKey = 'my_order_id';
@@ -158,24 +158,18 @@ $app->get('/db/orders', function (Request $request, Response $response, array $a
 	$columns = array(
 		array( 'db' => 'my_order_id', 'dt' => 0 ),
 		array( 'db' => 'region_name', 'dt' => 1 ),
-		array( 'db' => 'category_name', 'dt' => 2 ),
-		array( 'db' => 'group_name', 'dt' => 3 ),
-		array( 'db' => 'item_name', 'dt' => 4 ),
-		array( 'db' => 'location_id', 'dt' => 5 ),
-		array( 'db' => 'volume_total', 'dt' => 6 ),
-		array( 'db' => 'volume_remain', 'dt' => 7 ),
-		array( 'db' => 'packaged_volume', 'dt' => 8 ),
-		array( 'db' => 'price', 'dt' => 9 ),
-		array( 'db' => 'average_price', 'dt' => 10 ),
-		array( 'db' => 'MarketCompair', 'dt' => 11 ),
-		array( 'db' => 'is_buy_order', 'dt' => 12 )
+		array( 'db' => 'item_name', 'dt' => 2 ),
+		array( 'db' => 'location_id', 'dt' => 3 ),
+		array( 'db' => 'volume_total', 'dt' => 4 ),
+		array( 'db' => 'volume_remain', 'dt' => 5 ),
+		array( 'db' => 'price', 'dt' => 6 ),
+		array( 'db' => 'is_buy_order', 'dt' => 7 )
 		/*array( 'db' => 'average_price', 'dt' => 3, 'formatter' => function($d, $row){ 
 			return "$".number_format($d,2);
 		}),
 		array( 'db' => 'adjusted_price', 'dt' => 4, 'formatter' => function($d, $row){ 
 			return "$".number_format($d,2);
 		})*/
-
 	);
 
 
