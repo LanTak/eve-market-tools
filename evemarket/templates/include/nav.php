@@ -121,6 +121,11 @@
 						<i class="fa fa-lg fa-tachometer  fa-fw"></i><span class="nav-label">Market Data</span>
 					</a>
 				</li>
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/query/builders"){echo "active";} ?>">
+					<a href="/query/builders" title="Types (Items) Search">
+						<i class="fa fa-lg fa-crosshairs fa-fw"></i><span class="nav-label">Search Orders</span>
+					</a>
+				</li>
 				<li class="<?php if($_SERVER['REQUEST_URI'] == "/db/systems"){echo "active";} ?>">
 					<a href="/db/systems" title="Systems Search">
 						<i class="fa fa-lg fa-table  fa-fw"></i><span class="nav-label">Systems Search</span>

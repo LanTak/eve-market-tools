@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php 
+include_once('include/header.php');
+?>
+	<body class=" sidebar-fixed navbar-fixed sidebar-slim loading">
+		<div id="initial-loader">
+			<div class="initial-loader-bottom">
+				Loading. Please Wait. <i class="fa fa-cricle" style="opacity: 0"></i>
+			</div>
+		</div>
+
+		<!-- Bower Libraries Scripts -->
+		<script src="/assets/vendor/js/lib.js"></script>
+
+		<div class="main-wrap">
+			<?php include_once('include/nav.php');?>
+
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="sub-navbar sub-navbar__header-breadcrumbs">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-lg-12 sub-navbar-column">
+										<div class="sub-navbar-header">
+											<h3>Query Builder</h3>
+										</div>
+										<ol class="breadcrumb navbar-text navbar-right no-bg">
+											<li class="current-parent">
+												<a class="current-parent" href="/">
+													<i class="fa fa-fw fa-home"></i>
+												</a>
+											</li>
+											<li>
+												<a href="javascript: void(0)">
+													For Market Orders
+												</a>
+											</li>
+											
+										</ol>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+							<div class="panel-body">
+								<div class="form-inline"> 
+									<div class="form-group">
+										<label for="min" class="m-r-1">Min</label>
+										<input type="text" class="form-control" id="min" name="min" placeholder="Min Isk">
+									</div>
+									<div class="form-group">
+										<label for="max" class="m-l-1 m-r-1">Max</label>
+										<input type="text" class="form-control m-r-1" id="max" name="max" placeholder="Max Isk">
+									</div>
+									<a class="btn btn-primary" href="javascript:getSearch();">Search</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+								<div class="panel-body" id="que1">
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+								<div class="panel-body" id="buy">
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="panel panel-default no-bg b-a-2 b-gray-dark">
+								<div class="panel-body" id="sell">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="row">
+						<table id="orders" class="display table">
+							<thead>
+								<tr>
+									<th>my_order_id</th>
+									<th>region_name</th>
+									<th>item_name</th>
+									<th>location_id</th>
+									<th>volume_total</th>
+									<th>volume_remain</th>
+									<th>price</th>
+									<th>is_buy_order</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>my_order_id</th>
+									<th>region_name</th>
+									<th>item_name</th>
+									<th>location_id</th>
+									<th>volume_total</th>
+									<th>volume_remain</th>
+									<th>price</th>
+									<th>is_buy_order</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div> -->
+				</div>
+				<script src="/assets/vendor/js/jquery.dataTables.js"></script>
+				<script src="/assets/vendor/js/datatables.bootstrap.js"></script>
+				<script type="text/javascript">
+					function getSearch(){
+						var min = $('#min').val();
+						var max = $('#max').val();
+						$.get('/db/dataSearch', {min:min,max:max}, function(data) {
+							$('#que1').html(data);
+						});
+					};
+
+					function getItemInfo(type_id){
+						if(type_id){
+							$.get('/db/getBuy', {type_id:type_id},function(data) {
+								$('#buy').html(data);
+							});
+							$.get('/db/getSell', {type_id:type_id},function(data) {
+								$('#sell').html(data);
+							});
+						}
+					}
+				</script>
+			</div>
+			<?php include_once('include/footer.php');?>
+		</div>
+		<script>
+			// Hide loader
+			(function() {
+				var bodyElement = document.querySelector('body');
+				bodyElement.classList.add('loading');
+
+				document.addEventListener('readystatechange', function() {
+					if(document.readyState === 'complete') {
+						var bodyElement = document.querySelector('body');
+						var loaderElement = document.querySelector('#initial-loader');
+
+						bodyElement.classList.add('loaded');
+						setTimeout(function() {
+							bodyElement.removeChild(loaderElement);
+							bodyElement.classList.remove('loading', 'loaded');
+						}, 200);
+					}
+				});
+			})();
+		</script>
+
+		<!-- Bower Libraries Styles -->
+		<link rel="stylesheet" href="/assets/vendor/css/lib.css">
+
+		<script src="/js/app.js"></script>
+
+		<script src="/js/plugins-init.js"></script>
+		<script src="/js/switchery-settings.js"></script>
+	</body>
+</html

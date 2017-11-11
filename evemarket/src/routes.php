@@ -69,6 +69,13 @@ $app->get('/db/searchOrders', function (Request $request, Response $response, ar
 	return $this->renderer->render($response, 'searchOrders.phtml', $args);
 });
 
+$app->get('/query/builders', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/query/builders' route");
+	// Render index view
+	return $this->renderer->render($response, 'queryBuilder.phtml', $args);
+});
+
 $app->get('/data/home/catOrdersSum', function (Request $request, Response $response, array $args) {
 	$conn = Propel::getConnection();
 	$allGetVars = $request->getQueryParams();
@@ -210,3 +217,4 @@ $app->get('/data/home/getOrders', function (Request $request, Response $response
 });
 
 require_once 'controllers/dataTableData.php';
+require_once 'controllers/queryBuilderData.php';
