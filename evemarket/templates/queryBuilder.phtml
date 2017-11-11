@@ -127,6 +127,8 @@ include_once('include/header.php');
 
 					function getItemInfo(type_id){
 						if(type_id){
+							$('#buy').html("");
+							$('#sell').html("");
 							$.get('/db/getBuy', {type_id:type_id},function(data) {
 								$('#buy').html(data);
 							});

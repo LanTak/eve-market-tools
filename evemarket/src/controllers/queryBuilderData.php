@@ -47,7 +47,10 @@ $app->get('/db/getBuy', function (Request $request, Response $response, array $a
 		$table[] = array('region_name', 'item_name', 'volume_total', 'volume_remain', 'price' );
 		$data = fetch($conn, $sql, $params);
 		foreach ($data as $key => $d) {
-			$table[] = $d;
+			$d['price'] = number_format($d['price'],0);
+			$d['volume_remain'] = number_format($d['volume_remain'],0);
+			$d['volume_total'] = number_format($d['volume_total'],0);
+ 			$table[] = $d;
 		}
 		echo html_table($table);
 	}
@@ -62,6 +65,9 @@ $app->get('/db/getSell', function (Request $request, Response $response, array $
 		$table[] = array('region_name', 'item_name', 'volume_total', 'volume_remain', 'price' );
 		$data = fetch($conn, $sql, $params);
 		foreach ($data as $key => $d) {
+			$d['price'] = number_format($d['price'],0);
+			$d['volume_remain'] = number_format($d['volume_remain'],0);
+			$d['volume_total'] = number_format($d['volume_total'],0);
 			$table[] = $d;
 		}
 		echo html_table($table);
