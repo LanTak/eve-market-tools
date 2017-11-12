@@ -10,9 +10,105 @@ use Propel\Runtime\Propel;
 
 $conn = Propel::getConnection();
 // $sql = "SELECT * FROM regions WHERE region_id != 10000002 AND region_id != 10000033";
-// $sql = "SELECT * FROM regions where region_id < 10000070";
-$sql = "SELECT DISTINCT regions.region_id, regions.name FROM systems JOIN constellations ON systems.constellation_id = constellations.constellations_id LEFT JOIN regions ON constellations.region_id = regions.region_id WHERE security_status > .51 GROUP BY regions.region_id";
-$regions = fetch($conn, $sql);
+// $sql = "SELECT * FROM regions where region_id = 10000033";
+// $sql = "SELECT DISTINCT regions.region_id, regions.name FROM systems JOIN constellations ON systems.constellation_id = constellations.constellations_id LEFT JOIN regions ON constellations.region_id = regions.region_id WHERE security_status > .51 GROUP BY regions.region_id";
+// $regions = fetch($conn, $sql);
+
+$regions = array(
+	array( // row #0
+		'region_id' => 10000001,
+		'name' => 'Derelik',
+	),
+	array( // row #1
+		'region_id' => 10000002,
+		'name' => 'The Forge',
+	),
+	array( // row #2
+		'region_id' => 10000016,
+		'name' => 'Lonetrek',
+	),
+	array( // row #3
+		'region_id' => 10000020,
+		'name' => 'Tash-Murkon',
+	),
+	array( // row #4
+		'region_id' => 10000028,
+		'name' => 'Molden Heath',
+	),
+	array( // row #5
+		'region_id' => 10000030,
+		'name' => 'Heimatar',
+	),
+	array( // row #6
+		'region_id' => 10000032,
+		'name' => 'Sinq Laison',
+	),
+	array( // row #7
+		'region_id' => 10000033,
+		'name' => 'The Citadel',
+	),
+	array( // row #8
+		'region_id' => 10000036,
+		'name' => 'Devoid',
+	),
+	array( // row #9
+		'region_id' => 10000037,
+		'name' => 'Everyshore',
+	),
+	array( // row #10
+		'region_id' => 10000038,
+		'name' => 'The Bleak Lands',
+	),
+	array( // row #11
+		'region_id' => 10000042,
+		'name' => 'Metropolis',
+	),
+	array( // row #12
+		'region_id' => 10000043,
+		'name' => 'Domain',
+	),
+	array( // row #13
+		'region_id' => 10000044,
+		'name' => 'Solitude',
+	),
+	array( // row #14
+		'region_id' => 10000048,
+		'name' => 'Placid',
+	),
+	array( // row #15
+		'region_id' => 10000049,
+		'name' => 'Khanid',
+	),
+	array( // row #16
+		'region_id' => 10000052,
+		'name' => 'Kador',
+	),
+	array( // row #17
+		'region_id' => 10000054,
+		'name' => 'Aridia',
+	),
+	array( // row #18
+		'region_id' => 10000064,
+		'name' => 'Essence',
+	),
+	array( // row #19
+		'region_id' => 10000065,
+		'name' => 'Kor-Azor',
+	),
+	array( // row #20
+		'region_id' => 10000067,
+		'name' => 'Genesis',
+	),
+	array( // row #21
+		'region_id' => 10000068,
+		'name' => 'Verge Vendor',
+	),
+	array( // row #22
+		'region_id' => 10000069,
+		'name' => 'Black Rise',
+	),
+);
+
 
 // echo print_array($regions);
 // echo var_dump($regions);
