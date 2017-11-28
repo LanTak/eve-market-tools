@@ -45,26 +45,57 @@ include_once('include/header.php');
 						</div>
 					</div>
 					<div class="row">
-						<table id="moneyMakers" class="display table">
-							<thead>
-								<tr>
-									<th>Type Id</th>
-									<th>Name</th>
-									<th>Average Price</th>
-									<th>Adjusted Price</th>
-									<th>Profit</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>Type Id</th>
-									<th>Name</th>
-									<th>Average Price</th>
-									<th>Adjusted Price</th>
-									<th>Profit</th>
-								</tr>
-							</tfoot>
-						</table>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Group Description </div>
+								<div class="panel-body" id="groupDescription">
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Item Description </div>
+								<div class="panel-body" id="itemDescription">
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Another space </div>
+								<div class="panel-body" id="tmp2">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-8">
+							<table id="moneyMakers" class="display table">
+								<thead>
+									<tr>
+										<th>Type Id</th>
+										<th>Name</th>
+										<th>Average Price</th>
+										<th>Adjusted Price</th>
+										<th>Profit</th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>Type Id</th>
+										<th>Name</th>
+										<th>Average Price</th>
+										<th>Adjusted Price</th>
+										<th>Profit</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div class="col-lg-4">
+							<div id="detailHolder"></div>
+						</div>
 					</div>
 				</div>
 				<script src="/assets/vendor/js/jquery.dataTables.js"></script>
@@ -74,9 +105,53 @@ include_once('include/header.php');
 						$('#moneyMakers').DataTable( {
 							"processing": true,
 							"serverSide": true,
-							"ajax": "/db/moneyMakers"
+							"ajax": "/db/moneyMakers",
+							"order": [[ 4, "desc" ]]
 						} );
 					} );
+
+					function getItemDetails(id){
+						$('#detailHolder').html("");
+						var json;
+						if(id){
+							/*$.get('/moneyMakers/getSubItems/'+id, function(data) {
+								json = jQuery.parseJSON(data);
+								// $('#detailHolder').html(json.description);
+								$('#itemDescription').html(json.description);
+							}).done(function(){
+								console.log(json.group_id);
+								console.log(json.market_group_id);
+							});*/
+							$.ajax({
+								url: '/moneyMakers/getSubItems/'+id,
+								type: 'GET',
+								dataType: 'JSON',
+							})
+							.done(function(data) {
+								console.log("success");
+								$('#itemDescription').html(data.description);
+								console.log(data.group_id);
+								getGroupInfo(data.group_id);
+								console.log(data.market_group_id);
+							})
+							.fail(function() {
+								console.log("error");
+							})
+							.always(function() {
+								console.log("complete");
+							});
+							
+						}
+					};
+
+					function getGroupInfo(groupId){
+						if(groupId){
+							$.get('/moneyMakers/getGroups/'+groupId, function(data) {
+								var json = jQuery.parseJSON(data);
+								console.log(json);
+							});
+						}
+					};
 				</script>
 			</div>
 			<?php include_once('include/footer.php');?>

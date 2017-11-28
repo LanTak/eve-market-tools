@@ -198,7 +198,9 @@ $app->get('/db/moneyMakers', function (Request $request, Response $response, arr
 	// parameter represents the DataTables column identifier. In this case simple
 	// indexes
 	$columns = array(
-		array( 'db' => 'type_id', 'dt' => 0 ),
+		array( 'db' => 'type_id', 'dt' => 0, 'formatter' => function($d, $row){ 
+			return "<a href='javascript:getItemDetails(".$d.")'>Item Details</a>";
+		}),
 		array( 'db' => 'name', 'dt' => 1 ),
 		array( 'db' => 'average_price', 'dt' => 2, 'formatter' => function($d, $row){ 
 			return "$".number_format($d,2);

@@ -69,6 +69,25 @@ $app->get('/moneyMakers', function (Request $request, Response $response, array 
 	return $this->renderer->render($response, 'moneyMakers.phtml', $args);
 });
 
+$app->get('/moneyMakers/getSubItems/{id}', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/moneyMakers/getSubItems' route");
+	// Render index view
+	$item = new Types($args['id']);
+	// print_array($item->toArray());
+	// print_array($item->getSubItems());
+	echo $item->getSubItems();
+});
+
+$app->get('/moneyMakers/getGroups/{id}', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/moneyMakers/getGroups' route");
+	// Render index view
+	$group = new Groups($args['id']);
+	// echo $group->toJson();
+	$group->getAllTypes();
+});
+
 $app->get('/db/searchOrders', function (Request $request, Response $response, array $args) {
 	// Sample log message
 	$this->logger->info("Slim-Skeleton '/db/searchOrders' route");
