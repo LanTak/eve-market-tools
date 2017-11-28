@@ -62,6 +62,13 @@ $app->get('/marketDashboard', function (Request $request, Response $response, ar
 	return $this->renderer->render($response, 'marketData.phtml', $args);
 });
 
+$app->get('/moneyMakers', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/moneyMakers' route");
+	// Render index view
+	return $this->renderer->render($response, 'moneyMakers.phtml', $args);
+});
+
 $app->get('/db/searchOrders', function (Request $request, Response $response, array $args) {
 	// Sample log message
 	$this->logger->info("Slim-Skeleton '/db/searchOrders' route");

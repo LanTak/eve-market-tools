@@ -121,6 +121,11 @@
 						<i class="fa fa-lg fa-tachometer  fa-fw"></i><span class="nav-label">Market Data</span>
 					</a>
 				</li>
+				<li class="<?php if($_SERVER['REQUEST_URI'] == "/moneyMakers"){echo "active";} ?>">
+					<a href="/moneyMakers" title="Money Makers">
+						<i class="fa fa-lg fa-money  fa-fw"></i><span class="nav-label">Money Makers</span>
+					</a>
+				</li>
 				<li class="<?php if($_SERVER['REQUEST_URI'] == "/query/builders"){echo "active";} ?>">
 					<a href="/query/builders" title="Types (Items) Search">
 						<i class="fa fa-lg fa-crosshairs fa-fw"></i><span class="nav-label">Search Orders</span>
