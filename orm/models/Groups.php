@@ -55,9 +55,10 @@ class Groups extends BaseGroups
 				// return $response;
 				$json = json_decode($response,1);
 				$tmp = array();
+				$tmp['name'] = $this->getName();
 				foreach ($json['types'] as $key => $t) {
 					$type = new Types($t);
-					$tmp[] = $type->toArray();
+					$tmp['items'][] = $type->toArray();
 				}
 				echo json_encode($tmp);
 			}
@@ -66,7 +67,7 @@ class Groups extends BaseGroups
 
 	public function getInfoFromEve(){
 		if(!empty($this->getGroupId())){
-			
+
 		}
 	}
 }

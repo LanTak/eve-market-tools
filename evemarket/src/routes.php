@@ -88,6 +88,21 @@ $app->get('/moneyMakers/getGroups/{id}', function (Request $request, Response $r
 	$group->getAllTypes();
 });
 
+$app->get('/moneyMakers/getBluePrint/{id}', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/moneyMakers/getBluePrint' route");
+	
+	$item = new Types($args['id']);
+	
+	$bluePrint = $item->getBluePrint();
+	// print_array($bluePrint->toArray());
+	if(!empty($bluePrint->getTypeId())){
+		echo $bluePrint->toJson();
+	}else{
+		echo "<h3>Blueprint not found.</h3>";
+	}
+});
+
 $app->get('/db/searchOrders', function (Request $request, Response $response, array $args) {
 	// Sample log message
 	$this->logger->info("Slim-Skeleton '/db/searchOrders' route");

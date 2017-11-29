@@ -60,8 +60,22 @@ class Types extends BaseTypes
 	}
 
 	public function getMarketGroups($id){
+		// really to be used on blue prints only
 		if(!empty($id)){
-			
+
+		}
+	}
+
+	public function getBluePrint(){
+		if(!empty($this->getTypeId())){
+			$look = TypesQuery::Create()->filterByName($this->getName()." Blueprint")->findOne();
+			if(!empty($look)){
+				return $look;
+			}else{
+				return "No Blueprint Found.";
+			}
+		}else{
+			return "No Item Id Found.";
 		}
 	}
 }

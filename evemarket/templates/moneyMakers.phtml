@@ -47,7 +47,7 @@ include_once('include/header.php');
 					<div class="row">
 						<div class="col-lg-4 col-md-4 col-sm-4">
 							<div class="panel panel-default b-a-0 bg-gray-dark">
-								<div class="panel-heading">Group Description </div>
+								<div class="panel-heading">Group Information </div>
 								<div class="panel-body" id="groupDescription">
 									
 								</div>
@@ -93,8 +93,13 @@ include_once('include/header.php');
 								</tfoot>
 							</table>
 						</div>
-						<div class="col-lg-4">
-							<div id="detailHolder"></div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<div class="panel panel-default b-a-0 bg-gray-dark">
+								<div class="panel-heading">Blue Print Data </div>
+								<div class="panel-body" id="bluePrintData">
+									
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -111,8 +116,8 @@ include_once('include/header.php');
 					} );
 
 					function getItemDetails(id){
-						$('#detailHolder').html("");
-						var json;
+						$('#bluePrintData').html("");
+						// var json;
 						if(id){
 							/*$.get('/moneyMakers/getSubItems/'+id, function(data) {
 								json = jQuery.parseJSON(data);
@@ -133,6 +138,10 @@ include_once('include/header.php');
 								console.log(data.group_id);
 								getGroupInfo(data.group_id);
 								console.log(data.market_group_id);
+
+								$.get('/moneyMakers/getBluePrint/'+id, function(data2) {
+									$('#bluePrintData').html(data2);
+								});
 							})
 							.fail(function() {
 								console.log("error");
