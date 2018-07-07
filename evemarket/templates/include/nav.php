@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 
 			<div class="navbar-header">
-				<a class="current navbar-brand" href="#">
+				<a class="current navbar-brand" href="/toon">
 					<img alt="Metz Logo" class="h-20" src="/assets/images/logo.png">
 				</a>
 				<button class="action-right-sidebar-toggle navbar-toggle collapsed" data-target="#navdbar" data-toggle="collapse" type="button">
@@ -45,12 +45,22 @@
 					<!-- START Menu Only Visible on Navbar -->
 					<li id="top-menu-switch" class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <i class="fa fa-fw fa-caret-down"></i></a>
-						
 					</li>
 					<!-- END Menu Only Visible on Navbar -->
+					<?php 
+						if(empty($_SESSION['code'])){
+					?>
+						<a href="https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=https%3A%2F%2Feve.pvpguild.com%2Feveauth&client_id=07b8bb74fe6144a4b14455d95bb5344d&scope=publicData%20esi-killmails.read_killmails.v1%20esi-assets.read_assets.v1%20esi-markets.read_character_orders.v1%20esi-location.read_online.v1 esi-contracts.read_character_contracts.v1&state=something123"><img src="/assets/images/eve-sso-login-white-large.png"></a>
+					<?php 
+						}else{
+					?>
+						<a href="/logout" class="btn btn-primary" style="margin-top: 10px">Log out</a>
+					<?php 
+						}
+					?>
+					
 
-
-					<li class="spin-search-box clearfix hidden-xs">
+					<!-- <li class="spin-search-box clearfix hidden-xs">
 						<a href="#" class="pull-left">
 							<i class="fa fa-search fa-lg icon-inactive"></i>
 							<i class="fa fa-close fa-lg icon-active"></i>
@@ -63,7 +73,7 @@
 								</button>
 							</span>
 						</div>
-					</li>
+					</li> -->
 				</ul>
 				<!-- START Left Side Navbar -->
 			</div>

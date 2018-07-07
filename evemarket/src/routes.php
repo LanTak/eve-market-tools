@@ -13,6 +13,84 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 	return $this->renderer->render($response, 'home.phtml', $args);
 });
 
+$app->get('/eveauth', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/eveauth' route");
+
+	$allGetPut	= $request->getQueryParams();
+	$allPostPutVars = $request->getParsedBody();
+
+	print_array($allGetPut);
+	if(!empty($allGetPut['code'])){
+		$_SESSION['code'] = $allGetPut['code'];
+		$code = $allGetPut['code'];
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://login.eveonline.com/oauth/token",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "POST",
+			CURLOPT_POSTFIELDS => "{\n  \"grant_type\":\"authorization_code\",\n  \"code\":\"$code\"\n}",
+			CURLOPT_HTTPHEADER => array(
+				"Accept: application/json",
+				"Authorization: Basic MDdiOGJiNzRmZTYxNDRhNGIxNDQ1NWQ5NWJiNTM0NGQ6ZGNzbHk3Q2hYUTVmMFVCYUh4RlFHRVRjV2NKRExNUGFwMnhhU0JNeQ==",
+				"Cache-Control: no-cache",
+				"Content-Type: application/json"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+			// echo $response;
+			$data = json_decode($response,1);
+			// print_array(json_decode($response,1));
+			$_SESSION['access_token'] = $data['access_token']; 
+			$_SESSION['refresh_token'] = $data['refresh_token'];
+
+			if(!empty($data['access_token'])){
+				$toonData = getToonData();
+				if(!empty($toonData['CharacterID']) && !empty($toonData['CharacterName'])){
+					$_SESSION['CharacterID'] = $toonData['CharacterID']; 
+					$_SESSION['CharacterName'] = $toonData['CharacterName'];
+				}
+			}
+
+			header('Location: /toon');
+		}
+	}
+	// print_array($allPostPutVars);
+
+	// Render index view
+	// return $this->renderer->render($response, 'home.phtml', $args);
+	
+});
+
+$app->get('/logout', function (Request $request, Response $response, array $args) {
+	// Sample log message
+	$this->logger->info("Slim-Skeleton '/logout' route");
+
+	session_destroy();
+	session_start();
+	header('Location: /');
+});
+
+
+$app->get('/toon', function (Request $request, Response $response, array $args) {
+	return $this->renderer->render($response, 'toon.phtml', $args);
+});
+
+
 // $app->get('/update', function (Request $request, Response $response, array $args) {
 // 	$curl = curl_init();
 
@@ -48,10 +126,9 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 // 	}
 // });
 
-// $app->get('/test', function (Request $request, Response $response, array $args) {
-// 	$t = new Types();
-// 	print_array($t);
-// });
+$app->get('/test', function (Request $request, Response $response, array $args) {
+	print_array($_SESSION);
+});
 
 /* how to get variables https://stackoverflow.com/questions/32668186/slim-3-how-to-get-all-get-put-post-variables */
 
